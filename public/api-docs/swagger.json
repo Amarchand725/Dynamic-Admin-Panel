@@ -1,0 +1,1338 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "\n\nHeader -> api_key :  \n\n",
+    "version": "1.0.0",
+    "title": "Solid Disk Direct"
+  },
+  "host": "127.0.0.1:8000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Business info",
+      "description": "All Business info Operations"
+    },
+    {
+      "name": "Customer",
+      "description": "All Customer Operations"
+    },
+    {
+      "name": "Subscriber",
+      "description": "All Subscriber Operations"
+    },
+    {
+      "name": "Product",
+      "description": "All Product Operations"
+    },
+    {
+      "name": "Brand",
+      "description": "All Brand Operations"
+    },
+    {
+      "name": "Banner",
+      "description": "All Banner Operations"
+    },
+    {
+      "name": "Category",
+      "description": "All Category Operations"
+    },
+    {
+      "name": "Slider",
+      "description": "All Slider Operations"
+    },
+    {
+      "name": "Blog",
+      "description": "All Blog Operations"
+    },
+    {
+      "name": "Shipping Method",
+      "description": "All Shipping Method Operations"
+    },
+    {
+      "name": "Question Answer",
+      "description": "All Question Answer Operations"
+    },
+    {
+      "name": "Payment Method",
+      "description": "All Payment Method Operations"
+    },
+    {
+      "name": "Quote Request",
+      "description": "All Quote Request Operations"
+    },
+    {
+      "name": "Policies",
+      "description": "All Policies Operations"
+    },
+    {
+      "name": "Contact Us",
+      "description": "All Contact Us Operations"
+    },
+    {
+      "name": "Cart",
+      "description": "All Cart Operations"
+    },
+    {
+      "name": "Wishlist",
+      "description": "All Wishlist Operations"
+    },
+    {
+      "name": "Order",
+      "description": "All Order Operations"
+    }
+  ],
+  "paths": {
+    "/business-info": {
+      "get": {
+        "tags": [
+          "Business info"
+        ],
+        "summary": "Business Info",
+        "operationId": "business-info",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/customer/login": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Customer Login",
+        "operationId": "login",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter Email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "password",
+            "required": true,
+            "type": "string"
+          }  
+         
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/customer/register": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Customer Register",
+        "operationId": "register",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "Enter name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "description": "Enter phone",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter Email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "password",
+            "required": true,
+            "type": "string"
+          },  
+          {
+            "name": "password_confirmation",
+            "in": "formData",
+            "description": "confirm password",
+            "required": true,
+            "type": "string"
+          }  
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/customer/show": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Customer Show",
+        "operationId": "show",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter Bearer Token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/customer/update": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Customer Update",
+        "operationId": "update",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter Bearer Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "choose profile image",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "Enter name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "description": "Enter phone",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/customer/logout": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Customer Logout",
+        "operationId": "logout",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter Bearer Token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/subscriber/store": {
+      "post": {
+        "tags": [
+          "Subscriber"
+        ],
+        "summary": "Subscriber Register",
+        "operationId": "register",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter Email",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get Products",
+        "operationId": "products",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/products/{slug}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get products",
+        "operationId": "show-products",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Enter slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/products/featured": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get Featured Products",
+        "operationId": "featured-products",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/products/recent-viewed": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get Recent Viewed Products",
+        "operationId": "recent-viewed-products",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/products/best-selling": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get Best Selling Products",
+        "operationId": "best-selling",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/products/top-rated": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get Top Rated Products",
+        "operationId": "top-rated",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/products/search": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Search Products",
+        "operationId": "searchProducts",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "Keyword to search for products",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful product search"
+          }
+        }
+      }
+    },
+    "/brands": {
+      "get": {
+        "tags": [
+          "Brand"
+        ],
+        "summary": "Get Brands",
+        "operationId": "brand",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/brands/show/{slug}": {
+      "get": {
+        "tags": [
+          "Brand"
+        ],
+        "summary": "Get Brands",
+        "operationId": "show-brand",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Enter slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/brands/featured": {
+      "get": {
+        "tags": [
+          "Brand"
+        ],
+        "summary": "Get Featured Brands",
+        "operationId": "featured-brand",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/brands/top": {
+      "get": {
+        "tags": [
+          "Brand"
+        ],
+        "summary": "Get Top Brands",
+        "operationId": "top-brands",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/banners": {
+      "get": {
+        "tags": [
+          "Banner"
+      ],
+        "summary": "Get Banners",
+        "operationId": "banner",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get Categories",
+        "operationId": "category",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/categories/show/{slug}": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get categories",
+        "operationId": "show-categories",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Enter slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/categories/featured": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get Featured Categories",
+        "operationId": "featured-category",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/categories/top": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get Top Categories",
+        "operationId": "top-category",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/categories/{categorySlug}/products": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get Category Products",
+        "operationId": "category-product",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "categorySlug",
+            "in": "path",
+            "value": "switches",
+            "description": "Enter slug",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "search",
+            "in": "path",
+            "description": "Enter search product",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/sliders": {
+      "get": {
+        "tags": [
+          "Slider"
+        ],
+        "summary": "Get sliders",
+        "operationId": "slider",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/blogs": {
+      "get": {
+        "tags": [
+          "Blog"
+        ],
+        "summary": "Get blogs",
+        "operationId": "blogs",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/blogs/show/{slug}": {
+      "get": {
+        "tags": [
+          "Blog"
+        ],
+        "summary": "Get blogs",
+        "operationId": "show-blogs",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Enter slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/shipping_methods": {
+      "get": {
+        "tags": [
+          "Shipping Method"
+        ],
+        "summary": "Get Shipping Methods",
+        "operationId": "shipping-method",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/question_answers": {
+      "get": {
+        "tags": [
+          "Question Answer"
+        ],
+        "summary": "Get Question Answers",
+        "operationId": "question-answer",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/payment_methods": {
+      "get": {
+        "tags": [
+          "Payment Method"
+        ],
+        "summary": "Get Payment Methods",
+        "operationId": "payment-method",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/quote_requests/store": {
+      "post": {
+        "tags": [
+          "Quote Request"
+        ],
+        "summary": "Quote Request",
+        "operationId": "quote-request",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "full_name",
+            "in": "formData",
+            "description": "Enter Full Name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "company",
+            "in": "formData",
+            "description": "Enter company",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mpn",
+            "in": "formData",
+            "description": "Enter mpn",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "phone_number",
+            "in": "formData",
+            "description": "Enter phone_number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "how_soon_need",
+            "in": "formData",
+            "description": "Enter how_soon_need",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "in": "formData",
+            "description": "Enter message",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/policies/{title}": {
+      "get": {
+        "tags": [
+          "Policies"
+        ],
+        "summary": "Get Policies",
+        "operationId": "policy",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "description": "Enter title",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/contact_messages/store": {
+      "post": {
+        "tags": [
+          "Contact Us"
+        ],
+        "summary": "Contact Us",
+        "operationId": "contact-us",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "Enter Name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "description": "Enter phone",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subject",
+            "in": "formData",
+            "description": "Enter subject",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "in": "formData",
+            "description": "Enter message",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/cart": {
+      "get": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Get Cart",
+        "operationId": "cart",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/cart/store": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Cart",
+        "operationId": "cart-store",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "Enter product slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/cart/increase": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Increase Quantity",
+        "operationId": "increase-quantity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cart_item_id",
+            "in": "formData",
+            "description": "Enter cart_item_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/cart/decrease": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Decrease Quantity",
+        "operationId": "decrease-quantity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cart_item_id",
+            "in": "formData",
+            "description": "Enter cart_item_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/cart/remove": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Remove item",
+        "operationId": "remove-item",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cart_item_id",
+            "in": "formData",
+            "description": "Enter cart_item_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/cart/clear": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Clear Cart",
+        "operationId": "clear-cart",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/wishlists": {
+      "get": {
+        "tags": [
+          "Wishlist"
+        ],
+        "summary": "Get Wishlist",
+        "operationId": "wishlist",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/wishlists/store": {
+      "post": {
+        "tags": [
+          "Wishlist"
+        ],
+        "summary": "Add to Wishlist",
+        "operationId": "wishlist-store",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "Enter product slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/wishlists/remove": {
+      "post": {
+        "tags": [
+          "Wishlist"
+        ],
+        "summary": "Remove From Wishlist",
+        "operationId": "remove-store",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "Enter product slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data"
+          }
+        }
+      }
+    },
+    "/orders/place-order": {
+      "post": {
+        "tags": ["Order"],
+        "summary": "Place Order",
+        "operationId": "orders-store",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "shipping_method_id",
+            "in": "formData",
+            "description": "Enter shipping_method_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "payment_method",
+            "in": "formData",
+            "description": "Enter payment_method",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "stripe_token",
+            "in": "formData",
+            "description": "Enter stripe_token",
+            "required": true,
+            "type": "string"
+          },
+
+          {
+            "name": "shipping_first_name",
+            "in": "formData",
+            "description": "Shipping first name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipping_last_name",
+            "in": "formData",
+            "description": "Shipping last name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipping_email",
+            "in": "formData",
+            "description": "Shipping email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipping_phone",
+            "in": "formData",
+            "description": "Shipping phone number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipping_address",
+            "in": "formData",
+            "description": "Shipping address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipping_city",
+            "in": "formData",
+            "description": "Shipping city",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipping_state",
+            "in": "formData",
+            "description": "Shipping state",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipping_zip",
+            "in": "formData",
+            "description": "Shipping ZIP/postal code",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shipping_country",
+            "in": "formData",
+            "description": "Shipping country",
+            "required": true,
+            "type": "string"
+          },
+
+          {
+            "name": "billing_different",
+            "in": "formData",
+            "description": "Is billing address different?",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "billing_first_name",
+            "in": "formData",
+            "description": "Billing first name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_last_name",
+            "in": "formData",
+            "description": "Billing last name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_email",
+            "in": "formData",
+            "description": "Billing email",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_phone",
+            "in": "formData",
+            "description": "Billing phone number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_address",
+            "in": "formData",
+            "description": "Billing address",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_city",
+            "in": "formData",
+            "description": "Billing city",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_state",
+            "in": "formData",
+            "description": "Billing state",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_zip",
+            "in": "formData",
+            "description": "Billing ZIP/postal code",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_country",
+            "in": "formData",
+            "description": "Billing country",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order placed successfully"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "APIKeyHeader": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "api-key"
+    }
+  },
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ]
+}

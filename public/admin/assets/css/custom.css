@@ -1,0 +1,75 @@
+#preview {
+    width: 100%;
+    text-align: center;
+}
+
+#preview img {
+    width: 100%;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.zoomed {
+    transform: scale(5.5);
+    transform-origin: left center; /* Zoom from the left */
+    overflow: visible;  /* Ensure that zoomed part is not clipped */
+}
+
+/* Zoomable class for applying zoom effect */
+.zoomable {
+    cursor: pointer; /* Show pointer cursor on hover */
+    transition: transform 0.3s ease; /* Smooth transition for zoom effect */
+}
+
+@keyframes blink {
+    0% {
+        color: red;
+    }
+    50% {
+        color: transparent;
+    }
+    100% {
+        color: red;
+    }
+}
+
+.blink-text {
+    animation: blink 1s infinite;
+}
+
+.new-item-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+.sidebar-progress-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.05);
+    z-index: 10;
+  }
+  
+  .sidebar-progress {
+    width: 100%;
+    height: 0%;
+    background-color: #7367f0;
+    transition: height 0.2s ease;
+  }  
+  .scroll-container {
+    overflow-y: auto;
+    max-height: calc(100vh - 64px); /* Adjust to your layout */
+    padding-right: 8px; /* optional for scrollbar spacing */
+  }
+  #layout-menu {
+    position: relative;
+  }
+    
