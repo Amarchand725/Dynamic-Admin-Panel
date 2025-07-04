@@ -15,7 +15,7 @@ use App\Http\Controllers\Admin\{
     PermissionController,
     RoleController,
     SettingController,
-    UserController,
+    UserController
 };
 use App\Http\Controllers\DeveloperController;
 
@@ -32,7 +32,9 @@ use App\Http\Controllers\DeveloperController;
 
 //developer
 Route::controller(DeveloperController::class)->group(function () {
-    // Route::get('/generate-policy-slugs', 'generateMissingPolicySlugs');
+    Route::get('/getCountries', 'getCountries');
+    Route::get('/getStates', 'getStates');
+    Route::get('/getCities', 'getCities');
 });
 
 //developer
@@ -61,7 +63,7 @@ Route::controller(AdminController::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::controller(AdminController::class)->group(function () {
+Route::controller(AdminController::class)->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/logout', 'logOut')->name('user.logout');
     });

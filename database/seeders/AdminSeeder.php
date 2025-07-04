@@ -3,15 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Setting;
 use App\Models\BusinessSetting;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class AdminSeeder extends Seeder
 {
@@ -44,7 +41,7 @@ class AdminSeeder extends Seeder
         ]);
 
         $roles = [
-            $user['role']
+            ucfirst($user['role'])
         ];
 
         foreach($roles as $role) {
@@ -58,13 +55,18 @@ class AdminSeeder extends Seeder
                 ]
             );
         }
-        $userRole = Role::where('name', $user['role'])->first();
-        $permissions = include(config_path('seederData/permissions.php'));
+        $userRole = Role::where('name', ucfirst($user['role']))->first();
+        $permissions = include(database_path('seederData/permissions.php'));
 
         foreach ($permissions as $permission) {
             $underscoreSeparated = explode('-', $permission);
             $label = str_replace('_', ' ', $underscoreSeparated[0]);
-            if(Permission::where('label', $label)->where('name', $permission)->first()){
+            $exists = DB::table('permissions')
+                ->where('label', $label)
+                ->where('name', $permission)
+                ->exists();
+
+            if ($exists) {
                 continue;
             }
             Permission::create([
@@ -74,7 +76,7 @@ class AdminSeeder extends Seeder
             ]);
         }
         // Assign Permissions and Role "Admin User".
-        if(isset($userRole) && !empty($userRole) && $userRole=='admin'){
+        if (isset($userRole) && !empty($userRole) && $userRole->name === 'Admin') {
             $permissions = Permission::get();
             $userRole->givePermissionTo($permissions);
         }

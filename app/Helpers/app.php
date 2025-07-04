@@ -3,20 +3,17 @@
 use Carbon\Carbon;
 use App\Models\Menu;
 use App\Models\User;
-use App\Models\Setting;
 use App\Models\PaymentMode;
 use App\Models\PaymentType;
 use Illuminate\Support\Str;
-use App\Mail\QuoteRequestMail;
 use App\Models\BusinessSetting;
 use App\Mail\ContactSupportMail;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Permission;
 use App\Notifications\SiteEventNotification;
 
 function appName(){
-    return getSetting('application_name', 'Dynamic Admin Panel');
+    return getSetting('name', 'Dynamic Admin Panel');
 }
 
 function settings()
@@ -26,9 +23,7 @@ function settings()
         return collect();
     }
 
-    return cache()->remember('business_settings', 3600, function () {
-        return BusinessSetting::where('status', 1)->pluck('value', 'key');
-    });
+    return BusinessSetting::where('status', 1)->pluck('value', 'key');
 }
 
 function getSetting($key, $default = null)
@@ -401,7 +396,6 @@ function getTabIcons(){
         "ti ti-eye",
         "ti ti-eye-off",
         "ti ti-layers-subtract",
-        "ti ti-brand-producthunt",
         "ti ti-certificate",
         "ti ti-file-text",
         "ti ti-file-invoice",
@@ -441,10 +435,6 @@ function sendSupportOrContactEmail($emailFrom, $data){
         $supportEmail = $setting->support_email;
     }
     if(isset($supportEmail) && !empty($supportEmail)){
-        if($emailFrom=='quote'){
-            Mail::to($supportEmail)->send(new QuoteRequestMail($data));
-        }else{
-            Mail::to($supportEmail)->send(new ContactSupportMail($data));
-        }
+        Mail::to($supportEmail)->send(new ContactSupportMail($data));
     }
 }

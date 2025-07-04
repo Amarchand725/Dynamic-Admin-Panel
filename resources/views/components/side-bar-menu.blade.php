@@ -1,8 +1,8 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
   <div class="app-brand demo">
     <a href="{{ route('dashboard') }}" class="app-brand-link">
-      @if(isset(settings()->black_logo) && !empty(settings()->black_logo))
-        <img src="{{ asset('storage').'/'.settings()->black_logo }}" width="130px" class="img-fluid light-logo img-logo" alt="{{ settings()->name }}" />
+      @if(!empty(getSetting('black_logo', null)))
+        <img src="{{ asset('storage').'/'.getSetting('black_logo', null) }}" width="130px" class="img-fluid light-logo img-logo" alt="{{ getSetting('name', null) }}" />
       @else
         <img src="{{ asset('storage/images/default.png') }}" width="130px" class="img-fluid light-logo img-logo" alt="Default" />
       @endif
@@ -160,8 +160,6 @@
 
       @php 
         $menuGroups = getDynamicMenuGroups();
-
-        
       @endphp 
 
       <li class="menu-header small text-uppercase">

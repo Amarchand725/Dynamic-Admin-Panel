@@ -1,7 +1,7 @@
 <?php
 return [
     'settings' => [
-        'application_name' => 'Dynamic Admin Panel',
+        'name' => 'Dynamic Admin Panel',
         'country' => 'United State',
         'state' => 'Lincolnwood',
         'area' => '6600 N Lincoln Ave Ste 316',
