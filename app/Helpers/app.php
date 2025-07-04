@@ -438,3 +438,19 @@ function sendSupportOrContactEmail($emailFrom, $data){
         Mail::to($supportEmail)->send(new ContactSupportMail($data));
     }
 }
+
+function getDateTimeFormat($dateTime){
+    return Carbon::parse($dateTime)->format('d, M Y | H:i A');
+}
+
+function getDateFormat($date){
+    return Carbon::parse($date)->format('d, M Y');
+}
+
+function statusBadge($status){
+    if($status == 1){
+        return '<span class="badge bg-label-success me-1">Active</span>';
+    }else{
+        return '<span class="badge bg-label-danger me-1">De-Active</span>';
+    }
+}

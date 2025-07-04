@@ -1,8 +1,6 @@
-@extends('admin.layouts.app')
+<?php $__env->startSection('title', $title.' -  ' . appName()); ?>
 
-@section('title', $title.' -  ' . appName())
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card mb-4">
@@ -10,12 +8,12 @@
                     <div class="col-md-6">
                         <div class="card-header">
                             <h4 class="fw-bold mb-0"><span class="text-muted fw-light">Home /</span>
-                                {{ $title ?? 'Log Details' }}</h4>
+                                <?php echo e($title ?? 'Log Details'); ?></h4>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="dt-buttons btn-group flex-wrap float-end mt-4">
-                            <a href="{{ route('logs.index') }}" class="btn btn-secondary btn-primary mx-3"
+                            <a href="<?php echo e(route('logs.index')); ?>" class="btn btn-secondary btn-primary mx-3"
                                 data-toggle="tooltip" data-placement="top" title="List of Pre-Employees"
                                 tabindex="0" aria-controls="DataTables_Table_0" type="button">
                                 <span>
@@ -57,106 +55,117 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            @if(!empty($model->hasActionUser->name))
-                                                                {{ $model->hasActionUser->name.' ('.$model->hasActionUser->role.')' ?? '-' }}
-                                                            @else
+                                                            <?php if(!empty($model->hasActionUser->name)): ?>
+                                                                <?php echo e($model->hasActionUser->name.' ('.$model->hasActionUser->role.')' ?? '-'); ?>
+
+                                                            <?php else: ?>
                                                                 -
-                                                            @endif
+                                                            <?php endif; ?>
                                                         </td>
                                                         <td>
-                                                            {!! actionLabel($model->action) !!}
+                                                            <?php echo actionLabel($model->action); ?>
+
                                                         </td>
-                                                        <td>{{ $className }}</td>
-                                                        <td>{{ $model->description }}</td>
-                                                        <td>{{ $model->ip_address }}</td>
+                                                        <td><?php echo e($className); ?></td>
+                                                        <td><?php echo e($model->description); ?></td>
+                                                        <td><?php echo e($model->ip_address); ?></td>
                                                         <td>
-                                                            @if(!empty($model->created_at))
-                                                                {{ getDateTimeFormat($model->created_at) ?? '-' }}
-                                                            @else
+                                                            <?php if(!empty($model->created_at)): ?>
+                                                                <?php echo e(getDateTimeFormat($model->created_at) ?? '-'); ?>
+
+                                                            <?php else: ?>
                                                                 -
-                                                            @endif
+                                                            <?php endif; ?>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="6"><strong>Details Data</strong></td>
                                                     </tr>
-                                                    @if($model->action=='update') <!-- For update -->
+                                                    <?php if($model->action=='update'): ?> <!-- For update -->
                                                         <tr>
                                                             <th colspan="2">Columns</th>
                                                             <th colspan="2">Old Data</th>
                                                             <th colspan="2">New Data</th>
                                                         </tr>
-                                                        @php $data = json_decode($model->changed_fields, true); @endphp
-                                                        @foreach ($data as $key => $item)
+                                                        <?php $data = json_decode($model->changed_fields, true); ?>
+                                                        <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <tr>
-                                                                <th colspan="2"><strong>{{ $key }}</strong></th>
+                                                                <th colspan="2"><strong><?php echo e($key); ?></strong></th>
                                                                 <td colspan="2">
-                                                                    @if($key=='status')
-                                                                        {!! statusBadge($item['old']) !!}
-                                                                    @elseif($key == 'updated_at')
-                                                                        {{ newDateFormat($item['old']) ?? '-' }}
-                                                                    @elseif($key=='password')
-                                                                        {{ '-' }}
-                                                                    @else
-                                                                        {{ $item['old'] }}
-                                                                    @endif
+                                                                    <?php if($key=='status'): ?>
+                                                                        <?php echo statusBadge($item['old']); ?>
+
+                                                                    <?php elseif($key == 'updated_at'): ?>
+                                                                        <?php echo e(newDateFormat($item['old']) ?? '-'); ?>
+
+                                                                    <?php elseif($key=='password'): ?>
+                                                                        <?php echo e('-'); ?>
+
+                                                                    <?php else: ?>
+                                                                        <?php echo e($item['old']); ?>
+
+                                                                    <?php endif; ?>
                                                                 </td>
                                                                 <td colspan="2">
-                                                                    @if($key=='status')
-                                                                        {!! statusBadge($item['new']) !!}
-                                                                    @elseif($key == 'updated_at')
-                                                                        {{ newDateFormat($item['new']) ?? '-' }}
-                                                                    @elseif($key=='password')
-                                                                        {{ '-' }}
-                                                                    @else
-                                                                        {{ $item['new'] }}
-                                                                    @endif
+                                                                    <?php if($key=='status'): ?>
+                                                                        <?php echo statusBadge($item['new']); ?>
+
+                                                                    <?php elseif($key == 'updated_at'): ?>
+                                                                        <?php echo e(newDateFormat($item['new']) ?? '-'); ?>
+
+                                                                    <?php elseif($key=='password'): ?>
+                                                                        <?php echo e('-'); ?>
+
+                                                                    <?php else: ?>
+                                                                        <?php echo e($item['new']); ?>
+
+                                                                    <?php endif; ?>
                                                                 </td>
                                                             </tr>
-                                                        @endforeach
-                                                    @elseif($model->action=='show_column') <!-- For show specific column data -->
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php elseif($model->action=='show_column'): ?> <!-- For show specific column data -->
                                                         <tr>
                                                             <th colspan="2">Columns</th>
                                                             <th colspan="4">Viewed </th>
                                                         </tr>
-                                                        @php
+                                                        <?php
                                                             $columnData = json_decode($model->extra_details, true);
-                                                        @endphp
+                                                        ?>
                                                         <tr>
-                                                            <th colspan="2"><strong>{{ Str::upper($columnData['column_name']) ?? '-' }}</strong></th>
-                                                            <td colspan="4">{{ $columnData['column_value'] ?? '-' }}</td>
+                                                            <th colspan="2"><strong><?php echo e(Str::upper($columnData['column_name']) ?? '-'); ?></strong></th>
+                                                            <td colspan="4"><?php echo e($columnData['column_value'] ?? '-'); ?></td>
                                                         </tr>
-                                                    @elseif($model->action=='downloaded-document') <!-- For downloading document or file -->
+                                                    <?php elseif($model->action=='downloaded-document'): ?> <!-- For downloading document or file -->
                                                         <tr>
                                                             <th colspan="2">Columns</th>
                                                             <th colspan="4">Document </th>
                                                         </tr>
-                                                        @php
+                                                        <?php
                                                             $columnData = json_decode($model->extra_details, true);
-                                                        @endphp
+                                                        ?>
                                                         <tr>
-                                                            <th colspan="2"><strong>{{ Str::upper($columnData['column_name']) ?? '-' }}</strong></th>
+                                                            <th colspan="2"><strong><?php echo e(Str::upper($columnData['column_name']) ?? '-'); ?></strong></th>
                                                             <td colspan="4">
-                                                                @if(!empty($columnData['column_value']))
-                                                                    <a href="{{ asset($columnData['document_path'].'/'.$columnData['column_value']) }}"
+                                                                <?php if(!empty($columnData['column_value'])): ?>
+                                                                    <a href="<?php echo e(asset($columnData['document_path'].'/'.$columnData['column_value'])); ?>"
                                                                         download class="btn btn-info"
-                                                                        title="{{ $columnData['column_value'] }}"
+                                                                        title="<?php echo e($columnData['column_value']); ?>"
                                                                         style="display: flex; align-items: center; gap: 5px;">
                                                                         <i class="fa fa-download"></i>
                                                                         Download
                                                                     </a>
-                                                                @else
+                                                                <?php else: ?>
                                                                     -
-                                                                @endif
+                                                                <?php endif; ?>
                                                             </td>
                                                         </tr>
-                                                    @else
+                                                    <?php else: ?>
                                                         <tr>
                                                             <th colspan="2">Columns</th>
                                                             <th colspan="4">Data</th>
                                                         </tr>
-                                                        @if(isset($modelData) && !empty($modelData))
-                                                            @php
+                                                        <?php if(isset($modelData) && !empty($modelData)): ?>
+                                                            <?php
                                                                 $recordArray = $modelData->toArray();
                                                                 $excludeKeys = ['id', 'created_by', 'updated_at', 'deleted_at'];
 
@@ -167,29 +176,33 @@
                                                                 }
 
                                                                 $filteredData = array_diff_key($recordArray, array_flip($excludeKeys));
-                                                            @endphp
-                                                            @foreach ($filteredData as $key => $item)
+                                                            ?>
+                                                            <?php $__currentLoopData = $filteredData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                 <tr>
-                                                                    <th colspan="2"><strong>{{ $key ?? '-' }}</strong></th>
+                                                                    <th colspan="2"><strong><?php echo e($key ?? '-'); ?></strong></th>
                                                                     <td colspan="4">
-                                                                        @if($key=='status')
-                                                                            {!! statusBadge($item) !!}
-                                                                        @elseif($key=='created_at')
-                                                                            {{ getDateTimeFormat($item) }}
-                                                                        @elseif($key=='is_employee')
-                                                                            {!! isEmployee($item) !!}
-                                                                        @else
-                                                                            {{ $item ?? '-' }}
-                                                                        @endif
+                                                                        <?php if($key=='status'): ?>
+                                                                            <?php echo statusBadge($item); ?>
+
+                                                                        <?php elseif($key=='created_at'): ?>
+                                                                            <?php echo e(getDateTimeFormat($item)); ?>
+
+                                                                        <?php elseif($key=='is_employee'): ?>
+                                                                            <?php echo isEmployee($item); ?>
+
+                                                                        <?php else: ?>
+                                                                            <?php echo e($item ?? '-'); ?>
+
+                                                                        <?php endif; ?>
                                                                     </td>
                                                                 </tr>
-                                                            @endforeach
-                                                        @else
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php else: ?>
                                                             <tr>
                                                                 <td colspan="6">Record not found</td>
                                                             </tr>
-                                                        @endif
-                                                    @endif
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -202,6 +215,8 @@
             </div>
         </div>
     </div>
-@endsection
-@push('js')
-@endpush
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('js'); ?>
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\dynamic-admin-panel\resources\views/admin/logs/show.blade.php ENDPATH**/ ?>

@@ -424,12 +424,20 @@ class MenuController extends Controller
                 );
             }
 
+            if (!Str::contains($modelContent, 'use App\Traits\HasModelLogObserver;')) {
+                $modelContent = preg_replace(
+                    '/namespace App\\\Models;(\n(?:use\s+[^\n]+;)*)/',
+                    "namespace App\Models;$1\nuse App\\Traits\\HasModelLogObserver;",
+                    $modelContent
+                );
+            }
+
             // 2. Remove 'use HasFactory;' at the bottom if it exists
             $modelContent = preg_replace('/\n\s*use HasFactory;\n/', '', $modelContent);
 
             // 3. Add 'use HasFactory, SoftDeletes;' and other class body content, including the createdBy relation
             $modelContent = preg_replace_callback('/class\s+' . $modelName . '\s+extends\s+Model\s*\{/', function ($matches) {
-                return $matches[0] . "\n    use HasFactory, SoftDeletes;\n\n    protected \$guarded = [];\n\n    public function createdBy()\n    {\n        return \$this->hasOne(User::class, 'id', 'created_by');\n    }\n";
+                return $matches[0] . "\n    use HasFactory, SoftDeletes, HasModelLogObserver;\n\n    protected \$guarded = [];\n\n    public function createdBy()\n    {\n        return \$this->hasOne(User::class, 'id', 'created_by');\n    }\n";
             }, $modelContent);
 
             file_put_contents($modelPath, $modelContent);

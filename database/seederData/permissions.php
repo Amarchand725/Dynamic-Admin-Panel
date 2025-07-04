@@ -1,5 +1,13 @@
 <?php
 return  [
+    "logs-list",
+    "logs-create",
+    "logs-show",
+    "logs-edit",
+    "logs-delete",
+    "logs-status",
+    "logs-trashed",
+    "logs-restore",
     "users-list",
     "users-create",
     "users-show",

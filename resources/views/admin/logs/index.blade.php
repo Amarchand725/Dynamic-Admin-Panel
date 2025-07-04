@@ -3,11 +3,12 @@
 @section('title', $title.' -  ' . appName())
 
 @section('content')
-<input type="hidden" id="page_url" value="{{ route(Route::currentRouteName()) }}">
+
+<input type="hidden" id="page_url" value="{{ route($routeInitialize.'.index') }}">
 
 <div class="content-wrapper">
-    <div class="flex-grow-1">
-        <div class="card">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card mb-4">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card-header">
@@ -15,40 +16,23 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="d-flex justify-content-end align-item-center mt-4">
-                        <div class="col-md-6">
-                            <div class="d-flex justify-content-end align-item-center">
-                                <div class="dt-buttons btn-group flex-wrap">
-                                    <button data-toggle="tooltip" data-placement="top" title="Refresh " type="button" class="btn btn-secondary add-new btn-primary me-3" id="refresh-btn" data-url="{{ route('logs.index') }}">
-                                        <span>
-                                            <i class="ti ti-refresh ti-sm"></i>
-                                            <span class="d-none d-sm-inline-block">Refresh Records</span>
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="dt-buttons btn-group flex-wrap float-end mt-4">
+                        <button id="refresh-record" class="btn btn-success mx-2" title="Refresh Records"><i class="ti ti-refresh me-0 ti-xs"></i></button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Logs List Table -->
-        <div class="card mt-4">
+        <!-- Users List Table -->
+        <div class="card">
             <div class="card-datatable table-responsive">
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                    <div class="container-fluid">
-                        <table class="dt-row-grouping table dataTable dtr-column border-top table-border data_table table-responsive">
+                    <div class="container">
+                        <table class="dt-row-grouping table dataTable dtr-column data_table">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">User</th>
-                                    <th scope="col" style="width: 100px">Action Type</th>
-                                    <th scope="col" style="width: 100px">Action Model</th>
-                                    <th scope="col">Remarks</th>
-                                    <th scope="col">IP</th>
-                                    <th scope="col" style="width: 100px">Date</th>
-                                    <th scope="col">Action</th>
+                                    @foreach($columnsConfig as $columnName)
+                                        <th>{{ $columnName['name'] }}</th>
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tbody id="body"></tbody>
@@ -59,6 +43,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 @push('js')
 <script>

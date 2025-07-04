@@ -40,9 +40,12 @@ class AdminController extends Controller
             if (Auth::attempt($credentials, $request->remember)) {
                 $user = Auth::user();
                 if ($user->status == 1) {
+                    // Log successful login
+                    logAction($user, 'login');
+
                     return response()->json([
-                        'success' => true, 
-                        'message' =>'You are logged successfully.', 
+                        'success' => true,
+                        'message' =>'You are logged successfully.',
                         'route' => route('dashboard')
                     ]);
                 } else {
@@ -58,6 +61,13 @@ class AdminController extends Controller
     }
     public function logOut()
     {
+        $user = Auth::user();
+
+        // Log logout action before logging out
+        if ($user) {
+            logAction($user, 'logout');
+        }
+
         auth()->logout();
         return redirect()->route('admin.login');
     }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\{
 use App\Http\Controllers\Admin\{
     AdminController,
     CurrencyController,
+    LogController,
     MenuController,
     MenuFieldController,
     PaymentMethodController,
@@ -15,8 +16,7 @@ use App\Http\Controllers\Admin\{
     PermissionController,
     RoleController,
     SettingController,
-    UserController,
-    LogController
+    UserController
 };
 use App\Http\Controllers\DeveloperController;
 
@@ -91,7 +91,7 @@ Route::controller(AdminController::class)->group(function () {
     Route::prefix('users')->controller(UserController::class)->group(function () {
         Route::get('trashed', 'trashed')->name('users.trashed');
         Route::get('restore/{id}', 'restore')->name('users.restore');
-    });  
+    }); 
 
     //Resource Routes.
     Route::resource('roles', RoleController::class);
