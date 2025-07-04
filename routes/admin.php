@@ -15,7 +15,8 @@ use App\Http\Controllers\Admin\{
     PermissionController,
     RoleController,
     SettingController,
-    UserController
+    UserController,
+    LogController
 };
 use App\Http\Controllers\DeveloperController;
 
@@ -103,4 +104,5 @@ Route::controller(AdminController::class)->group(function () {
     Route::resource('payment_modes', PaymentModeController::class);
     Route::resource('payment_types', PaymentTypeController::class);
     Route::resource('users', UserController::class);
+    Route::resource('logs', LogController::class);
 });

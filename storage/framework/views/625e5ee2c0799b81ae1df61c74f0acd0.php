@@ -37,12 +37,14 @@
             <div>Dashboards</div>
         </a>
       </li>
-      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['roles-list', 'permissions-list', 'menus-list', 'api_docs-list', 'users-list'])): ?>
+      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['roles-list', 'permissions-list', 'menus-list', 'api_docs-list', 'users-list', 'logs-list'])): ?>
         <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Settings</span>
         </li>
         <li class="menu-item
-            <?php echo e(request()->is('users') ||
+            <?php echo e(request()->is('logs') ||
+                request()->is('logs/*') ||
+                request()->is('users') ||
                 request()->is('users/*') ||
                 request()->is('menus') ||
                 request()->is('menus/*') ||
@@ -94,6 +96,15 @@
                           <?php if(count(getNewMenus()) > 0): ?>
                             <span class="blink-text">&#9733;</span>
                           <?php endif; ?>
+                        </div>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('logs-list')): ?>
+                <li class="menu-item <?php echo e(request()->is('logs') || request()->is('logs/*')?'active':''); ?>">
+                    <a href="<?php echo e(route('logs.index')); ?>" class="menu-link">
+                        <div>
+                          All Logs
                         </div>
                     </a>
                 </li>

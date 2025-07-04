@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Log;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\ClientBoarding;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 
@@ -54,19 +53,6 @@ class LogController extends Controller
         }
         return view('admin.logs.index', get_defined_vars());
     }
-
-    // public function store(Request $request)
-    // {
-    //     $model = ClientBoarding::where('id', $request->target_id)->first();
-    //     if($request->action_type=='downloaded'){
-    //         $model['document_path'] = 'admin/assets/upload/clients';
-    //         logDownloadDocument($model, $request->target_type);
-    //         return response()->json(['message' => 'Document downloaded successfully.']);
-    //     }else{
-    //         logShowColumn($model, $request->target_type);
-    //         return response()->json(['message' => 'Document view successfully.']);
-    //     }
-    // }
 
     public function show(string $id)
     {

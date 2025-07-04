@@ -1,5 +1,7 @@
-@extends('admin.layouts.master')
-@push('title', $title ?? 'Users')
+@extends('admin.layouts.app')
+
+@section('title', $title.' -  ' . appName())
+
 @section('content')
 <input type="hidden" id="page_url" value="{{ route(Route::currentRouteName()) }}">
 
@@ -60,71 +62,16 @@
 @endsection
 @push('js')
 <script>
-    $(document).ready(function() {
-        loadPageData()
-    });
-
-    function loadPageData() {
-        var table = $('.data_table').DataTable();
-        if ($.fn.DataTable.isDataTable('.data_table')) {
-            table.destroy();
-        }
-
-        var page_url = $('#page_url').val();
-        var table = $('.data_table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: page_url + "?loaddata=yes",
-                type: "GET",
-                data: function(d) {
-                    d.search = $('input[type="search"]').val();
-                },
-                error: function(xhr, error, code) {
-                    console.log(xhr);
-                    console.log(error);
-                    console.log(code);
-                }
-            },
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: 'user_id',
-                    name: 'user_id'
-                },
-                {
-                    data: 'action_type',
-                    name: 'action_type'
-                },
-                {
-                    data: 'model',
-                    name: 'model'
-                },
-                {
-                    data: 'description',
-                    name: 'description'
-                },
-                {
-                    data: 'ip_address',
-                    name: 'ip_address'
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true
-                }
-            ]
-        });
-    }
     //datatable
+    $(document).ready(function(){
+        var page_url = $('#page_url').val();
+        var columns =     {!! json_encode($columnsConfig) !!}  // Get columns dynamically from controller
+        initializeDataTable(page_url, columns);
+    })
+    $('#refresh-record').on('click', function(){
+        var page_url = $('#page_url').val();
+        var columns =     {!! json_encode($columnsConfig) !!}  // Get columns dynamically from controller
+        initializeDataTable(page_url, columns);
+    })
 </script>
 @endpush

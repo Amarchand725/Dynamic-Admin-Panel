@@ -37,12 +37,14 @@
             <div>Dashboards</div>
         </a>
       </li>
-      @canany(['roles-list', 'permissions-list', 'menus-list', 'api_docs-list', 'users-list'])
+      @canany(['roles-list', 'permissions-list', 'menus-list', 'api_docs-list', 'users-list', 'logs-list'])
         <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Settings</span>
         </li>
         <li class="menu-item
             {{
+                request()->is('logs') ||
+                request()->is('logs/*') ||
                 request()->is('users') ||
                 request()->is('users/*') ||
                 request()->is('menus') ||
@@ -95,6 +97,15 @@
                           @if(count(getNewMenus()) > 0)
                             <span class="blink-text">&#9733;</span>
                           @endif
+                        </div>
+                    </a>
+                </li>
+                @endcan
+                @can('logs-list')
+                <li class="menu-item {{ request()->is('logs') || request()->is('logs/*')?'active':'' }}">
+                    <a href="{{ route('logs.index') }}" class="menu-link">
+                        <div>
+                          All Logs
                         </div>
                     </a>
                 </li>
