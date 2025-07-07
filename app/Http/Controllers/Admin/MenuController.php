@@ -501,7 +501,15 @@ class MenuController extends Controller
     public function generateResourceRoute($controllerName, $modelName)
     {
         $routeName = str_replace('-', '_', Str::kebab(Str::plural($modelName)));  
-        $routeLine = "    Route::resource('$routeName', $controllerName::class);";
+        $routeLine = "Route::resource('$routeName', $controllerName::class);";
+
+        // Add trashed and restore route block
+        $additionalRoutes = <<<EOT
+            Route::controller($controllerName::class)->group(function () {
+                Route::get('$routeName/trashed', 'trashed')->name('$routeName.trashed');
+                Route::get('$routeName/restore/{id}', 'restore')->name('$routeName.restore');
+            });
+        EOT;
 
         $filePath = base_path('routes/admin.php');
         $fileContent = file_get_contents($filePath);
@@ -531,14 +539,24 @@ class MenuController extends Controller
         // 2. Update or insert route inside middleware group
         $fileContent = preg_replace_callback(
             '/Route::middleware\(\'auth\'\)->group\(function\s*\(\)\s*\{(.*?)\n\}\);/s',
-            function ($matches) use ($routeName, $controllerName, $routeLine) {
+            function ($matches) use ($routeName, $controllerName, $routeLine, $additionalRoutes) {
                 $routesBlock = trim($matches[1]);
-    
-                // Remove old resource route for this controller
+
+                // Remove old resource route and additional custom block
                 $routesBlock = preg_replace("/Route::resource\('$routeName'.*?;\n?/", '', $routesBlock);
-    
-                // Append the new route
-                return "Route::middleware('auth')->group(function () {\n" . $routesBlock . "\n" . $routeLine . "\n});";
+                $routesBlock = preg_replace("/Route::controller\($controllerName::class\)->group\(function\s*\(\)\s*\{.*?\}\);/s", '', $routesBlock);
+
+                // ✅ Insert custom routes right before "//Resource Routes."
+                $updatedRoutes = preg_replace(
+                    '/(\/\/\s*Resource Routes\.)/',
+                    $additionalRoutes . "\n\n    $1",  // add indent to match
+                    $routesBlock
+                );
+
+                // ✅ Append the resource route at the end
+                $updatedRoutes .= "\n" . $routeLine;
+
+                return "Route::middleware('auth')->group(function () {\n" . $updatedRoutes . "\n});";
             },
             $fileContent
         );
