@@ -32,147 +32,20 @@
         </li>
       <?php endif; ?>
       <li class="menu-item <?php echo e(request()->is('dashboard')?'active':''); ?>">
-        <a href="<?php echo e(url('/dashboard')); ?>" class="menu-link">
+        <a href="<?php echo e(url('dashboard')); ?>" class="menu-link">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div>Dashboards</div>
         </a>
       </li>
-      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['roles-list', 'permissions-list', 'menus-list', 'api_docs-list', 'users-list', 'logs-list'])): ?>
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Settings</span>
-        </li>
-        <li class="menu-item
-            <?php echo e(request()->is('logs') ||
-                request()->is('logs/*') ||
-                request()->is('users') ||
-                request()->is('users/*') ||
-                request()->is('menus') ||
-                request()->is('menus/*') ||
-                request()->is('roles') ||
-                request()->is('roles/*') ||
-                request()->is('permissions/*') ||
-                request()->is('permissions')
-                ?'open active':''); ?>
+      
 
-        ">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons ti ti-settings"></i>
-              <div data-i18n="Roles & Permissions">Roles & Permissions</div>
-            </a>
-            <ul class="menu-sub">
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('users-list')): ?>
-                <li class="menu-item <?php echo e(request()->is('users') ?'active':''); ?>">
-                  <a href="<?php echo e(route('users.index')); ?>" class="menu-link"  >
-                      <div>All Users</div>
-                  </a>
-                </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('api_docs-list')): ?>
-                <li class="menu-item <?php echo e(request()->is('api_docs') ?'active':''); ?>">
-                  <a href="<?php echo e(route('api_docs.index')); ?>" class="menu-link" target="blank">
-                      <div>Api Docs</div>
-                  </a>
-                </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('menus-list')): ?>
-                <li class="menu-item <?php echo e(request()->is('menus') || request()->is('menus/*')?'active':''); ?>">
-                    <a href="<?php echo e(route('menus.index')); ?>" class="menu-link">
-                        <div>Menus</div>
-                    </a>
-                </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('roles-list')): ?>
-                <li class="menu-item <?php echo e(request()->is('roles') || request()->is('roles/*')?'active':''); ?>">
-                    <a href="<?php echo e(route('roles.index')); ?>" class="menu-link">
-                        <div>Roles</div>
-                    </a>
-                </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('permissions-list')): ?>
-                <li class="menu-item <?php echo e(request()->is('permissions') || request()->is('permissions/*')?'active':''); ?>">
-                    <a href="<?php echo e(route('permissions.index')); ?>" class="menu-link">
-                        <div>
-                          Permissions
-                          <?php if(count(getNewMenus()) > 0): ?>
-                            <span class="blink-text">&#9733;</span>
-                          <?php endif; ?>
-                        </div>
-                    </a>
-                </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('logs-list')): ?>
-                <li class="menu-item <?php echo e(request()->is('logs') || request()->is('logs/*')?'active':''); ?>">
-                    <a href="<?php echo e(route('logs.index')); ?>" class="menu-link">
-                        <div>
-                          All Logs
-                        </div>
-                    </a>
-                </li>
-                <?php endif; ?>
-            </ul>
-        </li>
-      <?php endif; ?>
-
-      <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Administration</span>
-      </li>
-
-      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['orders-list'])): ?>
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Orders</span>
-        </li>
-        <li class="menu-item
-            <?php echo e(request()->is('orders')
-                ?'open active':''); ?>
-
-        ">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons ti ti-file"></i>
-              <div data-i18n="Orders & Invoices">Orders & Invoices</div>
-            </a>
-            <ul class="menu-sub">
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('orders-list')): ?>
-                <li class="menu-item <?php echo e(request()->is('orders') ?'active':''); ?>">
-                  <a href="<?php echo e(route('orders.index')); ?>" class="menu-link"  >  
-                      <div>All Orders</div>
-                  </a>
-                </li>
-                <?php endif; ?>
-            </ul>
-        </li>
-      <?php endif; ?>
-      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['purchase_orders-list'])): ?>
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Purchase Orders</span>
-        </li>
-        <li class="menu-item
-            <?php echo e(request()->is('purchase_orders')
-                ?'open active':''); ?>
-
-        ">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons ti ti-file"></i>
-              <div data-i18n="Purchase Orders">Purchase Orders</div>
-            </a>
-            <ul class="menu-sub">
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('purchase_orders-list')): ?>
-                <li class="menu-item <?php echo e(request()->is('purchase_orders') ?'active':''); ?>">
-                  <a href="<?php echo e(route('purchase_orders.index')); ?>" class="menu-link"  >  
-                      <div>All Purchase Orders</div>
-                  </a>
-                </li>
-                <?php endif; ?>
-            </ul>
-        </li>
-      <?php endif; ?>
+      
 
       <?php 
         $menuGroups = getDynamicMenuGroups();
       ?> 
 
-      <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">System</span>
-      </li>
+      
       <?php $__currentLoopData = $menuGroups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menuGroup): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
         <?php
           $menus = $menuGroup['has_child_menus'];
@@ -192,7 +65,7 @@
           ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons <?php echo e($menuGroup['icon'] ?? 'ti ti-smart-home'); ?>"></i>
-                  <div><?php echo e($menuGroup['menu']); ?></div>
+                  <div><?php echo e($menuGroup['menu_label']); ?></div>
               </a>
 
               <ul class="menu-sub">

@@ -123,7 +123,7 @@
           <li>
             <div class="dropdown-divider"></div>
           </li> 
-          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('setting-create')): ?>
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('settings-create')): ?>
               <li>
                   <a class="dropdown-item" href="<?php echo e(route('settings.create')); ?>">
                       <i class="ti ti-settings me-2 ti-sm"></i>

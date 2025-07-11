@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="create-pop-up-modal-large-for-file" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="create-pop-up-modal-x-large-for-file" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content p-3 p-md-5">
                 <button type="button" class="btn-close btn-pinned" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -110,7 +110,7 @@
                     <div class="text-center mb-4">
                         <h3 class="mb-2" id="modal-label"></h3>
                     </div>
-                    <form method="POST" class="pt-0 fv-plugins-bootstrap5 fv-plugins-framework submitBtnWithFileUpload" id="create-form" data-modal-id="create-pop-up-modal-large-for-file" enctype="multipart/form-data">
+                    <form method="POST" class="pt-0 fv-plugins-bootstrap5 fv-plugins-framework submitBtnWithFileUpload" id="create-form" data-modal-id="create-pop-up-modal-x-large-for-file" enctype="multipart/form-data">
                         <?php echo csrf_field(); ?>
     
                         <div id="edit-content"></div>

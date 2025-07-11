@@ -91,7 +91,7 @@ class BaseController extends Controller
             return $this->getDataTable($request, $models, $columns);
         }
 
-        collect($getFields)->map(function ($config, $key) {
+        $columnsConfig = collect($getFields)->map(function ($config, $key) {
             return [
                 'data' => $key,
                 'name' => $key,
@@ -326,7 +326,7 @@ class BaseController extends Controller
             return $this->getDataTable($request, $models, $columns);
         }
 
-        collect($getFields)->map(function ($config, $key) {
+        $columnsConfig = collect($getFields)->map(function ($config, $key) {
             return [
                 'data' => $key,
                 'name' => $key,

@@ -15,7 +15,7 @@ class SettingController extends Controller
 {
     public function create()
     {
-        $this->authorize('setting-create');
+        $this->authorize('settings-create');
         $settings = BusinessSetting::first();
         if(empty($settings)){
             $title = 'Setting';
@@ -27,7 +27,7 @@ class SettingController extends Controller
 
     public function edit($id)
     {
-        $this->authorize('setting-edit');
+        $this->authorize('settings-edit');
         $title = 'Setting Details';
         $model = BusinessSetting::get();
         if(empty($model)){

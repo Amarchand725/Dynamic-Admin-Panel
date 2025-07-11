@@ -122,7 +122,7 @@
           <li>
             <div class="dropdown-divider"></div>
           </li> 
-          @can('setting-create')
+          @can('settings-create')
               <li>
                   <a class="dropdown-item" href="{{ route('settings.create') }}">
                       <i class="ti ti-settings me-2 ti-sm"></i>

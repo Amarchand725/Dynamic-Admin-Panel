@@ -110,7 +110,7 @@
                     <div class="text-center mb-4">
                         <h3 class="mb-2" id="modal-label"></h3>
                     </div>
-                    <form method="POST" class="pt-0 fv-plugins-bootstrap5 fv-plugins-framework submitBtnWithFileUpload" id="create-form" data-modal-id="create-pop-up-modal-large-for-file" enctype="multipart/form-data">
+                    <form method="POST" class="pt-0 fv-plugins-bootstrap5 fv-plugins-framework submitBtnWithFileUpload" id="create-form" data-modal-id="create-pop-up-modal-x-large-for-file" enctype="multipart/form-data">
                         @csrf
     
                         <div id="edit-content"></div>

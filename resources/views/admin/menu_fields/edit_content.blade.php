@@ -78,9 +78,17 @@
                                     </label>
                                 </div>
                             @endforeach
+                            
                             <div class="mb-3">
                                 <label>Extra (JSON)</label>
-                                <textarea name="fields[{{ $field['name'] }}][extra]" placeholder="{'validation':'max:255'}" class="form-control w-full" rows="3">{{ $field['extra'] }}</textarea>
+                                @php
+                                    $extraFormatted = is_array($field['extra']) 
+                                        ? json_encode($field['extra'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+                                        : $field['extra'];
+                                @endphp
+
+                                <textarea name="fields[{{ $field['name'] }}][extra]" placeholder='{"validation":"max:255"}' class="form-control w-full" rows="3">{{ $extraFormatted }}</textarea>
+                                <small class="text-muted">Enter valid JSON. Example: {"validation":"max:255"}</small>
                             </div>
                         </div>
                     </div>

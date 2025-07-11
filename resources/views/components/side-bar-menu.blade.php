@@ -32,12 +32,12 @@
         </li>
       @endif
       <li class="menu-item {{ request()->is('dashboard')?'active':'' }}">
-        <a href="{{ url('/dashboard') }}" class="menu-link">
+        <a href="{{ url('dashboard') }}" class="menu-link">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div>Dashboards</div>
         </a>
       </li>
-      @canany(['roles-list', 'permissions-list', 'menus-list', 'api_docs-list', 'users-list', 'logs-list'])
+      {{-- @canany(['roles-list', 'permissions-list', 'menus-list', 'api_docs-list', 'users-list', 'logs-list'])
         <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Settings</span>
         </li>
@@ -112,70 +112,19 @@
                 @endcan
             </ul>
         </li>
-      @endcanany
+      @endcanany --}}
 
-      <li class="menu-header small text-uppercase">
+      {{-- <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Administration</span>
-      </li>
-
-      @canany(['orders-list'])
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Orders</span>
-        </li>
-        <li class="menu-item
-            {{
-                request()->is('orders')
-                ?'open active':''
-            }}
-        ">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons ti ti-file"></i>
-              <div data-i18n="Orders & Invoices">Orders & Invoices</div>
-            </a>
-            <ul class="menu-sub">
-                @can('orders-list')
-                <li class="menu-item {{ request()->is('orders') ?'active':'' }}">
-                  <a href="{{ route('orders.index') }}" class="menu-link"  >  
-                      <div>All Orders</div>
-                  </a>
-                </li>
-                @endcan
-            </ul>
-        </li>
-      @endcanany
-      @canany(['purchase_orders-list'])
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Purchase Orders</span>
-        </li>
-        <li class="menu-item
-            {{
-                request()->is('purchase_orders')
-                ?'open active':''
-            }}
-        ">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons ti ti-file"></i>
-              <div data-i18n="Purchase Orders">Purchase Orders</div>
-            </a>
-            <ul class="menu-sub">
-                @can('purchase_orders-list')
-                <li class="menu-item {{ request()->is('purchase_orders') ?'active':'' }}">
-                  <a href="{{ route('purchase_orders.index') }}" class="menu-link"  >  
-                      <div>All Purchase Orders</div>
-                  </a>
-                </li>
-                @endcan
-            </ul>
-        </li>
-      @endcanany
+      </li> --}}
 
       @php 
         $menuGroups = getDynamicMenuGroups();
       @endphp 
 
-      <li class="menu-header small text-uppercase">
+      {{-- <li class="menu-header small text-uppercase">
         <span class="menu-header-text">System</span>
-      </li>
+      </li> --}}
       @foreach ($menuGroups as $menuGroup)  
         @php
           $menus = $menuGroup['has_child_menus'];
@@ -196,7 +145,7 @@
           ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons {{ $menuGroup['icon'] ?? 'ti ti-smart-home' }}"></i>
-                  <div>{{ $menuGroup['menu'] }}</div>
+                  <div>{{ $menuGroup['menu_label'] }}</div>
               </a>
 
               <ul class="menu-sub">

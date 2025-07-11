@@ -47,120 +47,164 @@ class MenuController extends Controller
         ];
     }
 
-    protected function getFieldsAndColumns()
-    {
-        // Dynamic fields fetched from the database
-        $dynamicFields = $this->generateDynamicFieldArray($this->model);
+    // protected function getFieldsAndColumns()
+    // {
+    //     // Dynamic fields fetched from the database
+    //     $dynamicFields = $this->generateDynamicFieldArray($this->model);
 
-        // Common fields that should always be included
-        $commonFields = $this->getCommonFields($this->model);
+    //     // Common fields that should always be included
+    //     $commonFields = $this->getCommonFields($this->model);
     
-        // Merging common fields with dynamic fields
-        $mergedFields = array_merge($dynamicFields, $commonFields);
+    //     // Merging common fields with dynamic fields
+    //     $mergedFields = array_merge($dynamicFields, $commonFields);
         
-        return $mergedFields;
-    }
+    //     return $mergedFields;
+    // }
 
-    public function generateDynamicFieldArray($model) {
-        $table = $model->getTable();
-        // Get column names and types from the database schema
-        // $columns = Schema::getColumnListing($table);
-        $columns = DB::connection()->getDoctrineSchemaManager()->listTableColumns($table);
+    // public function generateDynamicFieldArray($model) {
+    //     $table = $model->getTable();
+    //     // Get column names and types from the database schema
+    //     // $columns = Schema::getColumnListing($table);
+    //     $columns = DB::connection()->getDoctrineSchemaManager()->listTableColumns($table);
         
-        $fieldArray = [];
+    //     $fieldArray = [];
     
-        foreach ($columns as $columnName => $column) {
-            // Skip common fields
-            if (in_array($columnName, ['id', 'status', 'created_at', 'created_by', 'action', 'deleted_at', 'updated_at'])) {
-                continue;
-            }
+    //     foreach ($columns as $columnName => $column) {
+    //         // Skip common fields
+    //         if (in_array($columnName, ['id', 'status', 'created_at', 'created_by', 'action', 'deleted_at', 'updated_at'])) {
+    //             continue;
+    //         }
     
-            // Get the type of each column (e.g., string, integer, etc.)
-            // $type = Schema::getColumnType($table, $column);
-            $type = $column->getType()->getName();
+    //         // Get the type of each column (e.g., string, integer, etc.)
+    //         // $type = Schema::getColumnType($table, $column);
+    //         $type = $column->getType()->getName();
             
-            // Build the dynamic field configuration
-            $fieldArray[$columnName] = [
-                'type' => $type == 'text' ? 'text' : ($type == 'boolean' ? 'select' : 'text'), // Default 'text' or 'select' for boolean
-                'label' => ucfirst(str_replace('_', ' ', $columnName)), // Use column name as label (capitalize words and replace underscores)
-                'placeholder' => "Enter $columnName", // Placeholder text
-                'required' => in_array($columnName, ['title', 'status']), // Example: Mark some fields as required
-                'value' => fn($model) => $model->{$columnName} ?? '', // Get the value from the model
-                'index' => fn($model) => $model->{$columnName} ?? '-', // Index view value
-                'index_visible' => true, // You can dynamically set visibility rules
-                'create_visible' => true,
-                'edit_visible' => true,
-                'show_visible' => true,
-            ];
+    //         // Build the dynamic field configuration
+    //         $fieldArray[$columnName] = [
+    //             'type' => $type == 'text' ? 'text' : ($type == 'boolean' ? 'select' : 'text'), // Default 'text' or 'select' for boolean
+    //             'label' => ucfirst(str_replace('_', ' ', $columnName)), // Use column name as label (capitalize words and replace underscores)
+    //             'placeholder' => "Enter $columnName", // Placeholder text
+    //             'required' => in_array($columnName, ['title', 'status']), // Example: Mark some fields as required
+    //             'value' => fn($model) => $model->{$columnName} ?? '', // Get the value from the model
+    //             'index' => fn($model) => $model->{$columnName} ?? '-', // Index view value
+    //             'index_visible' => true, // You can dynamically set visibility rules
+    //             'create_visible' => true,
+    //             'edit_visible' => true,
+    //             'show_visible' => true,
+    //         ];
 
-            // Specifically handle the 'description' field
-            if ($columnName == 'fields') {
-                $fieldArray[$columnName]['index_visible'] = false; // Hide description in index view
-            }
-        }
+    //         // Specifically handle the 'description' field
+    //         if ($columnName == 'fields') {
+    //             $fieldArray[$columnName]['index_visible'] = false; // Hide description in index view
+    //         }
+    //     }
     
-        return $fieldArray;
-    }
-    public function getCommonFields($model) {
-        // Common fields data (status, created_at, created_by, action)
-        return [
-            'status' => [
-                'type' => 'select',
-                'label' => 'Status',
-                'options' => [
-                    1 => 'Active',
-                    0 => 'De-Active'
-                ],
-                'index' => fn($model) => $model->status == 1
-                    ? '<span class="badge bg-label-success me-1">Active</span>'
-                    : '<span class="badge bg-label-danger me-1">De-Active</span>',
-                'required' => true,
-                'index_visible' => true,
-                'create_visible' => true,
-                'edit_visible' => true,
-                'show_visible' => true,
-            ],
-            'created_at' => [
-                'type' => 'datetime',
-                'label' => 'Created At',
-                'required' => false,
-                'value' => fn($model) => Carbon::parse($model->created_at)->format('d, M Y | H:i A') ?? '',
-                'index' => fn($model) => Carbon::parse($model->created_at)->format('d, M Y'),
-                'index_visible' => true,
-                'create_visible' => false,  // Hide in create form
-                'edit_visible' => false,    // Hide in edit form
-                'show_visible' => true,
-            ],
-            'created_by' => [
-                'type' => 'text',
-                'label' => 'Created By',
-                'required' => false,
-                'value' => fn($model) => isset($model->createdBy) && !empty($model->createdBy) ? $model->createdBy->name : '-',
-                'index' => fn($model) => isset($model->createdBy) && !empty($model->createdBy) ? $model->createdBy->name : '-',
-                'index_visible' => true,
-                'create_visible' => false,  // Hide in create form
-                'edit_visible' => false,    // Hide in edit form
-                'show_visible' => true,
-            ],
-            'action' => [
-                'index' => fn($model) => view($this->pathInitialize . '.action', [
-                    'model' => $model,
-                    'singularLabel' => $this->singularLabel,
-                    'routeInitialize' => $this->routePrefix
-                ])->render(),
-                'index_visible' => true,
-                'create_visible' => false,  // Hide in create form
-                'edit_visible' => false,    // Hide in edit form
-                'show_visible' => false,
-            ]
-        ];
-    }
+    //     return $fieldArray;
+    // }
+    // public function getCommonFields($model) {
+    //     // Common fields data (status, created_at, created_by, action)
+    //     return [
+    //         'status' => [
+    //             'type' => 'select',
+    //             'label' => 'Status',
+    //             'options' => [
+    //                 1 => 'Active',
+    //                 0 => 'De-Active'
+    //             ],
+    //             'index' => fn($model) => $model->status == 1
+    //                 ? '<span class="badge bg-label-success me-1">Active</span>'
+    //                 : '<span class="badge bg-label-danger me-1">De-Active</span>',
+    //             'required' => true,
+    //             'index_visible' => true,
+    //             'create_visible' => true,
+    //             'edit_visible' => true,
+    //             'show_visible' => true,
+    //         ],
+    //         'created_at' => [
+    //             'type' => 'datetime',
+    //             'label' => 'Created At',
+    //             'required' => false,
+    //             'value' => fn($model) => Carbon::parse($model->created_at)->format('d, M Y | H:i A') ?? '',
+    //             'index' => fn($model) => Carbon::parse($model->created_at)->format('d, M Y'),
+    //             'index_visible' => true,
+    //             'create_visible' => false,  // Hide in create form
+    //             'edit_visible' => false,    // Hide in edit form
+    //             'show_visible' => true,
+    //         ],
+    //         'created_by' => [
+    //             'type' => 'text',
+    //             'label' => 'Created By',
+    //             'required' => false,
+    //             'value' => fn($model) => isset($model->createdBy) && !empty($model->createdBy) ? $model->createdBy->name : '-',
+    //             'index' => fn($model) => isset($model->createdBy) && !empty($model->createdBy) ? $model->createdBy->name : '-',
+    //             'index_visible' => true,
+    //             'create_visible' => false,  // Hide in create form
+    //             'edit_visible' => false,    // Hide in edit form
+    //             'show_visible' => true,
+    //         ],
+    //         'action' => [
+    //             'index' => fn($model) => view($this->pathInitialize . '.action', [
+    //                 'model' => $model,
+    //                 'singularLabel' => $this->singularLabel,
+    //                 'routeInitialize' => $this->routePrefix
+    //             ])->render(),
+    //             'index_visible' => true,
+    //             'create_visible' => false,  // Hide in create form
+    //             'edit_visible' => false,    // Hide in edit form
+    //             'show_visible' => false,
+    //         ]
+    //     ];
+    // }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    // public function index(Request $request)
+    // {
+    //     $title = $this->pluralLabel;
+    //     $singularLabel = $this->singularLabel;
+    //     $routeInitialize = $this->routePrefix;
+    //     $bladePath = $this->pathInitialize;
+
+    //     // $models = [];
+        // $models = $this->model->latest()
+        //     ->with('hasMenuGroup:id,menu', 'createdBy:id,name')
+        //     ->select('id', 'menu', 'menu_group', 'priority', 'fields', 'status', 'created_by', 'icon');
+        
+    //     // Get column definitions dynamically
+    //     $getFields = getFields($this->model, $this->getFieldsAndColumns(), 'index');
+        
+        // if (isset($getFields['icon'])) {
+        //     $getFields['icon']['index'] = fn($model) => '<i class="menu-icon tf-icons '.$model->icon .'"></i>';
+        // }
+        // // Check and handle relation
+        // if (isset($getFields['menu_group'])) {
+        //     // Customize index to pull from relation
+        //     $getFields['menu_group']['index'] = fn($model) => optional($model->hasMenuGroup)->menu ?? '-';
+        // }
+    //     $columns = collect($getFields)->mapWithKeys(function ($config, $key) {
+    //         return [$key => $config['index']];
+    //     })->toArray();  // Convert Collection to Array
+        
+    //     if ($request->ajax() && $request->loaddata == "yes") {
+    //         return $this->getDataTable($request, $models, $columns);
+    //     }
+
+    //     $columnsConfig = collect($getFields)->map(function ($config, $key) {
+    //         return [
+    //             'data' => $key,
+    //             'name' => $key,
+    //             'title' => $config['label'],
+    //             'orderable' => !in_array($key, ['action']), // Set orderable=false for 'action'
+    //             'searchable' => !in_array($key, ['action']) // Set searchable=false for 'action'
+    //         ];
+    //     })->values()->toArray();
+        
+    //     return view($bladePath.'.index', get_defined_vars());
+    // }
+
     public function index(Request $request)
     {
         $title = $this->pluralLabel;
@@ -168,14 +212,29 @@ class MenuController extends Controller
         $routeInitialize = $this->routePrefix;
         $bladePath = $this->pathInitialize;
 
-        // $models = [];
+        // Get column definitions dynamically
+        $getFields = getFields($this->model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'index');
+        
+        //select columns
+        $selectedColumns = collect($getFields)
+        ->mapWithKeys(function ($config, $key) {
+            return [$key => $config['index']];
+        })
+        ->keys()
+        ->filter(function ($key) {
+            return $key !== 'action'; // Remove 'action'
+        })
+        ->values() // Reindex the array
+        ->toArray();
+    
+        // Optionally prepend 'id'
+        array_unshift($selectedColumns, 'id');
+        
         $models = $this->model->latest()
             ->with('hasMenuGroup:id,menu', 'createdBy:id,name')
-            ->select('id', 'menu', 'menu_group', 'priority', 'fields', 'status', 'created_by', 'icon');
-        
-        // Get column definitions dynamically
-        $getFields = getFields($this->model, $this->getFieldsAndColumns(), 'index');
-        
+            ->select($selectedColumns);
+        //select columns
+
         if (isset($getFields['icon'])) {
             $getFields['icon']['index'] = fn($model) => '<i class="menu-icon tf-icons '.$model->icon .'"></i>';
         }
@@ -184,6 +243,7 @@ class MenuController extends Controller
             // Customize index to pull from relation
             $getFields['menu_group']['index'] = fn($model) => optional($model->hasMenuGroup)->menu ?? '-';
         }
+
         $columns = collect($getFields)->mapWithKeys(function ($config, $key) {
             return [$key => $config['index']];
         })->toArray();  // Convert Collection to Array
@@ -192,24 +252,35 @@ class MenuController extends Controller
             return $this->getDataTable($request, $models, $columns);
         }
 
-        $columnsConfig = collect($columns)->map(function ($callback, $key) {
+        $columnsConfig = collect($getFields)->map(function ($config, $key) {
             return [
                 'data' => $key,
                 'name' => $key,
-                'orderable' => !in_array($key, ['action']), // Set orderable=false for 'action'
-                'searchable' => !in_array($key, ['action']) // Set searchable=false for 'action'
+                'title' => $config['label'],
+                'orderable' => !in_array($key, ['action']),
+                'searchable' => !in_array($key, ['action'])
             ];
         })->values()->toArray();
         
         return view($bladePath.'.index', get_defined_vars());
     }
+
     public function create(){
         $bladePath = $this->pathInitialize;
+
         $menuGroups = $this->model->where('menu_group', NULL)->where('status', 1)->get();
         $model = $this->model;
-        $fields = getFields($this->model, $this->getFieldsAndColumns(), 'create');
+        $fields = getFields($this->model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'create');
         return (string) view($bladePath.'.create_content', get_defined_vars());
     }
+
+    // public function create(){
+    //     $bladePath = $this->pathInitialize;
+    //     $menuGroups = $this->model->where('menu_group', NULL)->where('status', 1)->get();
+    //     $model = $this->model;
+    //     $fields = getFields($this->model, $this->getFieldsAndColumns(), 'create');
+    //     return (string) view($bladePath.'.create_content', get_defined_vars());
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -220,7 +291,8 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $singularLabel = $this->singularLabel;
-        $fields = $this->getFieldsAndColumns(); // getFieldsAndColumns() returns dynamic field definitions
+        // $fields = $this->getFieldsAndColumns(); // getFieldsAndColumns() returns dynamic field definitions
+        $fields = getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix);; // getFieldsAndColumns() returns dynamic field definitions
 
         // Step 1: Build dynamic validation rules
         $rules = buildValidationRules($fields, null, $request);
@@ -575,7 +647,7 @@ class MenuController extends Controller
     {
         $bladePath = $this->pathInitialize;
         $model = $this->model->with('hasMenuGroup')->findOrFail($id);
-        $fields = getFields($model, $this->getFieldsAndColumns(), 'show');
+        $fields = getFields($model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'show');
         return (string) view($bladePath.'.show_content', get_defined_vars());
     }
 
@@ -588,7 +660,7 @@ class MenuController extends Controller
         $title = $this->singularLabel;
         $menuGroups = $this->model->where('menu_group', NULL)->where('status', 1)->get();
         $model = $this->model->where('id', $id)->first();
-        $fields = getFields($model, $this->getFieldsAndColumns(), 'edit');
+        $fields = getFields($model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'edit');
         
         return view($bladePath.'.edit_content', get_defined_vars());
     }
@@ -600,7 +672,7 @@ class MenuController extends Controller
     {
         $model = $this->model->where('id', $modelId)->first();
         $singularLabel = $this->singularLabel;
-        $fields = $this->getFieldsAndColumns(); // getFieldsAndColumns() returns dynamic field definitions
+        $fields = getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix);; // getFieldsAndColumns() returns dynamic field definitions
 
         // Step 1: Build dynamic validation rules
         $rules = buildValidationRules($fields, $model, $request);

@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->string('menu_group')->nullable();
             $table->string('menu')->nullable();
+            $table->string('menu_label')->nullable();
+            $table->integer('group_order')->nullable(); // for sorting groups
+            $table->integer('menu_order')->nullable();  // for sorting inside group
             $table->integer('priority')->nullable();
             $table->text('fields')->nullable(); 
             $table->boolean('status')->default(1);

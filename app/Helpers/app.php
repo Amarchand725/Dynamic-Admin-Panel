@@ -229,8 +229,9 @@ function getDynamicMenuGroups(){
     $menus = Menu::with('hasChildMenus')
         ->where('status', 1)
         ->whereNull('menu_group')
-        ->orderBy('priority', 'ASC')
-        ->select('id', 'menu', 'icon')
+        ->select('id', 'menu', 'menu_label', 'icon')
+        ->orderBy('group_order')
+        ->orderBy('menu_order')
         ->get();
 
     $result = $menus->map(function ($menu) {
@@ -246,6 +247,7 @@ function getDynamicMenuGroups(){
         return [
             'id' => $menu->id,
             'menu' => $menu->menu,
+            'menu_label' => $menu->menu_label,
             'icon' => $menu->icon,
             'has_child_menus' => $allMenus, // ensure numeric keys
         ];
