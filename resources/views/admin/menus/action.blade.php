@@ -25,7 +25,7 @@
                 class="dropdown-item edit-btn"
                 tabindex="0" aria-controls="DataTables_Table_0"
                 type="button" data-bs-toggle="modal"
-                data-bs-target="#create-pop-up-modal">
+                data-bs-target="#create-pop-up-modal-x-large-for-file">
                 Settings
             </button>
         @endcan

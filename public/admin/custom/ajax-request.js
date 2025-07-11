@@ -296,7 +296,20 @@ function loadForm(targeted_modal, store_url, modal_label, content_url){
             $(targeted_modal).find('#edit-content').html('<div class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i> Loading...</div>');
         },
         success: function (response) {
-            $(targeted_modal).find('#edit-content').html(response);
+            // $(targeted_modal).find('#edit-content').html(response);
+            const $modal = $(targeted_modal);
+            $modal.find('#edit-content').html(response);
+
+            // ✅ Check what kind of form was just loaded
+            const $initTarget = $modal.find('[data-init]');
+            const initType = $initTarget.data('init');
+
+            // ✅ Run specific JS logic
+            if (initType === 'dynamic-fields') {
+                if (typeof initDynamicFormFeatures === 'function') {
+                    initDynamicFormFeatures();
+                }
+            }
         },
         error: function (xhr) {
             if (xhr.status === 403) {
@@ -307,6 +320,176 @@ function loadForm(targeted_modal, store_url, modal_label, content_url){
                 $(targeted_modal).find('#edit-content').html('<div class="alert alert-danger text-center">An error occurred. Please try again later.</div>');
             }
         }    
+    });
+}
+
+function initDynamicFormFeatures() {
+    $('select').each(function () {
+        $(this).select2({ dropdownParent: $(this).parent() });
+    });
+
+    const stepperEl = document.querySelector('.wizard-vertical-icons-example');
+    window.stepper = new Stepper(stepperEl, { linear: false, animation: true });
+
+    const stepperHeader = document.getElementById('stepperTabs');
+    const stepperContent = document.getElementById('stepperContent');
+
+    Sortable.create(stepperHeader, {
+        animation: 150,
+        onEnd: function () {
+            const order = [];
+            document.querySelectorAll('.bs-stepper-header .step').forEach((step) => {
+                order.push(step.dataset.target.replace('#', ''));
+            });
+            document.getElementById('field_order').value = JSON.stringify(order);
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-field')) {
+            const name = e.target.dataset.name;
+
+            const stepEl = document.querySelector(`[data-target="#${name}"]`);
+            const contentEl = document.getElementById(name);
+
+            // Get all steps before removing
+            const allSteps = Array.from(document.querySelectorAll('.step'));
+            const removedIndex = allSteps.indexOf(stepEl);
+
+            // Remove the step and content
+            stepEl?.remove();
+            contentEl?.remove();
+
+            // Optional: remove trailing line
+            const lines = document.querySelectorAll('.bs-stepper-header .line');
+            if (lines.length) {
+                lines[lines.length - 1].remove();
+            }
+
+            // Reinitialize stepper
+            window.stepper.destroy();
+            window.stepper = new Stepper(document.querySelector('.wizard-vertical-icons-example'), {
+                linear: false,
+                animation: true
+            });
+
+            // Refresh steps
+            const updatedSteps = document.querySelectorAll('.step');
+
+            // Determine new tab to activate
+            if (updatedSteps.length > 0) {
+                const newIndex = (removedIndex < updatedSteps.length) ? removedIndex : updatedSteps.length - 1;
+                window.stepper.to(newIndex + 1); // Stepper index is 1-based
+            }
+        }
+
+        const trigger = e.target.closest('.step-trigger');
+        if (trigger) {
+            const step = trigger.closest('.step');
+            if (step && step.dataset.target) {
+                const allSteps = Array.from(document.querySelectorAll('.step'));
+                const index = allSteps.indexOf(step);
+                if (index !== -1) {
+                    window.stepper.to(index + 1);
+                }
+            }
+        }
+    });
+
+    let fieldCount = 0;
+    document.getElementById('add-field').addEventListener('click', function () {
+        const name = `field_${Date.now()}`;
+        const label = `New Field ${++fieldCount}`;
+
+        const step = document.createElement('div');
+        step.classList.add('step');
+        step.dataset.target = `#${name}`;
+        step.innerHTML = `
+            <button type="button" class="step-trigger">
+                <span class="bs-stepper-circle"><i class="ti ti-file-description"></i></span>
+                <span class="bs-stepper-label">
+                    <span class="bs-stepper-title">${label}</span>
+                    <span class="bs-stepper-subtitle">Setup ${label}</span>
+                </span>
+            </button>
+            <button type="button" class="btn btn-sm text-danger remove-field ms-1" data-name="${name}">×</button>
+        `;
+        stepperHeader.appendChild(step);
+        stepperHeader.insertAdjacentHTML('beforeend', '<div class="line"></div>');
+
+        const content = document.createElement('div');
+        content.classList.add('content');
+        content.id = name;
+
+        let dataTypeOptions = '';
+        for (const key in FIELD_TYPES) {
+            dataTypeOptions += `<option value="${key}">${FIELD_TYPES[key]}</option>`;
+        }
+
+        let inputTypeOptions = '';
+        for (const key in INPUT_TYPES) {
+            inputTypeOptions += `<option value="${key}">${INPUT_TYPES[key]}</option>`;
+        }
+
+        let checkboxes = '';
+        FIELD_ATTRS.forEach(attr => {
+            const labelText = attr.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            checkboxes += `
+                <div class="mb-2">
+                    <label>
+                        <input type="checkbox" name="fields[${name}][${attr}]" value="1"> ${labelText}
+                    </label>
+                </div>
+            `;
+        });
+
+        content.innerHTML = `
+            <div class="content-header mb-3">
+                <h6 class="mb-0">${label}</h6>
+                <small>Enter ${label} Settings.</small>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <div class="mb-3">
+                        <label>Field Name</label>
+                        <input type="text" name="fields[${name}][name]" value="${name}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Data Type</label>
+                        <select name="fields[${name}][type]" class="form-select">${dataTypeOptions}</select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Input Type</label>
+                        <select name="fields[${name}][input_type]" class="form-select">${inputTypeOptions}</select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Label</label>
+                        <input type="text" name="fields[${name}][label]" value="${label}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Placeholder</label>
+                        <input type="text" name="fields[${name}][placeholder]" class="form-control">
+                    </div>
+                    ${checkboxes}
+                    <div class="mb-3">
+                        <label>Extra (JSON)</label>
+                        <textarea name="fields[${name}][extra]" class="form-control" rows="3">{}</textarea>
+                    </div>
+                    <button type="button" class="btn btn-outline-danger btn-sm remove-field" data-name="${name}">Remove Field</button>
+                </div>
+            </div>
+        `;
+
+        stepperContent.appendChild(content);
+
+        window.stepper.destroy();
+        window.stepper = new Stepper(document.querySelector('.wizard-vertical-icons-example'), {
+            linear: false,
+            animation: true
+        });
+
+        const steps = document.querySelectorAll('.step');
+        window.stepper.to(steps.length);
     });
 }
 

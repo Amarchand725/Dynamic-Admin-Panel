@@ -1,11 +1,22 @@
 @method('PUT')
 <input type="hidden" name="pre_menu" value="{{ $menu->menu }}">
-<div class="row">
+<input type="hidden" name="field_order" id="field_order">
+
+<script>
+    const FIELD_TYPES = @json(fieldTypes());
+    const INPUT_TYPES = @json(inputTypes());
+    const FIELD_ATTRS = ['required', 'index_visible', 'create_visible', 'edit_visible', 'show_visible'];
+</script>
+
+<div class="row" data-init="dynamic-fields">
     <!-- Vertical Icons Wizard -->
     <div class="col-12 mb-4">
-      <small class="text-light fw-semibold">Menu Fields</small>
+      <div class="d-flex justify-content-between align-items-center">
+          <small class="text-light fw-semibold">Menu Fields</small>
+          <button type="button" id="add-field" class="btn btn-success btn-sm">+ Add Field</button>
+      </div>
       <div class="bs-stepper vertical wizard-vertical-icons-example mt-2">
-        <div class="bs-stepper-header">
+        <div class="bs-stepper-header" id="stepperTabs">
             @foreach($fields as $name => $field)
                 <div class="step" data-target="#{{ $field['name'] }}">
                     <button type="button" class="step-trigger">
@@ -17,11 +28,12 @@
                             <span class="bs-stepper-subtitle">Setup {{ $field['label'] ?? '' }} </span>
                         </span>
                     </button>
+                    <button type="button" class="btn btn-sm text-danger remove-field ms-1" data-name="{{ $field['name'] }}">×</button>
                 </div>
                 <div class="line"></div>
             @endforeach
         </div>
-        <div class="bs-stepper-content">
+        <div class="bs-stepper-content" id="stepperContent">
             @foreach($fields as $name => $field)
                 <div id="{{ $field['name'] }}" class="content">
                     <div class="content-header mb-3">
@@ -30,41 +42,34 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-sm-12">
-                            {{-- Data Type dropdown --}}
+                            <div class="mb-3">
+                                <label>Field Name</label>
+                                <input type="text" name="fields[{{ $field['name'] }}][name]" value="{{ $field['name'] }}" class="form-control w-full">
+                            </div>
                             <div class="mb-3">
                                 <label>Data Type</label>
                                 <select name="fields[{{ $field['name'] }}][type]" class="form-select w-full">
                                     @foreach (fieldTypes() as $key=>$fieldType)
                                         <option value="{{ $key }}" {{ $field['type']==$key ? 'selected' : '' }}>{{ $fieldType }}</option>
                                     @endforeach
-                                    {{-- Add more as needed --}}
                                 </select>
                             </div>
-
-                            {{-- Input Type dropdown --}}
                             <div class="mb-3">
                                 <label>Input Type</label>
                                 <select name="fields[{{ $field['name'] }}][input_type]" class="form-select w-full">
                                     @foreach (inputTypes() as $key=>$inputType)
                                         <option value="{{ $key }}" {{ $field['input_type']==$key ? 'selected' : '' }}>{{ $inputType }}</option>
                                     @endforeach
-                                    {{-- Add more as needed --}}
                                 </select>
                             </div>
-
-                            {{-- Label input --}}
                             <div class="mb-3">
                                 <label>Label</label>
                                 <input type="text" name="fields[{{ $field['name'] }}][label]" value="{{ $field['label'] }}" class="form-control w-full">
                             </div>
-
-                            {{-- Placeholder input --}}
                             <div class="mb-3">
                                 <label>Placeholder</label>
                                 <input type="text" name="fields[{{ $field['name'] }}][placeholder]" value="{{ $field['placeholder'] }}" class="form-control w-full">
                             </div>
-
-                            {{-- Checkboxes --}}
                             @foreach (['required', 'index_visible', 'create_visible', 'edit_visible', 'show_visible'] as $attr)
                                 <div class="mb-2">
                                     <label>
@@ -73,54 +78,15 @@
                                     </label>
                                 </div>
                             @endforeach
-
-                            {{-- Extra textarea --}}
                             <div class="mb-3">
                                 <label>Extra (JSON)</label>
                                 <textarea name="fields[{{ $field['name'] }}][extra]" placeholder="{'validation':'max:255'}" class="form-control w-full" rows="3">{{ $field['extra'] }}</textarea>
                             </div>
                         </div>
-                        {{-- <div class="col-12 d-flex justify-content-between">
-                            <button class="btn btn-label-secondary btn-prev" type="button">
-                                <i class="ti ti-arrow-left me-sm-1"></i>
-                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
-                            </button>
-                            <button class="btn btn-primary btn-next" type="button">
-                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
-                                <i class="ti ti-arrow-right"></i>
-                            </button>
-                        </div> --}}
                     </div>
                 </div>
             @endforeach
         </div>
       </div>
     </div>
-    <!-- /Vertical Icons Wizard -->
 </div>
-
-<script>
-    $('select').each(function () {
-        $(this).select2({
-            dropdownParent: $(this).parent(),
-        });
-    });
-
-    window.stepper = new Stepper(document.querySelector('.wizard-vertical-icons-example'), {
-        linear: false,
-        animation: true
-    });
-
-    // Bind step navigation buttons
-    document.querySelectorAll('.btn-next').forEach(button => {
-        button.addEventListener('click', function () {
-            window.stepper.next();
-        });
-    });
-
-    document.querySelectorAll('.btn-prev').forEach(button => {
-        button.addEventListener('click', function () {
-            window.stepper.previous();
-        });
-    });
-</script>

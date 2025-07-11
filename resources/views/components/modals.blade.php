@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="create-pop-up-modal-large-for-file" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="create-pop-up-modal-x-large-for-file" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content p-3 p-md-5">
                 <button type="button" class="btn-close btn-pinned" data-bs-dismiss="modal" aria-label="Close"></button>

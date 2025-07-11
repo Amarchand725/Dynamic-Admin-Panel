@@ -91,10 +91,11 @@ class BaseController extends Controller
             return $this->getDataTable($request, $models, $columns);
         }
 
-        $columnsConfig = collect($columns)->map(function ($callback, $key) {
+        collect($getFields)->map(function ($config, $key) {
             return [
                 'data' => $key,
                 'name' => $key,
+                'title' => $config['label'],
                 'orderable' => !in_array($key, ['action']), // Set orderable=false for 'action'
                 'searchable' => !in_array($key, ['action']) // Set searchable=false for 'action'
             ];
@@ -325,10 +326,11 @@ class BaseController extends Controller
             return $this->getDataTable($request, $models, $columns);
         }
 
-        $columnsConfig = collect($columns)->map(function ($callback, $key) {
+        collect($getFields)->map(function ($config, $key) {
             return [
                 'data' => $key,
                 'name' => $key,
+                'title' => $config['label'],
                 'orderable' => !in_array($key, ['action']), // Set orderable=false for 'action'
                 'searchable' => !in_array($key, ['action']) // Set searchable=false for 'action'
             ];
