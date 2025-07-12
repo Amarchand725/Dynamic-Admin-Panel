@@ -46,11 +46,3 @@ function actionLabel($action){
         return '<span class="badge bg-label-secondary me-1">Unknown</span>';
     }
 }
-
-function isEmployee($isEmployee){
-    if($isEmployee == 1){
-        return '<span class="badge bg-label-success me-1">Yes</span>';
-    }else{
-        return '<span class="badge bg-label-danger me-1">No</span>';
-    }
-}

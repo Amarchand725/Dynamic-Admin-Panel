@@ -3,8 +3,6 @@
 use Carbon\Carbon;
 use App\Models\Menu;
 use App\Models\User;
-use App\Models\PaymentMode;
-use App\Models\PaymentType;
 use Illuminate\Support\Str;
 use App\Models\BusinessSetting;
 use App\Mail\ContactSupportMail;
@@ -101,6 +99,72 @@ function getFields($model, $fields, $view = 'index')
             ];
         })
         ->toArray();
+}
+
+function getFieldsAndColumns($model, $pathInitialize, $singularLabel, $routePrefix)
+{
+    $modelName = class_basename($model);
+    $menuName = Str::headline(Str::kebab(Str::singular($modelName)));
+    $menu = Menu::select(['id', 'menu'])
+    ->with('hasMenFields:id,menu_id,name,data_type,input_type,label,placeholder,required,index_visible,create_visible,edit_visible,show_visible,extra')
+                ->where('menu', $menuName)->first();
+    $fieldArray = [];
+
+    if(isset($menu->hasMenFields) && !empty($menu->hasMenFields)){
+        $menuFields = $menu->hasMenFields;
+        foreach ($menuFields as $field) {
+            // Defaults
+            $fieldData = [
+                'type' => $field->input_type,
+                'label' => $field->label ?? ucfirst(str_replace('_', ' ', $field->name)),
+                'placeholder' => $field->placeholder ?? "Enter {$field->name}",
+                'required' => (bool) $field->required,
+                'value' => fn($model) => $model->{$field->name} ?? '',
+                'index' => fn($model) => $model->{$field->name} ?? '-',
+                'index_visible' => (bool) $field->index_visible,
+                'create_visible' => (bool) $field->create_visible,
+                'edit_visible' => (bool) $field->edit_visible,
+                'show_visible' => (bool) $field->show_visible,
+                'extra' => $field->extra,
+            ];
+
+            // Dynamic custom logic for specific fields
+            switch ($field->name) {
+                case 'status':
+                    $fieldData['options'] = [1 => 'Active', 0 => 'De-Active'];
+                    $fieldData['value'] = fn($model) => $model->status ?? 0;
+                    $fieldData['index'] = fn($model) =>
+                        $model->status == 1
+                            ? '<span class="badge bg-label-success me-1">Active</span>'
+                            : '<span class="badge bg-label-danger me-1">De-Active</span>';
+                    break;
+
+                case 'created_at':
+                    $fieldData['value'] = fn($model) => $model->created_at
+                        ? Carbon::parse($model->created_at)->format('d, M Y | H:i A') : '';
+                    $fieldData['index'] = fn($model) => $model->created_at
+                        ? Carbon::parse($model->created_at)->format('d, M Y | H:i A') : '';
+                    break;
+
+                case 'created_by':
+                    $fieldData['value'] = fn($model) => optional($model->createdBy)->name ?? '-';
+                    $fieldData['index'] = fn($model) => optional($model->createdBy)->name ?? '-';
+                    break;
+
+                case 'action':
+                    $fieldData['index'] = fn($model) => view($pathInitialize . '.action', [
+                        'model' => $model,
+                        'singularLabel' => $singularLabel,
+                        'routeInitialize' => $routePrefix
+                    ])->render();
+                    break;               
+            }
+
+            $fieldArray[$field->name] = $fieldData;
+        }
+    }
+    
+    return $fieldArray;
 }
 
 function buildValidationRules($fields, $model = null, $request = null)
@@ -280,72 +344,6 @@ function getActiveAdminUser(){
     }
 }
 
-function getFieldsAndColumns($model, $pathInitialize, $singularLabel, $routePrefix)
-{
-    $modelName = class_basename($model);
-    $menuName = Str::headline(Str::kebab(Str::singular($modelName)));
-    $menu = Menu::select(['id', 'menu'])
-    ->with('hasMenFields:id,menu_id,name,data_type,input_type,label,placeholder,required,index_visible,create_visible,edit_visible,show_visible,extra')
-                ->where('menu', $menuName)->first();
-    $fieldArray = [];
-
-    if(isset($menu->hasMenFields) && !empty($menu->hasMenFields)){
-        $menuFields = $menu->hasMenFields;
-        foreach ($menuFields as $field) {
-            // Defaults
-            $fieldData = [
-                'type' => $field->input_type,
-                'label' => $field->label ?? ucfirst(str_replace('_', ' ', $field->name)),
-                'placeholder' => $field->placeholder ?? "Enter {$field->name}",
-                'required' => (bool) $field->required,
-                'value' => fn($model) => $model->{$field->name} ?? '',
-                'index' => fn($model) => $model->{$field->name} ?? '-',
-                'index_visible' => (bool) $field->index_visible,
-                'create_visible' => (bool) $field->create_visible,
-                'edit_visible' => (bool) $field->edit_visible,
-                'show_visible' => (bool) $field->show_visible,
-                'extra' => $field->extra,
-            ];
-
-            // Dynamic custom logic for specific fields
-            switch ($field->name) {
-                case 'status':
-                    $fieldData['options'] = [1 => 'Active', 0 => 'De-Active'];
-                    $fieldData['value'] = fn($model) => $model->status ?? 0;
-                    $fieldData['index'] = fn($model) =>
-                        $model->status == 1
-                            ? '<span class="badge bg-label-success me-1">Active</span>'
-                            : '<span class="badge bg-label-danger me-1">De-Active</span>';
-                    break;
-
-                case 'created_at':
-                    $fieldData['value'] = fn($model) => $model->created_at
-                        ? Carbon::parse($model->created_at)->format('d, M Y | H:i A') : '';
-                    $fieldData['index'] = fn($model) => $model->created_at
-                        ? Carbon::parse($model->created_at)->format('d, M Y | H:i A') : '';
-                    break;
-
-                case 'created_by':
-                    $fieldData['value'] = fn($model) => optional($model->createdBy)->name ?? '-';
-                    $fieldData['index'] = fn($model) => optional($model->createdBy)->name ?? '-';
-                    break;
-
-                case 'action':
-                    $fieldData['index'] = fn($model) => view($pathInitialize . '.action', [
-                        'model' => $model,
-                        'singularLabel' => $singularLabel,
-                        'routeInitialize' => $routePrefix
-                    ])->render();
-                    break;               
-            }
-
-            $fieldArray[$field->name] = $fieldData;
-        }
-    }
-    
-    return $fieldArray;
-}
-
 function getTabIcons(){
     return [
         "ti ti-shopping-cart",
@@ -411,24 +409,6 @@ function getTabIcons(){
     ];      
 }
 
-function getPaymentModes(){
-    $modes = PaymentMode::where('status', 1)->get();
-    if($modes){
-        return $modes;
-    }else{
-        return [];
-    }
-}
-
-function getPaymentTypes(){
-    $types = PaymentType::where('status', 1)->get();
-    if($types){
-        return $types;
-    }else{
-        return [];
-    }
-}
-
 function sendSupportOrContactEmail($emailFrom, $data){
     $setting = settings();
     $supportEmail = '';
@@ -453,5 +433,13 @@ function statusBadge($status){
         return '<span class="badge bg-label-success me-1">Active</span>';
     }else{
         return '<span class="badge bg-label-danger me-1">De-Active</span>';
+    }
+}
+
+function isEmployee($isEmployee){
+    if($isEmployee == 1){
+        return '<span class="badge bg-label-success me-1">Yes</span>';
+    }else{
+        return '<span class="badge bg-label-danger me-1">No</span>';
     }
 }

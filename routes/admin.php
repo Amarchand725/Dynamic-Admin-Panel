@@ -10,9 +10,6 @@ use App\Http\Controllers\Admin\{
     LogController,
     MenuController,
     MenuFieldController,
-    PaymentMethodController,
-    PaymentModeController,
-    PaymentTypeController,
     PermissionController,
     RoleController,
     SettingController,
@@ -64,7 +61,7 @@ Route::controller(AdminController::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-Route::controller(AdminController::class)->group(function () {
+    Route::controller(AdminController::class)->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/logout', 'logOut')->name('user.logout');
     });
@@ -72,20 +69,6 @@ Route::controller(AdminController::class)->group(function () {
     Route::controller(CurrencyController::class)->group(function () {
         Route::get('currencies/trashed', 'trashed')->name('currencies.trashed');
         Route::get('currencies/restore/{id}', 'restore')->name('currencies.restore');
-    });
-    
-    Route::controller(PaymentMethodController::class)->group(function () {
-        Route::get('payment_methods/trashed', 'trashed')->name('payment_methods.trashed');
-        Route::get('payment_methods/restore/{id}', 'restore')->name('payment_methods.restore');
-    });
-    
-    Route::controller(PaymentModeController::class)->group(function () {
-        Route::get('payment_modes/trashed', 'trashed')->name('payment_modes.trashed');
-        Route::get('payment_modes/restore/{id}', 'restore')->name('payment_modes.restore');
-    });
-    Route::controller(PaymentTypeController::class)->group(function () {
-        Route::get('payment_types/trashed', 'trashed')->name('payment_types.trashed');
-        Route::get('payment_types/restore/{id}', 'restore')->name('payment_types.restore');
     });
     
     Route::prefix('users')->controller(UserController::class)->group(function () {
@@ -107,9 +90,6 @@ Route::controller(AdminController::class)->group(function () {
     Route::resource('menus', MenuController::class);
     Route::resource('menu_fields', MenuFieldController::class);
     Route::resource('currencies', CurrencyController::class);
-    Route::resource('payment_methods', PaymentMethodController::class);
-    Route::resource('payment_modes', PaymentModeController::class);
-    Route::resource('payment_types', PaymentTypeController::class);
     Route::resource('users', UserController::class);
     Route::resource('logs', LogController::class);
 });
