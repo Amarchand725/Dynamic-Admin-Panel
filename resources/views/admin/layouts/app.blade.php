@@ -154,6 +154,8 @@
     <script src="{{ asset('admin') }}/assets/js/dashboards-ecommerce.js"></script>
     <script src="{{ asset('admin') }}/custom/custom.js"></script>
 
+    <script src="{{ asset('admin') }}/assets/vendor/libs/sortablejs/sortable.js"></script>
+
     <script>
         var btn = $('#scrollTop');
 

@@ -64,7 +64,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {!! actionLabel($model->action) !!}
+                                                            {!! actionLabel($model->user_action) !!}
                                                         </td>
                                                         <td>{{ $className }}</td>
                                                         <td>{{ $model->description }}</td>

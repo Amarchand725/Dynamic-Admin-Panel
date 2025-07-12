@@ -49,6 +49,7 @@
                             <div class="mb-3">
                                 <label>Data Type</label>
                                 <select name="fields[{{ $field['name'] }}][type]" class="form-select w-full">
+                                    <option value="" selected>Select Data Type</option>
                                     @foreach (fieldTypes() as $key=>$fieldType)
                                         <option value="{{ $key }}" {{ $field['type']==$key ? 'selected' : '' }}>{{ $fieldType }}</option>
                                     @endforeach
@@ -57,6 +58,7 @@
                             <div class="mb-3">
                                 <label>Input Type</label>
                                 <select name="fields[{{ $field['name'] }}][input_type]" class="form-select w-full">
+                                    <option value="" selected>Select Input Type</option>
                                     @foreach (inputTypes() as $key=>$inputType)
                                         <option value="{{ $key }}" {{ $field['input_type']==$key ? 'selected' : '' }}>{{ $inputType }}</option>
                                     @endforeach

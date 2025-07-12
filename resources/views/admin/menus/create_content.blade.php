@@ -140,7 +140,7 @@
             '</div>'+
             '<div class="col-sm-3">'+
                 '<select name="types[]" class="form-control">'+
-                    '<option value="" selected>Choose type</option>';
+                    '<option value="" selected>Choose data type</option>';
                     @foreach (fieldTypes() as $key=>$fieldType)
                         html += '<option value="{{ $key }}">{{ $fieldType }}</option>';
                     @endforeach

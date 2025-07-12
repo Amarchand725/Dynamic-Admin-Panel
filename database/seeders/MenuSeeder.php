@@ -20,16 +20,15 @@ class MenuSeeder extends Seeder
                         'menu_label' => 'Menu',
                         'menu_order' => 0,
                         'fields' => [
-                            ['name' => 'icon', 'label' => 'Icon', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'categorized_by', 'label' => 'Categorized By', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'menu_group', 'label' => 'Menu Group', 'data_type' => 'integer', 'input_type' => 'select'],
-                            ['name' => 'menu', 'label' => 'Menu', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'menu_label', 'label' => 'Menu Label', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'fields', 'label' => 'Menu Fields', 'data_type' => 'text', 'input_type' => 'textarea'],
-                            ['name' => 'status', 'label' => 'Status', 'data_type' => 'boolean', 'input_type' => 'select'],
-                            ['name' => 'created_at', 'label' => 'Created At', 'data_type' => 'string', 'input_type' => 'string'],
-                            ['name' => 'created_by', 'label' => 'Created By', 'data_type' => 'integer', 'input_type' => 'select'],
-                            ['name' => 'action', 'label' => 'Action', 'data_type' => 'string', 'input_type' => 'select'],
+                            ['field' => 'icon', 'label' => 'Icon', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'menu_group', 'label' => 'Menu Group', 'type' => 'integer', 'input_type' => 'select'],
+                            ['field' => 'menu', 'label' => 'Menu', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'menu_label', 'label' => 'Menu Label', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'fields', 'label' => 'Menu Fields', 'type' => 'text', 'input_type' => 'textarea'],
+                            ['field' => 'status', 'label' => 'Status', 'type' => 'boolean', 'input_type' => 'select'],
+                            ['field' => 'created_at', 'label' => 'Created At', 'type' => 'string', 'input_type' => 'string'],
+                            ['field' => 'created_by', 'label' => 'Created By', 'type' => 'integer', 'input_type' => 'select'],
+                            ['field' => 'action', 'label' => 'Action', 'type' => 'string', 'input_type' => 'select'],
                         ]
                     ]
                 ],
@@ -44,12 +43,12 @@ class MenuSeeder extends Seeder
                         'menu_label' => 'Users',
                         'menu_order' => 0,
                         'fields' => [
-                            ['name' => 'name', 'label' => 'Name', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'email', 'label' => 'Email', 'data_type' => 'string', 'input_type' => 'email'],
-                            ['name' => 'role', 'label' => 'Role', 'data_type' => 'string', 'input_type' => 'select'],
-                            ['name' => 'created_at', 'label' => 'Created At', 'data_type' => 'string', 'input_type' => 'string'],
-                            ['name' => 'created_by', 'label' => 'Created By', 'data_type' => 'integer', 'input_type' => 'select'],
-                            ['name' => 'action', 'label' => 'Action', 'data_type' => 'string', 'input_type' => 'select'],
+                            ['field' => 'name', 'label' => 'Name', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'email', 'label' => 'Email', 'type' => 'string', 'input_type' => 'email'],
+                            ['field' => 'role', 'label' => 'Role', 'type' => 'string', 'input_type' => 'select'],
+                            ['field' => 'created_at', 'label' => 'Created At', 'type' => 'string', 'input_type' => 'string'],
+                            ['field' => 'created_by', 'label' => 'Created By', 'type' => 'integer', 'input_type' => 'select'],
+                            ['field' => 'action', 'label' => 'Action', 'type' => 'string', 'input_type' => 'select'],
                         ]
                     ]
                 ],
@@ -64,8 +63,8 @@ class MenuSeeder extends Seeder
                         'menu_label' => 'General Settings',
                         'menu_order' => 0,
                         'fields' => [
-                            ['name' => 'key', 'label' => 'key', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'value', 'label' => 'value', 'data_type' => 'text', 'input_type' => 'textarea'],
+                            ['field' => 'key', 'label' => 'key', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'value', 'label' => 'value', 'type' => 'text', 'input_type' => 'textarea'],
                         ]
                     ]
                 ],
@@ -80,12 +79,12 @@ class MenuSeeder extends Seeder
                         'menu_label' => 'Roles',
                         'menu_order' => 0,
                         'fields' => [
-                            ['name' => 'name', 'label' => 'Name', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'guard_name', 'label' => 'Guard Name', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'status', 'label' => 'Status', 'data_type' => 'boolean', 'input_type' => 'select'],
-                            ['name' => 'created_at', 'label' => 'Created At', 'data_type' => 'string', 'input_type' => 'string'],
-                            ['name' => 'created_by', 'label' => 'Created By', 'data_type' => 'integer', 'input_type' => 'select'],
-                            ['name' => 'action', 'label' => 'Action', 'data_type' => 'string', 'input_type' => 'select'],
+                            ['field' => 'name', 'label' => 'Name', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'guard_name', 'label' => 'Guard Name', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'status', 'label' => 'Status', 'type' => 'boolean', 'input_type' => 'select'],
+                            ['field' => 'created_at', 'label' => 'Created At', 'type' => 'string', 'input_type' => 'string'],
+                            ['field' => 'created_by', 'label' => 'Created By', 'type' => 'integer', 'input_type' => 'select'],
+                            ['field' => 'action', 'label' => 'Action', 'type' => 'string', 'input_type' => 'select'],
                         ]
                     ]
                 ],
@@ -100,12 +99,12 @@ class MenuSeeder extends Seeder
                         'menu_label' => 'Permissions',
                         'menu_order' => 0,
                         'fields' => [
-                            ['name' => 'label', 'label' => 'Label', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'name', 'label' => 'Name', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'guard_name', 'label' => 'Guard Name', 'data_type' => 'text', 'input_type' => 'text'],
-                            ['name' => 'created_at', 'label' => 'Created At', 'data_type' => 'string', 'input_type' => 'string'],
-                            ['name' => 'created_by', 'label' => 'Created By', 'data_type' => 'integer', 'input_type' => 'select'],
-                            ['name' => 'action', 'label' => 'Action', 'data_type' => 'string', 'input_type' => 'select'],
+                            ['field' => 'label', 'label' => 'Label', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'name', 'label' => 'Name', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'guard_name', 'label' => 'Guard Name', 'type' => 'text', 'input_type' => 'text'],
+                            ['field' => 'created_at', 'label' => 'Created At', 'type' => 'string', 'input_type' => 'string'],
+                            ['field' => 'created_by', 'label' => 'Created By', 'type' => 'integer', 'input_type' => 'select'],
+                            ['field' => 'action', 'label' => 'Action', 'type' => 'string', 'input_type' => 'select'],
                         ]
                     ]
                 ],
@@ -120,16 +119,16 @@ class MenuSeeder extends Seeder
                         'menu_label' => 'Logs',
                         'menu_order' => 0,
                         'fields' => [
-                            ['name' => 'user_id', 'label' => 'User', 'data_type' => 'integer', 'input_type' => 'select'],
-                            ['name' => 'action', 'label' => 'Action', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'model', 'label' => 'Model', 'data_type' => 'text', 'input_type' => 'text'],
-                            ['name' => 'model_id', 'label' => 'Model ID', 'data_type' => 'integer', 'input_type' => 'select'],
-                            ['name' => 'changed_fields', 'label' => 'Updated Fields', 'data_type' => 'text', 'input_type' => 'textarea'],
-                            ['name' => 'ip_address', 'label' => 'IP Address', 'data_type' => 'string', 'input_type' => 'text'],
-                            ['name' => 'description', 'label' => 'Description', 'data_type' => 'text', 'input_type' => 'textarea'],
-                            ['name' => 'extra_details', 'label' => 'Extra Details', 'data_type' => 'text', 'input_type' => 'textarea'],
-                            ['name' => 'created_at', 'label' => 'Created At', 'data_type' => 'string', 'input_type' => 'string'],
-                            ['name' => 'action', 'label' => 'Action', 'data_type' => 'string', 'input_type' => 'select'],
+                            ['field' => 'user_id', 'label' => 'User', 'type' => 'integer', 'input_type' => 'select'],
+                            ['field' => 'user_action', 'label' => 'User Action', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'model', 'label' => 'Model', 'type' => 'text', 'input_type' => 'text'],
+                            ['field' => 'model_id', 'label' => 'Model ID', 'type' => 'integer', 'input_type' => 'select'],
+                            ['field' => 'changed_fields', 'label' => 'Updated Fields', 'type' => 'text', 'input_type' => 'textarea'],
+                            ['field' => 'ip_address', 'label' => 'IP Address', 'type' => 'string', 'input_type' => 'text'],
+                            ['field' => 'description', 'label' => 'Description', 'type' => 'text', 'input_type' => 'textarea'],
+                            ['field' => 'extra_details', 'label' => 'Extra Details', 'type' => 'text', 'input_type' => 'textarea'],
+                            ['field' => 'created_at', 'label' => 'Created At', 'type' => 'string', 'input_type' => 'string'],
+                            ['field' => 'action', 'label' => 'Action', 'type' => 'string', 'input_type' => 'select'],
                         ]
                     ]
                 ],
@@ -147,7 +146,6 @@ class MenuSeeder extends Seeder
                     'menu_order' => $item['menu_order'],
                     'priority' => null,
                     'icon' => $group['icon'],
-                    'categorized_by' => 'Administration',
                     'status' => 1,
                     'fields' => json_encode($item['fields']),
                     'created_at' => now(),
@@ -169,9 +167,9 @@ class MenuSeeder extends Seeder
 
                     DB::table('menu_fields')->insert([
                         'menu_id' => $menuId,
-                        'name' => $field['name'],
+                        'name' => $field['field'],
                         'label' => $field['label'],
-                        'data_type' => $field['data_type'],
+                        'data_type' => $field['type'],
                         'input_type' => $field['input_type'],
                         'placeholder' => $field['label'],
                         'required' => false,

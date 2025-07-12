@@ -14,7 +14,7 @@ class ModelLogObserver
         }
         Log::create([
             'user_id' => $model->id,
-            'action' => $action,
+            'user_action' => $action,
             'model' => get_class($model),
             'model_id' => $model->id,
             'ip_address' => request()->ip(),
@@ -26,7 +26,7 @@ class ModelLogObserver
     {
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'create',
+            'user_action' => 'create',
             'model' => get_class($model),
             'model_id' => $model->id,
             'changed_fields' => null,
@@ -51,7 +51,7 @@ class ModelLogObserver
 
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'update',
+            'user_action' => 'update',
             'model' => get_class($model),
             'model_id' => $model->id,
             'changed_fields' => json_encode($changedFields),
@@ -64,7 +64,7 @@ class ModelLogObserver
     {
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'delete',
+            'user_action' => 'delete',
             'model' => get_class($model),
             'model_id' => $model->id,
             'changed_fields' => null,
@@ -77,7 +77,7 @@ class ModelLogObserver
     {
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'show',
+            'user_action' => 'show',
             'model' => get_class($model),
             'model_id' => $model->id,
             'changed_fields' => null, // No changes for a show action
@@ -90,7 +90,7 @@ class ModelLogObserver
     {
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'show_column',
+            'user_action' => 'show_column',
             'model' => get_class($model),
             'model_id' => $model->id,
             'changed_fields' => null, // No changes for show_column action
@@ -106,7 +106,7 @@ class ModelLogObserver
     {
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'downloaded-document',
+            'user_action' => 'downloaded-document',
             'model' => get_class($model),
             'model_id' => $model->id,
             'changed_fields' => null, // No changes for show_column action
@@ -123,7 +123,7 @@ class ModelLogObserver
     public function restoreRecord($model){
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'restore',
+            'user_action' => 'restore',
             'model' => get_class($model),
             'model_id' => $model->id,
             'changed_fields' => null,

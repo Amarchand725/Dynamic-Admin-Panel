@@ -118,6 +118,7 @@ class MenuFieldController extends Controller
         $title = $this->singularLabel;
         $menu = Menu::where('id', $id)->first();
         $fields = $this->model->where('menu_id', $menu->id)->get();
+        
         return view($bladePath.'.edit_content', get_defined_vars());
     }
 
@@ -131,37 +132,52 @@ class MenuFieldController extends Controller
         DB::beginTransaction();
 
         try{
-            // Loop through the fields and types
-            foreach ($request->fields as $field => $fieldObj) {
-                $model = $this->model
-                        ->where('menu_id', $mainMenu->id)
-                        ->where('name', $field)
-                        ->first();
+            // Delete old fields
+            $this->model->where('menu_id', $mainMenu->id)->delete();
+            
+            if(isset($request->field_order) && !empty($request->field_order)){
+                $fieldOrder = json_decode($request->field_order, true);
+                $orderedFields = [];
 
-                $extraValidation = NULL;
-                if(isset($fieldObj['extra']) && !empty($fieldObj['extra'])){
+                if (is_array($fieldOrder)) {
+                    foreach ($fieldOrder as $fieldName) {
+                        if (isset($request->fields[$fieldName])) {
+                            $orderedFields[$fieldName] = $request->fields[$fieldName];
+                        }
+                    }
+                }
+
+                // Replace request->fields with ordered array
+                $request->merge(['fields' => $orderedFields]);
+            }
+            
+            // Insert new ones
+            foreach ($request->fields as $field => $fieldObj) {
+                $extra = [];
+
+                if (!empty($fieldObj['extra'])) {
                     $extraValidation = $fieldObj['extra'];
-                }else{
+                } else {
                     if ($fieldObj['type'] == 'string') {
                         $extra['validation'] = 'max:255';
-                    } elseif ($fieldObj['type'] == 'text') {
-                        $extra['validation'] = NULL;
                     }
-
                     $extraValidation = json_encode($extra);
                 }
 
-                $model->data_type = $fieldObj['type'] ?? null;
-                $model->input_type = $fieldObj['input_type'] ?? null;
-                $model->label = $fieldObj['label'] ?? null;
-                $model->placeholder = $fieldObj['placeholder'] ?? null;
-                $model->required = $fieldObj['required'] ?? 0;
-                $model->index_visible = $fieldObj['index_visible'] ?? 0;
-                $model->create_visible = $fieldObj['create_visible'] ?? 0;
-                $model->edit_visible = $fieldObj['edit_visible'] ?? 0;
-                $model->show_visible = $fieldObj['show_visible'] ?? 0;
-                $model->extra = $extraValidation;
-                $model->save();
+                $model = $this->model->create([
+                    'menu_id' => $mainMenu->id,
+                    'name' => $fieldObj['name'] ?? null,
+                    'data_type' => $fieldObj['type'] ?? null,
+                    'input_type' => $fieldObj['input_type'] ?? null,
+                    'label' => $fieldObj['label'] ?? null,
+                    'placeholder' => $fieldObj['placeholder'] ?? null,
+                    'required' => $fieldObj['required'] ?? 0,
+                    'index_visible' => $fieldObj['index_visible'] ?? 0,
+                    'create_visible' => $fieldObj['create_visible'] ?? 0,
+                    'edit_visible' => $fieldObj['edit_visible'] ?? 0,
+                    'show_visible' => $fieldObj['show_visible'] ?? 0,
+                    'extra' => $extraValidation,
+                ]);
             }
 
             if(isset($model) && !empty($model)){

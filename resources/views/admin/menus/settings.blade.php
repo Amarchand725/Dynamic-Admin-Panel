@@ -59,7 +59,7 @@
 @endsection
 
 @push('js')
-<script src="{{ asset('admin') }}/assets/vendor/libs/sortablejs/sortable.js"></script>
+
 <script src="{{ asset('admin') }}/assets/js/extended-ui-drag-and-drop.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 

@@ -422,11 +422,13 @@ function initDynamicFormFeatures() {
         content.id = name;
 
         let dataTypeOptions = '';
+        dataTypeOptions += `<option value="" selected>Select Data Type</option>`;
         for (const key in FIELD_TYPES) {
             dataTypeOptions += `<option value="${key}">${FIELD_TYPES[key]}</option>`;
         }
 
         let inputTypeOptions = '';
+        inputTypeOptions += `<option value="" selected>Select Input Type</option>`;
         for (const key in INPUT_TYPES) {
             inputTypeOptions += `<option value="${key}">${INPUT_TYPES[key]}</option>`;
         }

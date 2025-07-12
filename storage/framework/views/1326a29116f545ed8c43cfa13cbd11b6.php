@@ -63,7 +63,7 @@
                                                             <?php endif; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo actionLabel($model->action); ?>
+                                                            <?php echo actionLabel($model->user_action); ?>
 
                                                         </td>
                                                         <td><?php echo e($className); ?></td>

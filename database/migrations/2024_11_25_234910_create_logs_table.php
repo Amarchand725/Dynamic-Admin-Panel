@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable(); // To associate the action with a user
-            $table->string('action'); // e.g., "create", "update", "delete", etc.
+            $table->string('user_action'); // e.g., "create", "update", "delete", etc.
             $table->string('model'); // The model name or table affected
             $table->unsignedBigInteger('model_id')->nullable(); // The ID of the affected record
             $table->json('changed_fields')->nullable(); // For storing changed fields in an update

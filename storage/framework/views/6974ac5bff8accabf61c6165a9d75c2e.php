@@ -57,7 +57,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('js'); ?>
-<script src="<?php echo e(asset('admin')); ?>/assets/vendor/libs/sortablejs/sortable.js"></script>
+
 <script src="<?php echo e(asset('admin')); ?>/assets/js/extended-ui-drag-and-drop.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
