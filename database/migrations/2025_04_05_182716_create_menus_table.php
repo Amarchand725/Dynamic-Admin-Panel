@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('created_by')->nullable();
             $table->string('icon')->nullable();
+            $table->string('categorized_by')->nullable()->comment('System, Administration, etc.');
             $table->string('menu_group')->nullable();
             $table->string('menu')->nullable();
             $table->string('menu_label')->nullable();

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\{
 };
 use App\Http\Controllers\Admin\{
     AdminController,
+    BrandController,
     CurrencyController,
     LogController,
     MenuController,
@@ -92,6 +93,18 @@ Route::controller(AdminController::class)->group(function () {
         Route::get('trashed', 'trashed')->name('users.trashed');
         Route::get('restore/{id}', 'restore')->name('users.restore');
     }); 
+    
+    Route::prefix('menus')->controller(MenuController::class)->group(function () {
+        Route::get('trashed', 'trashed')->name('menus.trashed');
+        Route::get('restore/{id}', 'restore')->name('menus.restore');
+        Route::get('settings', 'settings')->name('menus.settings');
+        Route::post('reorder', 'reorder')->name('menus.reorder');
+    }); 
+
+        Route::controller(BrandController::class)->group(function () {
+        Route::get('brands/trashed', 'trashed')->name('brands.trashed');
+        Route::get('brands/restore/{id}', 'restore')->name('brands.restore');
+    });
 
     //Resource Routes.
     Route::resource('roles', RoleController::class);
@@ -105,4 +118,5 @@ Route::controller(AdminController::class)->group(function () {
     Route::resource('payment_types', PaymentTypeController::class);
     Route::resource('users', UserController::class);
     Route::resource('logs', LogController::class);
+Route::resource('brands', BrandController::class);
 });

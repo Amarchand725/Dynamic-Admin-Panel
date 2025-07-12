@@ -28,4 +28,9 @@ class Menu extends Model
     public function hasChildMenus(){
         return $this->hasMany(Menu::class, 'menu_group', 'id')->select('menu', 'menu_group'); // must include 'menu_group';
     }
+
+    public function children()
+    {
+        return $this->hasMany(Menu::class, 'menu_group')->orderBy('group_order');
+    }
 }

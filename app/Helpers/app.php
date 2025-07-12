@@ -287,7 +287,6 @@ function getFieldsAndColumns($model, $pathInitialize, $singularLabel, $routePref
     $menu = Menu::select(['id', 'menu'])
     ->with('hasMenFields:id,menu_id,name,data_type,input_type,label,placeholder,required,index_visible,create_visible,edit_visible,show_visible,extra')
                 ->where('menu', $menuName)->first();
-    
     $fieldArray = [];
 
     if(isset($menu->hasMenFields) && !empty($menu->hasMenFields)){
@@ -343,7 +342,7 @@ function getFieldsAndColumns($model, $pathInitialize, $singularLabel, $routePref
             $fieldArray[$field->name] = $fieldData;
         }
     }
-
+    
     return $fieldArray;
 }
 

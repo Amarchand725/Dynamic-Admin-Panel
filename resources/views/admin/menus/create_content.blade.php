@@ -1,4 +1,4 @@
-@foreach($fields as $name => $field)
+@foreach($menuFields as $name => $field)
     @if($name != 'created_at')
         <div class="col-12 mb-3">
             <label class="form-label" for="{{ $name }}">
@@ -96,21 +96,19 @@
                 <span id="add-more-content"></span>
             @else
                 @if($name=='icon')
-                    <input 
-                        type="{{ $field['type'] ?? 'text' }}" 
-                        id="{{ $name }}" 
-                        name="{{ $name }}" 
-                        class="form-control" 
-                        placeholder="{{ $field['placeholder'] ?? '' }}" 
-                        value="{{ old($name, $field['value'] ?? '') }}" 
-                        autofocus
-                    />
-                    <div class="input-group-append">
-                        <a href="https://tabler-icons.io/" target="_blank" class="btn btn-success mt-2">Browse Icons</a>
+                    <select id="{{ $name }}" name="{{ $name }}" class="form-control">
+                        <option value="" selected>Select Icon</option>
+                        @foreach (getTabIcons() as $tabIcon)
+                            <option value="{{ $tabIcon }}" {{ $model->icon==$tabIcon?'selected':'' }}>
+                                <i class="{!! $tabIcon !!}"></i> {{ $tabIcon }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div id="icon-preview" style="margin-top: 10px; font-size: 24px;">
+                        @if($model->icon)
+                            <i class="{{ $model->icon }}"></i>
+                        @endif
                     </div>
-                    <small class="form-text text-muted">
-                        Go to <a href="https://tabler-icons.io/" target="_blank">tabler-icons.io</a>, copy the icon name like <code>ti ti-smart-home</code>, and paste it here.
-                    </small>
                 @else
                     <input 
                         type="{{ $field['type'] ?? 'text' }}" 
@@ -136,40 +134,6 @@
         });
     });
     $('#add-more-btn').on('click', function(){
-        // var html = '';
-        // html = '<div class="row mt-2">'+
-        //             '<div class="col-sm-3">'+
-        //                 '<select name="types[]" id="type" class="form-control">'+
-        //                     '<option value="" selected>Choose type</option>';
-        //                     @foreach (fieldTypes() as $key=>$fieldType)
-        //                         html += '<option value="{{ $key }}" >{{ $fieldType }}</option>';
-        //                     @endforeach
-        //                 html += '</select>'+
-        //             '</div>'+
-        //             '<div class="col-sm-3">'+
-        //                 '<select name="input_types[]" id="input_type" class="form-control">'+
-        //                     '<option value="" selected>Choose input type</option>';
-        //                     @foreach (inputTypes() as $inputKey=>$inputType)
-        //                         html += '<option value="{{ $inputKey }}" >{{ $inputType }}</option>';
-        //                     @endforeach
-        //                 html += '</select>'+
-        //             '</div>'+
-        //             '<div class="col-sm-5">'+
-        //                 '<input '+
-        //                     'type="text" '+
-        //                     'id="fields" '+
-        //                     'name="fields[]" '+
-        //                     'class="form-control" '+
-        //                     'placeholder="Enter field name" '+
-        //                 '/>'+
-        //             '</div>'+
-        //             '<div class="col-sm-1">'+
-        //                 '<button type="button" class="btn btn-danger remove-btn" id="remove-btn">'+
-        //                     '<i class="fa fa-times"></i>'+
-        //                 '</button>'+
-        //             '</div>'+
-        //         '</div>';
-        
         let html = '<div class="row mt-2 dynamic-block">'+
             '<div class="col-sm-4">'+
                 '<input type="text" name="fields[]" class="form-control" placeholder="Enter field name"/>'+

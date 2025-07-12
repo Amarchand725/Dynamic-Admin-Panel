@@ -37,19 +37,23 @@
             <div>Dashboards</div>
         </a>
       </li>
-      
 
-      
+      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('menus-list')): ?>
+      <li class="menu-item <?php echo e(request()->is('menus/settings')?'active':''); ?>">
+        <a href="<?php echo e(route('menus.settings')); ?>" class="menu-link">
+            <i class="menu-icon tf-icons ti ti-settings"></i>
+            <div>Menus Settings</div>
+        </a>
+      </li>
+      <?php endif; ?>
 
       <?php 
         $menuGroups = getDynamicMenuGroups();
       ?> 
 
-      
       <?php $__currentLoopData = $menuGroups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menuGroup): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
         <?php
           $menus = $menuGroup['has_child_menus'];
-          // Build an array of permissions, e.g., ['categories-list', 'brands-list']
           $permissions = array_map(function ($menu) {
               $pluralMenu = str_replace('-', '_', Str::kebab(Str::plural($menu)));
               return $pluralMenu . '-list';

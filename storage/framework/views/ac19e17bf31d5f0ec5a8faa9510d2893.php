@@ -1,4 +1,4 @@
-<?php $__currentLoopData = $fields; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $name => $field): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<?php $__currentLoopData = $menuFields; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $name => $field): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <?php if($name != 'created_at'): ?>
         <div class="col-12 mb-3">
             <label class="form-label" for="<?php echo e($name); ?>">
@@ -99,21 +99,20 @@
                 <span id="add-more-content"></span>
             <?php else: ?>
                 <?php if($name=='icon'): ?>
-                    <input 
-                        type="<?php echo e($field['type'] ?? 'text'); ?>" 
-                        id="<?php echo e($name); ?>" 
-                        name="<?php echo e($name); ?>" 
-                        class="form-control" 
-                        placeholder="<?php echo e($field['placeholder'] ?? ''); ?>" 
-                        value="<?php echo e(old($name, $field['value'] ?? '')); ?>" 
-                        autofocus
-                    />
-                    <div class="input-group-append">
-                        <a href="https://tabler-icons.io/" target="_blank" class="btn btn-success mt-2">Browse Icons</a>
+                    <select id="<?php echo e($name); ?>" name="<?php echo e($name); ?>" class="form-control">
+                        <option value="" selected>Select Icon</option>
+                        <?php $__currentLoopData = getTabIcons(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tabIcon): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($tabIcon); ?>" <?php echo e($model->icon==$tabIcon?'selected':''); ?>>
+                                <i class="<?php echo $tabIcon; ?>"></i> <?php echo e($tabIcon); ?>
+
+                            </option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                    <div id="icon-preview" style="margin-top: 10px; font-size: 24px;">
+                        <?php if($model->icon): ?>
+                            <i class="<?php echo e($model->icon); ?>"></i>
+                        <?php endif; ?>
                     </div>
-                    <small class="form-text text-muted">
-                        Go to <a href="https://tabler-icons.io/" target="_blank">tabler-icons.io</a>, copy the icon name like <code>ti ti-smart-home</code>, and paste it here.
-                    </small>
                 <?php else: ?>
                     <input 
                         type="<?php echo e($field['type'] ?? 'text'); ?>" 
@@ -139,40 +138,6 @@
         });
     });
     $('#add-more-btn').on('click', function(){
-        // var html = '';
-        // html = '<div class="row mt-2">'+
-        //             '<div class="col-sm-3">'+
-        //                 '<select name="types[]" id="type" class="form-control">'+
-        //                     '<option value="" selected>Choose type</option>';
-        //                     <?php $__currentLoopData = fieldTypes(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$fieldType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        //                         html += '<option value="<?php echo e($key); ?>" ><?php echo e($fieldType); ?></option>';
-        //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        //                 html += '</select>'+
-        //             '</div>'+
-        //             '<div class="col-sm-3">'+
-        //                 '<select name="input_types[]" id="input_type" class="form-control">'+
-        //                     '<option value="" selected>Choose input type</option>';
-        //                     <?php $__currentLoopData = inputTypes(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $inputKey=>$inputType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        //                         html += '<option value="<?php echo e($inputKey); ?>" ><?php echo e($inputType); ?></option>';
-        //                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        //                 html += '</select>'+
-        //             '</div>'+
-        //             '<div class="col-sm-5">'+
-        //                 '<input '+
-        //                     'type="text" '+
-        //                     'id="fields" '+
-        //                     'name="fields[]" '+
-        //                     'class="form-control" '+
-        //                     'placeholder="Enter field name" '+
-        //                 '/>'+
-        //             '</div>'+
-        //             '<div class="col-sm-1">'+
-        //                 '<button type="button" class="btn btn-danger remove-btn" id="remove-btn">'+
-        //                     '<i class="fa fa-times"></i>'+
-        //                 '</button>'+
-        //             '</div>'+
-        //         '</div>';
-        
         let html = '<div class="row mt-2 dynamic-block">'+
             '<div class="col-sm-4">'+
                 '<input type="text" name="fields[]" class="form-control" placeholder="Enter field name"/>'+

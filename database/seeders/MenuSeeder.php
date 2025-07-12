@@ -11,7 +11,7 @@ class MenuSeeder extends Seeder
     {
         $menus = [
             [
-                'menu_group' => NULL,
+                'menu_group' => Null,
                 'group_order' => 0,
                 'icon' => 'ti ti-home',
                 'items' => [
@@ -21,9 +21,11 @@ class MenuSeeder extends Seeder
                         'menu_order' => 0,
                         'fields' => [
                             ['name' => 'icon', 'label' => 'Icon', 'data_type' => 'string', 'input_type' => 'text'],
+                            ['name' => 'categorized_by', 'label' => 'Categorized By', 'data_type' => 'string', 'input_type' => 'text'],
                             ['name' => 'menu_group', 'label' => 'Menu Group', 'data_type' => 'integer', 'input_type' => 'select'],
                             ['name' => 'menu', 'label' => 'Menu', 'data_type' => 'string', 'input_type' => 'text'],
                             ['name' => 'menu_label', 'label' => 'Menu Label', 'data_type' => 'string', 'input_type' => 'text'],
+                            ['name' => 'fields', 'label' => 'Menu Fields', 'data_type' => 'text', 'input_type' => 'textarea'],
                             ['name' => 'status', 'label' => 'Status', 'data_type' => 'boolean', 'input_type' => 'select'],
                             ['name' => 'created_at', 'label' => 'Created At', 'data_type' => 'string', 'input_type' => 'string'],
                             ['name' => 'created_by', 'label' => 'Created By', 'data_type' => 'integer', 'input_type' => 'select'],
@@ -33,7 +35,7 @@ class MenuSeeder extends Seeder
                 ],
             ],
             [
-                'menu_group' => NULL,
+                'menu_group' => 1,
                 'group_order' => 1,
                 'icon' => 'ti ti-users',
                 'items' => [
@@ -53,7 +55,7 @@ class MenuSeeder extends Seeder
                 ],
             ],
             [
-                'menu_group' => NULL,
+                'menu_group' => 1,
                 'group_order' => 2,
                 'icon' => 'ti ti-settings',
                 'items' => [
@@ -69,7 +71,7 @@ class MenuSeeder extends Seeder
                 ],
             ],
             [
-                'menu_group' => NULL,
+                'menu_group' => 1,
                 'group_order' => 3,
                 'icon' => 'ti ti-settings',
                 'items' => [
@@ -89,7 +91,7 @@ class MenuSeeder extends Seeder
                 ],
             ],
             [
-                'menu_group' => NULL,
+                'menu_group' => 1,
                 'group_order' => 4,
                 'icon' => 'ti ti-settings',
                 'items' => [
@@ -109,7 +111,7 @@ class MenuSeeder extends Seeder
                 ],
             ],
             [
-                'menu_group' => NULL,
+                'menu_group' => 1,
                 'group_order' => 5,
                 'icon' => 'ti ti-settings',
                 'items' => [
@@ -138,15 +140,16 @@ class MenuSeeder extends Seeder
             foreach ($group['items'] as $menuIndex => $item) {
                 $menuId = DB::table('menus')->insertGetId([
                     'created_by' => 1,
-                    'menu_group' => null,
+                    'menu_group' => $group['menu_group'],
                     'menu' => $item['menu'],
                     'menu_label' => $item['menu_label'],
                     'group_order' => $group['group_order'],
                     'menu_order' => $item['menu_order'],
                     'priority' => null,
                     'icon' => $group['icon'],
+                    'categorized_by' => 'Administration',
                     'status' => 1,
-                    'fields' => json_encode($item['fields']), 
+                    'fields' => json_encode($item['fields']),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

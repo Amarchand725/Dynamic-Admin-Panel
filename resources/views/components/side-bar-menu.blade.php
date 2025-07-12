@@ -37,98 +37,23 @@
             <div>Dashboards</div>
         </a>
       </li>
-      {{-- @canany(['roles-list', 'permissions-list', 'menus-list', 'api_docs-list', 'users-list', 'logs-list'])
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Settings</span>
-        </li>
-        <li class="menu-item
-            {{
-                request()->is('logs') ||
-                request()->is('logs/*') ||
-                request()->is('users') ||
-                request()->is('users/*') ||
-                request()->is('menus') ||
-                request()->is('menus/*') ||
-                request()->is('roles') ||
-                request()->is('roles/*') ||
-                request()->is('permissions/*') ||
-                request()->is('permissions')
-                ?'open active':''
-            }}
-        ">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons ti ti-settings"></i>
-              <div data-i18n="Roles & Permissions">Roles & Permissions</div>
-            </a>
-            <ul class="menu-sub">
-                @can('users-list')
-                <li class="menu-item {{ request()->is('users') ?'active':'' }}">
-                  <a href="{{ route('users.index') }}" class="menu-link"  >
-                      <div>All Users</div>
-                  </a>
-                </li>
-                @endcan
-                @can('api_docs-list')
-                <li class="menu-item {{ request()->is('api_docs') ?'active':'' }}">
-                  <a href="{{ route('api_docs.index') }}" class="menu-link" target="blank">
-                      <div>Api Docs</div>
-                  </a>
-                </li>
-                @endcan
-                @can('menus-list')
-                <li class="menu-item {{ request()->is('menus') || request()->is('menus/*')?'active':'' }}">
-                    <a href="{{ route('menus.index') }}" class="menu-link">
-                        <div>Menus</div>
-                    </a>
-                </li>
-                @endcan
-                @can('roles-list')
-                <li class="menu-item {{ request()->is('roles') || request()->is('roles/*')?'active':'' }}">
-                    <a href="{{ route('roles.index') }}" class="menu-link">
-                        <div>Roles</div>
-                    </a>
-                </li>
-                @endcan
-                @can('permissions-list')
-                <li class="menu-item {{ request()->is('permissions') || request()->is('permissions/*')?'active':'' }}">
-                    <a href="{{ route('permissions.index') }}" class="menu-link">
-                        <div>
-                          Permissions
-                          @if(count(getNewMenus()) > 0)
-                            <span class="blink-text">&#9733;</span>
-                          @endif
-                        </div>
-                    </a>
-                </li>
-                @endcan
-                @can('logs-list')
-                <li class="menu-item {{ request()->is('logs') || request()->is('logs/*')?'active':'' }}">
-                    <a href="{{ route('logs.index') }}" class="menu-link">
-                        <div>
-                          All Logs
-                        </div>
-                    </a>
-                </li>
-                @endcan
-            </ul>
-        </li>
-      @endcanany --}}
 
-      {{-- <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Administration</span>
-      </li> --}}
+      @can('menus-list')
+      <li class="menu-item {{ request()->is('menus/settings')?'active':'' }}">
+        <a href="{{ route('menus.settings') }}" class="menu-link">
+            <i class="menu-icon tf-icons ti ti-settings"></i>
+            <div>Menus Settings</div>
+        </a>
+      </li>
+      @endcan
 
       @php 
         $menuGroups = getDynamicMenuGroups();
       @endphp 
 
-      {{-- <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">System</span>
-      </li> --}}
       @foreach ($menuGroups as $menuGroup)  
         @php
           $menus = $menuGroup['has_child_menus'];
-          // Build an array of permissions, e.g., ['categories-list', 'brands-list']
           $permissions = array_map(function ($menu) {
               $pluralMenu = str_replace('-', '_', Str::kebab(Str::plural($menu)));
               return $pluralMenu . '-list';
