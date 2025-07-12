@@ -19,10 +19,6 @@ use App\Http\Controllers\{
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::controller(WebController::class)->group(function () {
-    Route::get('/-sdd-google-shopping.txt', 'SddGoogleShopping')->name('-sdd-google-shopping.txt');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
