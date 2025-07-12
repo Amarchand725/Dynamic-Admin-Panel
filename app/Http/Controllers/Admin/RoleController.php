@@ -55,6 +55,7 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index(Request $request)
     {
         $title = $this->pluralLabel;
@@ -62,49 +63,51 @@ class RoleController extends Controller
         $routeInitialize = $this->routePrefix;
         $bladePath = $this->pathInitialize;
 
-        $models = $this->model->orderby('id', 'desc')->select(['id', 'name', 'status', 'created_at'])->get();
-        // Define the columns dynamically
-        $columns = [
-            'role' => function ($model) {
-                return $model->name;
-            },
-            'status' => function ($model) use ($bladePath) {
-                $label = '-';
-                if($model->status==1){
-                    $label = '<span class="badge bg-label-success me-1">Active</span>';
-                }elseif($model->status==0){
-                    $label = '<span class="badge bg-label-danger me-1">De-Active</span>';
-                }
+        // Get column definitions dynamically
+        $getFields = getFields($this->model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'index');
+        
+        //select columns
+        $selectedColumns = collect($getFields)
+        ->mapWithKeys(function ($config, $key) {
+            return [$key => $config['index']];
+        })
+        ->keys()
+        ->filter(function ($key) {
+            return $key !== 'action'; // Remove 'action'
+        })
+        ->values() // Reindex the array
+        ->toArray();
+    
+        // Optionally prepend 'id'
+        array_unshift($selectedColumns, 'id');
+        
+        $selectedColumns = array_filter($selectedColumns, fn($col) => $col !== 'role');
 
-                return $label;
-            },
-            'created_at' => function ($model) {
-                if(!empty($model->created_at)){
-                    return date('d, M Y | h:i A', strtotime($model->created_at));
-                }else{
-                    return '-';
-                }
-            },
-            'action' => function ($model) use ($bladePath, $singularLabel, $routeInitialize) {
-                return view($bladePath.'.action', ['model' => $model, 'singularLabel' => $singularLabel, 'routeInitialize' => $routeInitialize])->render();
-            }
-        ];
+        $models = $this->model->latest()
+            ->select($selectedColumns);
+        //select columns
+
+        $columns = collect($getFields)->mapWithKeys(function ($config, $key) {
+            return [$key => $config['index']];
+        })->toArray();  // Convert Collection to Array
         
         if ($request->ajax() && $request->loaddata == "yes") {
             return $this->getDataTable($request, $models, $columns);
         }
 
-        $columnsConfig = collect($columns)->map(function ($callback, $key) {
+        $columnsConfig = collect($getFields)->map(function ($config, $key) {
             return [
                 'data' => $key,
                 'name' => $key,
-                'orderable' => !in_array($key, ['action']), // Set orderable=false for 'action'
-                'searchable' => !in_array($key, ['action']) // Set searchable=false for 'action'
+                'title' => $config['label'],
+                'orderable' => !in_array($key, ['action']),
+                'searchable' => !in_array($key, ['action'])
             ];
         })->values()->toArray();
         
         return view($bladePath.'.index', get_defined_vars());
     }
+
     public function create(){
         $bladePath = $this->pathInitialize;
         $title = $this->singularLabel;

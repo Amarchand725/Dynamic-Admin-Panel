@@ -144,7 +144,7 @@
             '</div>'+
             '<div class="col-sm-3">'+
                 '<select name="types[]" class="form-control">'+
-                    '<option value="" selected>Choose type</option>';
+                    '<option value="" selected>Choose data type</option>';
                     <?php $__currentLoopData = fieldTypes(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$fieldType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         html += '<option value="<?php echo e($key); ?>"><?php echo e($fieldType); ?></option>';
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

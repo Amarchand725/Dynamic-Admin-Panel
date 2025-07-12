@@ -20,7 +20,11 @@
     </style>
 <?php $__env->stopPush(); ?>
 <?php $__env->startSection('content'); ?>
-<input type="hidden" id="page_url" value="<?php echo e(route($routeInitialize.'.index')); ?>">
+<?php if(request()->is($routeInitialize.'/trashed')): ?>
+    <input type="hidden" id="page_url" value="<?php echo e(route($routeInitialize.'.trashed')); ?>">
+<?php else: ?>
+    <input type="hidden" id="page_url" value="<?php echo e(route($routeInitialize.'.index')); ?>">
+<?php endif; ?>
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card mb-4">
@@ -30,25 +34,51 @@
                         <h4 class="fw-bold mb-0"><span class="text-muted fw-light">Home /</span> <?php echo e($title); ?></h4>
                     </div>
                 </div>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check($routeInitialize.'-create')): ?>
-                    <div class="col-md-6">
-                        <div class="dt-buttons btn-group flex-wrap float-end mt-4">
-                            <button
-                                id="add-btn"
-                                data-toggle="tooltip" data-placement="top" title="Add <?php echo e($singularLabel); ?>"
-                                data-url="<?php echo e(route($routeInitialize.'.store')); ?>"
-                                data-create-url="<?php echo e(route($routeInitialize.'.create')); ?>"
-                                class="btn btn-primary add-btn mb-3 mb-md-0 mx-3"
-                                tabindex="0" aria-controls="DataTables_Table_0"
-                                type="button" data-bs-toggle="modal"
-                                data-bs-target="#create-pop-up-modal">
-                                <span>
-                                    <i class="ti ti-plus me-0 me-sm-1 ti-xs"></i>
-                                    <span class="d-none d-sm-inline-block"> Add <?php echo e($singularLabel); ?> </span>
-                                </span>
-                            </button>
+                <?php if(request()->is($routeInitialize.'/trashed')): ?>
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check($routeInitialize.'-list')): ?>
+                        <div class="col-md-6">
+                            <div class="dt-buttons btn-group flex-wrap float-end mt-4">
+                                <a data-toggle="tooltip" data-placement="top" title="Show All Records" href="<?php echo e(route($routeInitialize.'.index')); ?>" class="btn btn-success btn-primary mx-3">
+                                    <span>
+                                        <i class="ti ti-eye me-0 me-sm-1 ti-xs"></i>
+                                        <span class="d-none d-sm-inline-block">View All Records</span>
+                                    </span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any([$routeInitialize.'-create', $routeInitialize.'-trashed'])): ?>
+                        <div class="col-md-6">
+                            <div class="dt-buttons btn-group flex-wrap float-end mt-4">
+                                <button id="refresh-record" class="btn btn-success mx-2" title="Refresh Records"><i class="ti ti-refresh me-0 ti-xs"></i></button>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check($routeInitialize.'-trashed')): ?>
+                                    <a data-toggle="tooltip" data-placement="top" title="All Trashed Records" href="<?php echo e(route($routeInitialize.'.trashed')); ?>" class="btn btn-label-danger mx-2">
+                                        <span>
+                                            <i class="ti ti-trash me-0 me-sm-1 ti-xs"></i>
+                                            <span class="d-none d-sm-inline-block">All Trashed Records </span>
+                                        </span>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check($routeInitialize.'-create')): ?>
+                                    <button
+                                        id="add-btn"
+                                        data-toggle="tooltip" data-placement="top" title="Add <?php echo e($singularLabel); ?>"
+                                        data-url="<?php echo e(route($routeInitialize.'.store')); ?>"
+                                        data-create-url="<?php echo e(route($routeInitialize.'.create')); ?>"
+                                        class="btn btn-primary add-btn mb-3 mb-md-0 mx-2"
+                                        tabindex="0" aria-controls="DataTables_Table_0"
+                                        type="button" data-bs-toggle="modal"
+                                        data-bs-target="#create-pop-up-modal-for-file">
+                                        <span>
+                                            <i class="ti ti-plus me-0 me-sm-1 ti-xs"></i>
+                                            <span class="d-none d-sm-inline-block"> Add <?php echo e($singularLabel); ?> </span>
+                                        </span>
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>

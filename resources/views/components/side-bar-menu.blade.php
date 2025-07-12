@@ -41,8 +41,8 @@
       @can('menus-list')
       <li class="menu-item {{ request()->is('menus/settings')?'active':'' }}">
         <a href="{{ route('menus.settings') }}" class="menu-link">
-            <i class="menu-icon tf-icons ti ti-settings"></i>
-            <div>Menus Settings</div>
+          <i class="menu-icon tf-icons ti ti-settings"></i>
+          <div>Menus Reorder</div>
         </a>
       </li>
       @endcan

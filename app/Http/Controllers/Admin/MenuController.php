@@ -126,7 +126,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $singularLabel = $this->singularLabel;
-        $fields = getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix);; // getFieldsAndColumns() returns dynamic field definitions
+        $fields = getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix);
 
         // Step 1: Build dynamic validation rules
         $rules = buildValidationRules($fields, null, $request);
@@ -505,7 +505,7 @@ class MenuController extends Controller
     {
         $model = $this->model->where('id', $modelId)->first();
         $singularLabel = $this->singularLabel;
-        $fields = getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix);; // getFieldsAndColumns() returns dynamic field definitions
+        $fields = getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix);
 
         // Step 1: Build dynamic validation rules
         $rules = buildValidationRules($fields, $model, $request);
@@ -706,6 +706,92 @@ class MenuController extends Controller
                 'status' => false,
                 'error' => $singularLabel.' not deleted try again.'
             ]);
+        }
+    }
+
+    public function trashed(Request $request)
+    {
+        $singularLabel = $this->singularLabel;
+        $routeInitialize = $this->routePrefix;
+        $bladePath = $this->pathInitialize;
+        $title = 'All Trashed '.Str::plural($singularLabel);
+
+        // Get column definitions dynamically
+        $getFields = getFields($this->model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'index');
+
+        if (isset($getFields['icon'])) {
+            $getFields['icon']['index'] = fn($model) => '<i class="menu-icon tf-icons '.$model->icon .'"></i>';
+        }
+        // Check and handle relation
+        if (isset($getFields['menu_group'])) {
+            // Customize index to pull from relation
+            $getFields['menu_group']['index'] = fn($model) => optional($model->hasMenuGroup)->menu ?? '-';
+        }
+
+        //select columns
+        $selectedColumns = collect($getFields)
+        ->mapWithKeys(function ($config, $key) {
+            return [$key => $config['index']];
+        })
+        ->keys()
+        ->filter(function ($key) {
+            return $key !== 'action'; // Remove 'action'
+        })
+        ->values() // Reindex the array
+        ->toArray();
+    
+        // Optionally prepend 'id'
+        array_unshift($selectedColumns, 'id');
+        
+        $models = $this->model->onlyTrashed()->latest()
+            ->select($selectedColumns);
+        //select columns
+
+        // Step 2: Check if current route is trashed
+        if (Route::currentRouteName() === $routeInitialize.'.trashed') {
+            // Step 3: Remove existing 'action' config
+            unset($getFields['action']);
+
+            // Step 4: Add custom restore button to 'action'
+            $getFields['action'] = [
+                'type' => 'custom',
+                'label' => 'Action',
+                'index_visible' => true,
+                'index' => fn($model) => '<a href="' . route($routeInitialize.'.restore', $model->id) . '" class="btn btn-icon btn-label-info waves-effect">'
+                                        . '<span><i class="ti ti-refresh ti-sm"></i></span></a>'
+            ];
+        }
+
+        $columns = collect($getFields)->mapWithKeys(function ($config, $key) {
+            return [$key => $config['index']];
+        })->toArray();  // Convert Collection to Array
+        
+        if ($request->ajax() && $request->loaddata == "yes") {
+            return $this->getDataTable($request, $models, $columns);
+        }
+
+        $columnsConfig = collect($getFields)->map(function ($config, $key) {
+            return [
+                'data' => $key,
+                'name' => $key,
+                'title' => $config['label'],
+                'orderable' => !in_array($key, ['action']), // Set orderable=false for 'action'
+                'searchable' => !in_array($key, ['action']) // Set searchable=false for 'action'
+            ];
+        })->values()->toArray();
+        
+        return view($bladePath.'.index', get_defined_vars());
+    }
+    public function restore($id)
+    {
+       $find = $this->model->onlyTrashed()->where('id', $id)->first();
+        if(isset($find) && !empty($find)) {
+            $restore = $find->restore();
+            if(!empty($restore)) {
+                return redirect()->back()->with('message', 'Record Restored Successfully.');
+            }
+        } else {
+            return false;
         }
     }
 

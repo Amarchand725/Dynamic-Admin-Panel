@@ -41,8 +41,8 @@
       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('menus-list')): ?>
       <li class="menu-item <?php echo e(request()->is('menus/settings')?'active':''); ?>">
         <a href="<?php echo e(route('menus.settings')); ?>" class="menu-link">
-            <i class="menu-icon tf-icons ti ti-settings"></i>
-            <div>Menus Settings</div>
+          <i class="menu-icon tf-icons ti ti-settings"></i>
+          <div>Menus Reorder</div>
         </a>
       </li>
       <?php endif; ?>

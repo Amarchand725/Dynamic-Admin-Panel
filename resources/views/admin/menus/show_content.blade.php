@@ -23,8 +23,8 @@
                             @foreach ($tableFields as $tableKey=>$tableField)
                                 <tr>
                                     <td>{{ ucfirst($tableField['field']) ?? '' }}</td>
-                                    <td>{{ $tableField['type'] ?? '' }}</td>
-                                    <td>{{ $tableField['input_type'] ?? '' }}</td>
+                                    <td>{{ ucfirst($tableField['type'] ?? '') }}</td>
+                                    <td>{{ ucfirst($tableField['input_type'] ?? '') }}</td>
                                 </tr>
                             @endforeach
                         @endif

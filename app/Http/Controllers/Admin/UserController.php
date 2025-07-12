@@ -48,172 +48,48 @@ class UserController extends Controller
         ];
     }
 
-    protected function getFieldsAndColumns()
-    {
-        // Dynamic fields fetched from the database
-        $dynamicFields = $this->generateDynamicFieldArray($this->model);
-
-        // Common fields that should always be included
-        $commonFields = $this->getCommonFields($this->model);
-    
-        // Merging common fields with dynamic fields
-        $mergedFields = array_merge($dynamicFields, $commonFields);
-        
-        return $mergedFields;
-    }
-
-    public function generateDynamicFieldArray($model) {
-        $table = $model->getTable();
-        // Get column names and types from the database schema
-        $columns = DB::connection()->getDoctrineSchemaManager()->listTableColumns($table);
-        
-        $fieldArray = [];
-
-        foreach ($columns as $columnName => $column) {
-            // Skip common fields
-            if (in_array($columnName, ['id', 'status', 'created_at', 'password', 'is_employee', 'email_verified_at', 'created_by', 'remember_token', 'action', 'deleted_at', 'updated_at'])) {
-                continue;
-            }
-        
-            $type = $column->getType()->getName();
-        
-            // Default field type
-            $fieldType = $type === 'boolean' ? 'select' : 'text';
-        
-            // Set type to 'file' if column name matches a known upload field
-            if (in_array($columnName, ['profile', 'image', 'document', 'avatar', 'file'])) {
-                $fieldType = 'file';
-            }
-        
-            $fieldArray[$columnName] = [
-                'type' => $fieldType,
-                'label' => ucfirst(str_replace('_', ' ', $columnName)),
-                'placeholder' => "Enter $columnName",
-                'required' => in_array($columnName, ['title', 'status']),
-                'value' => fn($model) => $model->{$columnName} ?? '',
-                'index' => fn($model) => $fieldType === 'file'
-                    ? ($model->{$columnName} ? '<a href="' . asset('storage/' . $model->{$columnName}) . '" target="_blank">View</a>' : '-')
-                    : ($model->{$columnName} ?? '-'),
-                'index_visible' => true,
-                'create_visible' => true,
-                'edit_visible' => true,
-                'show_visible' => true,
-            ];
-        
-            // Hide specific fields in index if needed
-            if ($columnName == 'fields') {
-                $fieldArray[$columnName]['index_visible'] = false;
-            }
-        }
-    
-        return $fieldArray;
-    }
-    public function getCommonFields($model) {
-        // Common fields data (status, created_at, created_by, action)
-        return [
-            'role' => [
-                'type' => 'select',
-                'label' => 'Role',
-                'required' => false,
-                'value' => fn($model) => optional($model->getRoleNames())->first() ?? '-',
-                'index' => fn($model) => optional($model->getRoleNames())->first() ?? '-',
-                'index_visible' => true,
-                'create_visible' => true,  // Hide in create form
-                'edit_visible' => true,    // Hide in edit form
-                'show_visible' => true,
-            ],
-            'status' => [
-                'type' => 'select',
-                'label' => 'Status',
-                'options' => [
-                    1 => 'Active',
-                    0 => 'De-Active'
-                ],
-                'index' => fn($model) => $model->status == 1
-                    ? '<span class="badge bg-label-success me-1">Active</span>'
-                    : '<span class="badge bg-label-danger me-1">De-Active</span>',
-                'required' => true,
-                'index_visible' => true,
-                'create_visible' => true,
-                'edit_visible' => true,
-                'show_visible' => true,
-            ],
-            // 'created_by' => [
-            //     'type' => 'text',
-            //     'label' => 'Created By',
-            //     'required' => false,
-            //     'value' => fn($model) => isset($model->createdBy) && !empty($model->createdBy) ? $model->createdBy->name : '-',
-            //     'index' => fn($model) => isset($model->createdBy) && !empty($model->createdBy) ? $model->createdBy->name : '-',
-            //     'index_visible' => true,
-            //     'create_visible' => false,  // Hide in create form
-            //     'edit_visible' => false,    // Hide in edit form
-            //     'show_visible' => true,
-            // ],
-            'created_at' => [
-                'type' => 'datetime',
-                'label' => 'Created At',
-                'required' => false,
-                'value' => fn($model) => Carbon::parse($model->created_at)->format('d, M Y | H:i A') ?? '',
-                'index' => fn($model) => Carbon::parse($model->created_at)->format('d, M Y'),
-                'index_visible' => true,
-                'create_visible' => false,  // Hide in create form
-                'edit_visible' => false,    // Hide in edit form
-                'show_visible' => true,
-            ],
-            'action' => [
-                'index' => fn($model) => view($this->pathInitialize . '.action', [
-                    'model' => $model,
-                    'singularLabel' => $this->singularLabel,
-                    'routeInitialize' => $this->routePrefix
-                ])->render(),
-                'index_visible' => true,
-                'create_visible' => false,  // Hide in create form
-                'edit_visible' => false,    // Hide in edit form
-                'show_visible' => false,
-            ]
-        ];
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
+
     public function index(Request $request)
     {
-        // return $this->getFieldsAndColumns();
         $title = $this->pluralLabel;
         $singularLabel = $this->singularLabel;
         $routeInitialize = $this->routePrefix;
         $bladePath = $this->pathInitialize;
 
-        // $models = [];
+        // Get column definitions dynamically
+        $getFields = getFields($this->model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'index');
+        
+        if (isset($getFields['role'])) {
+            $getFields['role']['index'] = fn($model) => $model->role ?? '-' ;
+        }
+        
+        //select columns
+        $selectedColumns = collect($getFields)
+        ->mapWithKeys(function ($config, $key) {
+            return [$key => $config['index']];
+        })
+        ->keys()
+        ->filter(function ($key) {
+            return $key !== 'action'; // Remove 'action'
+        })
+        ->values() // Reindex the array
+        ->toArray();
+    
+        // Optionally prepend 'id'
+        array_unshift($selectedColumns, 'id');
+        
+        $selectedColumns = array_filter($selectedColumns, fn($col) => $col !== 'role');
+
         $models = $this->model->latest()
             ->with('createdBy:id,name')
-            ->select('id', 'is_employee', 'profile', 'name', 'email', 'phone', 'status');
-        
-        // Get column definitions dynamically
-       $getFields = getFields($this->model, $this->getFieldsAndColumns(), 'index');
-        
-        // Insert 'role' after 'name'
-        if (isset($getFields['role'])) {
-            $roleDefinition = $getFields['role'];
-            unset($getFields['role']);
-
-            // Rebuild the array with 'role' in the desired position
-            $reorderedFields = [];
-
-            foreach ($getFields as $key => $value) {
-                $reorderedFields[$key] = $value;
-
-                if ($key === 'name') {
-                    // Inject 'role' right after 'name'
-                    $reorderedFields['role'] = $roleDefinition;
-                }
-            }
-
-            $getFields = $reorderedFields;
-        }
+            ->select($selectedColumns);
+        //select columns
 
         $columns = collect($getFields)->mapWithKeys(function ($config, $key) {
             return [$key => $config['index']];
@@ -223,22 +99,24 @@ class UserController extends Controller
             return $this->getDataTable($request, $models, $columns);
         }
 
-        $columnsConfig = collect($columns)->map(function ($callback, $key) {
+        $columnsConfig = collect($getFields)->map(function ($config, $key) {
             return [
                 'data' => $key,
                 'name' => $key,
-                'orderable' => !in_array($key, ['action']), // Set orderable=false for 'action'
-                'searchable' => !in_array($key, ['action']) // Set searchable=false for 'action'
+                'title' => $config['label'],
+                'orderable' => !in_array($key, ['action']),
+                'searchable' => !in_array($key, ['action'])
             ];
         })->values()->toArray();
         
         return view($bladePath.'.index', get_defined_vars());
     }
+
     public function create(){
         $bladePath = $this->pathInitialize;
         $roles = $this->roleModel->where('status', 1)->get();
         $model = $this->model;
-        $fields = getFields($this->model, $this->getFieldsAndColumns(), 'create');
+        $fields = getFields($this->model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'create');
         return (string) view($bladePath.'.create_content', get_defined_vars());
     }
 
@@ -251,7 +129,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $singularLabel = $this->singularLabel;
-        $fields = $this->getFieldsAndColumns(); // getFieldsAndColumns() returns dynamic field definitions
+        $fields = getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix);
 
         // Step 1: Build dynamic validation rules
         $rules = buildValidationRules($fields, null, $request);
@@ -353,7 +231,7 @@ class UserController extends Controller
     {
         $bladePath = $this->pathInitialize;
         $model = $this->model->findOrFail($id);
-        $fields = getFields($model, $this->getFieldsAndColumns(), 'show');
+        $fields = getFields($model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'show');
         // Insert 'role' after 'name'
         if (isset($fields['role'])) {
             $roleDefinition = $fields['role'];
@@ -385,7 +263,7 @@ class UserController extends Controller
         $title = $this->singularLabel;
         $roles = $this->roleModel->where('status', 1)->get();
         $model = $this->model->where('id', $id)->first();
-        $fields = getFields($model, $this->getFieldsAndColumns(), 'edit');
+        $fields = getFields($model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'edit');
         
         return view($bladePath.'.edit_content', get_defined_vars());
     }
@@ -397,7 +275,7 @@ class UserController extends Controller
     {
         $model = $this->model->where('id', $modelId)->first();
         $singularLabel = $this->singularLabel;
-        $fields = $this->getFieldsAndColumns(); // getFieldsAndColumns() returns dynamic field definitions
+        $fields = getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix);
 
         // Step 1: Build dynamic validation rules
         $rules = buildValidationRules($fields, $model, $request);
@@ -550,10 +428,11 @@ class UserController extends Controller
             return $this->getDataTable($request, $models, $columns);
         }
 
-        $columnsConfig = collect($columns)->map(function ($callback, $key) {
+        $columnsConfig = collect($getFields)->map(function ($config, $key) {
             return [
                 'data' => $key,
                 'name' => $key,
+                
                 'orderable' => !in_array($key, ['action']), // Set orderable=false for 'action'
                 'searchable' => !in_array($key, ['action']) // Set searchable=false for 'action'
             ];

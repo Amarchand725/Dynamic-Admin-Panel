@@ -83,7 +83,6 @@ class MenuSeeder extends Seeder
                             ['field' => 'guard_name', 'label' => 'Guard Name', 'type' => 'string', 'input_type' => 'text'],
                             ['field' => 'status', 'label' => 'Status', 'type' => 'boolean', 'input_type' => 'select'],
                             ['field' => 'created_at', 'label' => 'Created At', 'type' => 'string', 'input_type' => 'string'],
-                            ['field' => 'created_by', 'label' => 'Created By', 'type' => 'integer', 'input_type' => 'select'],
                             ['field' => 'action', 'label' => 'Action', 'type' => 'string', 'input_type' => 'select'],
                         ]
                     ]

@@ -132,6 +132,12 @@ class MenuFieldController extends Controller
         DB::beginTransaction();
 
         try{
+            if(!empty($mainMenu)){
+                $mainMenu->fields = json_encode($request->fields);
+                $mainMenu->save();
+            }
+            $mainMenu->refresh();
+            
             // Delete old fields
             $this->model->where('menu_id', $mainMenu->id)->delete();
             
