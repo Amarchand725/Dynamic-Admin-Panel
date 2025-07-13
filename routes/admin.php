@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\{
 };
 use App\Http\Controllers\Admin\{
     AdminController,
+    BrandController,
     CurrencyController,
     LogController,
     MenuController,
@@ -61,7 +62,7 @@ Route::controller(AdminController::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::controller(AdminController::class)->group(function () {
+Route::controller(AdminController::class)->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::get('/logout', 'logOut')->name('user.logout');
     });
@@ -83,6 +84,11 @@ Route::middleware('auth')->group(function () {
         Route::post('reorder', 'reorder')->name('menus.reorder');
     }); 
 
+        Route::controller(BrandController::class)->group(function () {
+        Route::get('brands/trashed', 'trashed')->name('brands.trashed');
+        Route::get('brands/restore/{id}', 'restore')->name('brands.restore');
+    });
+
     //Resource Routes.
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
@@ -92,4 +98,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('currencies', CurrencyController::class);
     Route::resource('users', UserController::class);
     Route::resource('logs', LogController::class);
+Route::resource('brands', BrandController::class);
 });

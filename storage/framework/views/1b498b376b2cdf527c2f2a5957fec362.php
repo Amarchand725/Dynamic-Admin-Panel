@@ -13,31 +13,35 @@
 
                     </span>
                 <?php elseif($name === 'fields'): ?>
-                    <?php $tableFields = json_decode($field['value'], true) ?> 
+                    <?php $tableFields = $model->hasMenFields; ?> 
                     <table class="table">
                         <tr>
-                            <th>Field Name</th>
-                            <th>Data Type</th>
-                            <th>Input Type</th>
+                            <th><strong>Field Name</strong></th>
+                            <th><strong>Data Type</strong></th>
+                            <th><strong>Input Type</strong></th>
                         </tr>
                         <?php if(isset($tableFields) && !empty($tableFields)): ?>
                             <?php $__currentLoopData = $tableFields; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tableKey=>$tableField): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td><?php echo e(ucfirst($tableField['field']) ?? ''); ?></td>
-                                    <td><?php echo e(ucfirst($tableField['type'] ?? '')); ?></td>
-                                    <td><?php echo e(ucfirst($tableField['input_type'] ?? '')); ?></td>
+                                    <td><?php echo e(ucfirst($tableField->name) ?? '-'); ?></td>
+                                    <td><?php echo e(ucfirst($tableField->data_type ?? '-')); ?></td>
+                                    <td><?php echo e(ucfirst($tableField->input_type ?? '-')); ?></td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php endif; ?>
                     </table>
                 <?php else: ?>
-                    <?php if($name=='menu_group' && isset($model->hasMenuGroup) && !empty($model->hasMenuGroup)): ?>
-                        <?php echo e($model->hasMenuGroup->menu ?? '-'); ?>
+                    <?php if($name=='menu_group'): ?>
+                        <?php if(isset($model->hasMenuGroup) && !empty($model->hasMenuGroup)): ?>
+                            <?php echo e(ucfirst($model->hasMenuGroup->menu ?? '-')); ?>
 
+                        <?php else: ?>
+                            -
+                        <?php endif; ?>
                     <?php elseif($name=='icon'): ?>
-                        <i class="menu-icon tf-icons <?php echo e($model->icon ?? 'ti ti-smart-home'); ?>"></i>
+                        <i class="menu-icon tf-icons <?php echo e($model->icon ?? '-'); ?>"></i>
                     <?php else: ?>
-                        <?php echo $field['value'] ?? '-'; ?>
+                        <?php echo ucfirst($field['value'] ?? '-'); ?>
 
                     <?php endif; ?>
                 <?php endif; ?>

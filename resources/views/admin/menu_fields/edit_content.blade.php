@@ -42,19 +42,19 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-sm-12">
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label>Field Name</label>
                                 <input type="text" name="fields[{{ $field['name'] }}][name]" value="{{ $field['name'] }}" class="form-control w-full">
-                            </div>
-                            <div class="mb-3">
+                            </div> --}}
+                            {{-- <div class="mb-3">
                                 <label>Data Type</label>
                                 <select name="fields[{{ $field['name'] }}][type]" class="form-select w-full">
                                     <option value="" selected>Select Data Type</option>
                                     @foreach (fieldTypes() as $key=>$fieldType)
-                                        <option value="{{ $key }}" {{ $field['type']==$key ? 'selected' : '' }}>{{ $fieldType }}</option>
+                                        <option value="{{ $key }}" {{ $field['data_type']==$key ? 'selected' : '' }}>{{ $fieldType }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <label>Input Type</label>
                                 <select name="fields[{{ $field['name'] }}][input_type]" class="form-select w-full">

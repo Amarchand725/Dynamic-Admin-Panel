@@ -24,7 +24,7 @@ class MenuSeeder extends Seeder
                             ['field' => 'menu_group', 'label' => 'Menu Group', 'type' => 'integer', 'input_type' => 'select'],
                             ['field' => 'menu', 'label' => 'Menu', 'type' => 'string', 'input_type' => 'text'],
                             ['field' => 'menu_label', 'label' => 'Menu Label', 'type' => 'string', 'input_type' => 'text'],
-                            ['field' => 'fields', 'label' => 'Menu Fields', 'type' => 'text', 'input_type' => 'textarea'],
+                            ['field' => 'fields', 'label' => 'Menu Fields', 'type' => 'text', 'input_type' => 'text'],
                             ['field' => 'status', 'label' => 'Status', 'type' => 'boolean', 'input_type' => 'select'],
                             ['field' => 'created_at', 'label' => 'Created At', 'type' => 'string', 'input_type' => 'string'],
                             ['field' => 'created_by', 'label' => 'Created By', 'type' => 'integer', 'input_type' => 'select'],

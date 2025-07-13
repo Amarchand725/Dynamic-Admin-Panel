@@ -12,30 +12,34 @@
                         {{ $model->status ? 'Active' : 'Deactive' }}
                     </span>
                 @elseif($name === 'fields')
-                    @php $tableFields = json_decode($field['value'], true) @endphp 
+                    @php $tableFields = $model->hasMenFields; @endphp 
                     <table class="table">
                         <tr>
-                            <th>Field Name</th>
-                            <th>Data Type</th>
-                            <th>Input Type</th>
+                            <th><strong>Field Name</strong></th>
+                            <th><strong>Data Type</strong></th>
+                            <th><strong>Input Type</strong></th>
                         </tr>
                         @if(isset($tableFields) && !empty($tableFields))
                             @foreach ($tableFields as $tableKey=>$tableField)
                                 <tr>
-                                    <td>{{ ucfirst($tableField['field']) ?? '' }}</td>
-                                    <td>{{ ucfirst($tableField['type'] ?? '') }}</td>
-                                    <td>{{ ucfirst($tableField['input_type'] ?? '') }}</td>
+                                    <td>{{ ucfirst($tableField->name) ?? '-' }}</td>
+                                    <td>{{ ucfirst($tableField->data_type ?? '-') }}</td>
+                                    <td>{{ ucfirst($tableField->input_type ?? '-') }}</td>
                                 </tr>
                             @endforeach
                         @endif
                     </table>
                 @else
-                    @if($name=='menu_group' && isset($model->hasMenuGroup) && !empty($model->hasMenuGroup))
-                        {{ $model->hasMenuGroup->menu ?? '-' }}
+                    @if($name=='menu_group')
+                        @if(isset($model->hasMenuGroup) && !empty($model->hasMenuGroup))
+                            {{ ucfirst($model->hasMenuGroup->menu ?? '-') }}
+                        @else
+                            -
+                        @endif
                     @elseif($name=='icon')
-                        <i class="menu-icon tf-icons {{ $model->icon ?? 'ti ti-smart-home' }}"></i>
+                        <i class="menu-icon tf-icons {{ $model->icon ?? '-' }}"></i>
                     @else
-                        {!! $field['value'] ?? '-' !!}
+                        {!! ucfirst($field['value'] ?? '-') !!}
                     @endif
                 @endif
             </td>

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class MenuFieldController extends Controller
 {
@@ -129,50 +130,85 @@ class MenuFieldController extends Controller
     {
         $mainMenu = Menu::where('id', $modelId)->first();
         $singularLabel = $this->singularLabel;
+
+        // Reorder fields if needed
+        if (isset($request->field_order) && !empty($request->field_order)) {
+            $fieldOrder = json_decode($request->field_order, true);
+            $orderedFields = [];
+
+            if (is_array($fieldOrder)) {
+                foreach ($fieldOrder as $fieldName) {
+                    if (isset($request->fields[$fieldName])) {
+                        $orderedFields[$fieldName] = $request->fields[$fieldName];
+                    }
+                }
+            }
+
+            $request->merge(['fields' => $orderedFields]);
+        }
+
+        // Get table name
+        $tableName = Str::plural(Str::snake($mainMenu->menu));
+
+        // 🔸 Step 1: Run schema changes OUTSIDE transaction
+        foreach ($request->fields as $field => $fieldObj) {
+            $columnName = $fieldObj['name'] ?? $field;
+
+            if (!Schema::hasColumn($tableName, $columnName) && $columnName !== 'action') {
+                try {
+                    Schema::table($tableName, function (Blueprint $table) use ($columnName, $fieldObj) {
+                        $type = $fieldObj['type'] ?? 'string';
+
+                        switch ($type) {
+                            case 'string':
+                                $table->string($columnName)->nullable();
+                                break;
+                            case 'text':
+                                $table->text($columnName)->nullable();
+                                break;
+                            case 'integer':
+                                $table->integer($columnName)->nullable();
+                                break;
+                            case 'boolean':
+                                $table->boolean($columnName)->default(false);
+                                break;
+                            case 'date':
+                                $table->date($columnName)->nullable();
+                                break;
+                            case 'datetime':
+                                $table->dateTime($columnName)->nullable();
+                                break;
+                            case 'float':
+                                $table->float($columnName)->nullable();
+                                break;
+                            default:
+                                $table->string($columnName)->nullable();
+                        }
+                    });
+                } catch (\Throwable $e) {
+                    return response()->json(['error' => 'Schema update failed: ' . $e->getMessage()]);
+                }
+            }
+        }
+
+        // 🔸 Step 2: Model update logic WITHIN transaction
         DB::beginTransaction();
 
-        try{
-            if(!empty($mainMenu)){
-                $mainMenu->fields = json_encode($request->fields);
-                $mainMenu->save();
-            }
-            $mainMenu->refresh();
-            
+        try {
             // Delete old fields
             $this->model->where('menu_id', $mainMenu->id)->delete();
-            
-            if(isset($request->field_order) && !empty($request->field_order)){
-                $fieldOrder = json_decode($request->field_order, true);
-                $orderedFields = [];
 
-                if (is_array($fieldOrder)) {
-                    foreach ($fieldOrder as $fieldName) {
-                        if (isset($request->fields[$fieldName])) {
-                            $orderedFields[$fieldName] = $request->fields[$fieldName];
-                        }
-                    }
-                }
-
-                // Replace request->fields with ordered array
-                $request->merge(['fields' => $orderedFields]);
-            }
-            
-            // Insert new ones
+            // Insert new metadata
             foreach ($request->fields as $field => $fieldObj) {
-                $extra = [];
+                $columnName = $fieldObj['name'] ?? $field;
 
-                if (!empty($fieldObj['extra'])) {
-                    $extraValidation = $fieldObj['extra'];
-                } else {
-                    if ($fieldObj['type'] == 'string') {
-                        $extra['validation'] = 'max:255';
-                    }
-                    $extraValidation = json_encode($extra);
-                }
+                $extraValidation = !empty($fieldObj['extra'])
+                    ? $fieldObj['extra']
+                    : json_encode(($fieldObj['type'] === 'string') ? ['validation' => 'max:255'] : []);
 
                 $model = $this->model->create([
                     'menu_id' => $mainMenu->id,
-                    'name' => $fieldObj['name'] ?? null,
+                    'name' => $columnName,
                     'data_type' => $fieldObj['type'] ?? null,
                     'input_type' => $fieldObj['input_type'] ?? null,
                     'label' => $fieldObj['label'] ?? null,
@@ -194,8 +230,115 @@ class MenuFieldController extends Controller
                 return response()->json(['success' => false, 'message' =>'You have not updated '.$singularLabel.' successfully.']);
             }
         } catch (Exception $e) {
-            DB::rollback();
+            DB::rollBack();
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+    // public function update(Request $request, $modelId)
+    // {
+    //     $mainMenu = Menu::where('id', $modelId)->first();
+    //     $singularLabel = $this->singularLabel;
+    //     DB::beginTransaction();
+
+    //     try{
+    //         // Delete old fields
+    //         $this->model->where('menu_id', $mainMenu->id)->delete();
+            
+    //         if(isset($request->field_order) && !empty($request->field_order)){
+    //             $fieldOrder = json_decode($request->field_order, true);
+    //             $orderedFields = [];
+
+    //             if (is_array($fieldOrder)) {
+    //                 foreach ($fieldOrder as $fieldName) {
+    //                     if (isset($request->fields[$fieldName])) {
+    //                         $orderedFields[$fieldName] = $request->fields[$fieldName];
+    //                     }
+    //                 }
+    //             }
+
+    //             // Replace request->fields with ordered array
+    //             $request->merge(['fields' => $orderedFields]);
+    //         }
+    
+    //         // Determine target table name
+    //         $tableName = Str::plural(Str::snake($mainMenu->menu)); // e.g., "brands"
+
+    //         // Insert new fields and create missing columns
+    //         foreach ($request->fields as $field => $fieldObj) {
+    //             $columnName = $fieldObj['name'] ?? $field;
+
+    //             // Add missing column to DB table
+    //             if (!Schema::hasColumn($tableName, $columnName) && $columnName !== 'action' ) {
+    //                 Schema::table($tableName, function (Blueprint $table) use ($columnName, $fieldObj) {
+    //                     $type = $fieldObj['type'] ?? 'string';
+
+    //                     switch ($type) {
+    //                         case 'string':
+    //                             $table->string($columnName)->nullable();
+    //                             break;
+    //                         case 'text':
+    //                             $table->text($columnName)->nullable();
+    //                             break;
+    //                         case 'integer':
+    //                             $table->integer($columnName)->nullable();
+    //                             break;
+    //                         case 'boolean':
+    //                             $table->boolean($columnName)->default(false);
+    //                             break;
+    //                         case 'date':
+    //                             $table->date($columnName)->nullable();
+    //                             break;
+    //                         case 'datetime':
+    //                             $table->dateTime($columnName)->nullable();
+    //                             break;
+    //                         case 'float':
+    //                             $table->float($columnName)->nullable();
+    //                             break;
+    //                         default:
+    //                             $table->string($columnName)->nullable();
+    //                     }
+    //                 });
+    //             }
+
+    //             // Prepare extra validation JSON
+    //             if (!empty($fieldObj['extra'])) {
+    //                 $extraValidation = $fieldObj['extra'];
+    //             } else {
+    //                 $extra = [];
+    //                 if ($fieldObj['type'] === 'string') {
+    //                     $extra['validation'] = 'max:255';
+    //                 }
+    //                 $extraValidation = json_encode($extra);
+    //             }
+
+    //             // Save metadata
+    //             $model = $this->model->create([
+    //                 'menu_id' => $mainMenu->id,
+    //                 'name' => $columnName,
+    //                 'data_type' => $fieldObj['type'] ?? null,
+    //                 'input_type' => $fieldObj['input_type'] ?? null,
+    //                 'label' => $fieldObj['label'] ?? null,
+    //                 'placeholder' => $fieldObj['placeholder'] ?? null,
+    //                 'required' => $fieldObj['required'] ?? 0,
+    //                 'index_visible' => $fieldObj['index_visible'] ?? 0,
+    //                 'create_visible' => $fieldObj['create_visible'] ?? 0,
+    //                 'edit_visible' => $fieldObj['edit_visible'] ?? 0,
+    //                 'show_visible' => $fieldObj['show_visible'] ?? 0,
+    //                 'extra' => $extraValidation,
+    //             ]);
+    //         }
+
+    //         if(isset($model) && !empty($model)){
+    //             DB::commit();
+    //             return response()->json(['success' => true, 'message' =>'You have updated '.$singularLabel.' successfully.']);
+    //         }else{
+    //             DB::rollback();
+    //             return response()->json(['success' => false, 'message' =>'You have not updated '.$singularLabel.' successfully.']);
+    //         }
+    //     } catch (Exception $e) {
+    //         DB::rollback();
+    //         return response()->json(['error' => $e->getMessage()]);
+    //     }
+    // }
 }

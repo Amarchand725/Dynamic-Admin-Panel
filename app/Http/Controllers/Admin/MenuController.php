@@ -78,7 +78,9 @@ class MenuController extends Controller
         //select columns
 
         if (isset($getFields['icon'])) {
-            $getFields['icon']['index'] = fn($model) => '<i class="menu-icon tf-icons '.$model->icon .'"></i>';
+            $getFields['icon']['index'] = fn($model) => !empty($model->icon)
+            ? '<i class="menu-icon tf-icons ' . $model->icon . '"></i>'
+            : '-';
         }
         // Check and handle relation
         if (isset($getFields['menu_group'])) {
@@ -150,7 +152,13 @@ class MenuController extends Controller
 
                         $saved->$field = mergeFieldInputTypes($validated[$field], $types, $inputTypes);
                     }else{
-                        $saved->$field = $validated[$field] ?? null;
+                        if($field=='created_by'){
+                            $saved->$field = auth()->id() ?? null;
+                        }elseif($field=='status'){
+                            $saved->$field = $validated[$field] ?? 1;
+                        }else{
+                            $saved->$field = $validated[$field] ?? null;
+                        }
                     }
                 }
 
@@ -479,7 +487,7 @@ class MenuController extends Controller
     public function show($id)
     {
         $bladePath = $this->pathInitialize;
-        $model = $this->model->with('hasMenuGroup')->findOrFail($id);
+        $model = $this->model->with('hasMenuGroup', 'hasMenFields')->findOrFail($id);
         $fields = getFields($model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'show');
         return (string) view($bladePath.'.show_content', get_defined_vars());
     }

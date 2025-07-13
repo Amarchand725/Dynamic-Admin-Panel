@@ -42,19 +42,8 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-sm-12">
-                            <div class="mb-3">
-                                <label>Field Name</label>
-                                <input type="text" name="fields[<?php echo e($field['name']); ?>][name]" value="<?php echo e($field['name']); ?>" class="form-control w-full">
-                            </div>
-                            <div class="mb-3">
-                                <label>Data Type</label>
-                                <select name="fields[<?php echo e($field['name']); ?>][type]" class="form-select w-full">
-                                    <option value="" selected>Select Data Type</option>
-                                    <?php $__currentLoopData = fieldTypes(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$fieldType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($key); ?>" <?php echo e($field['type']==$key ? 'selected' : ''); ?>><?php echo e($fieldType); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
+                            
+                            
                             <div class="mb-3">
                                 <label>Input Type</label>
                                 <select name="fields[<?php echo e($field['name']); ?>][input_type]" class="form-select w-full">
