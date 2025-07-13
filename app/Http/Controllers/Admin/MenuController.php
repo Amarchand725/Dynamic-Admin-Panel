@@ -83,7 +83,7 @@ class MenuController extends Controller
         // Check and handle relation
         if (isset($getFields['menu_group'])) {
             // Customize index to pull from relation
-            $getFields['menu_group']['index'] = fn($model) => optional($model->hasMenuGroup)->menu ?? '-';
+            $getFields['menu_group']['index'] = fn($model) => ucfirst(optional($model->hasMenuGroup)->menu ?? '-');
         }
 
         $columns = collect($getFields)->mapWithKeys(function ($config, $key) {
@@ -807,7 +807,8 @@ class MenuController extends Controller
             ->with('hasChildMenus')
             ->orderBy('group_order')
             ->orderBy('menu_order')
-            ->select('id', 'menu', 'menu_label', 'icon', 'group_order', 'menu_order')->get();
+            ->select('id', 'menu', 'menu_label', 'icon', 'group_order', 'menu_order')
+            ->get();
         return view('admin.menus.settings', get_defined_vars());
     }
 

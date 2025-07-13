@@ -135,6 +135,11 @@
         var columns =     <?php echo json_encode($columnsConfig); ?>  // Get columns dynamically from controller
         initializeDataTable(page_url, columns);
     })
+    $('#refresh-record').on('click', function(){
+        var page_url = $('#page_url').val();
+        var columns =     <?php echo json_encode($columnsConfig); ?>  // Get columns dynamically from controller
+        initializeDataTable(page_url, columns);
+    })
 </script>
 <?php $__env->stopPush(); ?>
 

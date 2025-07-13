@@ -14,6 +14,15 @@ function appName(){
     return getSetting('name', 'Dynamic Admin Panel');
 }
 
+function appAbbreviation() {
+    $appName = getSetting('name', 'Dynamic Admin Panel');
+
+    $words = preg_split('/\s+/', trim($appName)); // Handles multiple spaces
+    $abbreviation = implode('', array_map(fn($word) => strtoupper($word[0] ?? ''), $words));
+
+    return $abbreviation ?: 'DAP';
+}
+
 function settings()
 {
     // Check if settings table exists before querying
@@ -289,35 +298,36 @@ function getNewMenus(){
     return $menusWithoutPermissions;
 }
 
-function getDynamicMenuGroups(){
-    $menus = Menu::with('hasChildMenus')
+function getDynamicMenuGroups()
+{
+    $menus = Menu::with(['hasChildMenus' => function ($q) {
+            $q->where('status', 1)
+            ->orderBy('group_order')
+              ->orderBy('menu_order')
+              ->select('id', 'menu', 'menu_label', 'icon', 'menu_group', 'menu_order');
+        }])
         ->where('status', 1)
         ->whereNull('menu_group')
-        ->select('id', 'menu', 'menu_label', 'icon')
         ->orderBy('group_order')
         ->orderBy('menu_order')
+        ->select('id', 'menu', 'menu_label', 'icon', 'group_order', 'menu_order')
         ->get();
 
-    $result = $menus->map(function ($menu) {
-        $children = $menu->hasChildMenus->map(function ($child) {
-            return  $child->menu;
-        });
-    
-        // Include the parent itself in children array
-        $allMenus = collect([
-            $menu->menu
-        ])->merge($children)->toArray();
-    
+    return $menus->map(function ($menu) {
+        // Get all child menu slugs (names)
+        $childMenus = $menu->hasChildMenus->pluck('menu');
+
+        // Combine parent and children into a single array
+        $allMenus = collect([$menu->menu])->merge($childMenus)->values()->all();
+
         return [
             'id' => $menu->id,
             'menu' => $menu->menu,
             'menu_label' => $menu->menu_label,
             'icon' => $menu->icon,
-            'has_child_menus' => $allMenus, // ensure numeric keys
+            'has_child_menus' => $allMenus, // array of menu slugs
         ];
-    });    
-
-    return $result;
+    });
 }
 
 function formatSales($amount)
