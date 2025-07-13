@@ -13,6 +13,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 
 class MenuFieldController extends Controller
 {
@@ -126,12 +128,14 @@ class MenuFieldController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, $modelId)
     {
         $mainMenu = Menu::where('id', $modelId)->first();
         $singularLabel = $this->singularLabel;
+        $generatedMigration = null;
 
-        // Reorder fields if needed
+        // Reorder fields
         if (isset($request->field_order) && !empty($request->field_order)) {
             $fieldOrder = json_decode($request->field_order, true);
             $orderedFields = [];
@@ -147,58 +151,84 @@ class MenuFieldController extends Controller
             $request->merge(['fields' => $orderedFields]);
         }
 
-        // Get table name
+        // Step 1: Detect new columns
         $tableName = Str::plural(Str::snake($mainMenu->menu));
+        $newColumns = [];
 
-        // 🔸 Step 1: Run schema changes OUTSIDE transaction
         foreach ($request->fields as $field => $fieldObj) {
             $columnName = $fieldObj['name'] ?? $field;
 
             if (!Schema::hasColumn($tableName, $columnName) && $columnName !== 'action') {
-                try {
-                    Schema::table($tableName, function (Blueprint $table) use ($columnName, $fieldObj) {
-                        $type = $fieldObj['type'] ?? 'string';
+                $newColumns[$columnName] = $fieldObj['type'] ?? 'string';
+            }
+        }
 
-                        switch ($type) {
-                            case 'string':
-                                $table->string($columnName)->nullable();
-                                break;
-                            case 'text':
-                                $table->text($columnName)->nullable();
-                                break;
-                            case 'integer':
-                                $table->integer($columnName)->nullable();
-                                break;
-                            case 'boolean':
-                                $table->boolean($columnName)->default(false);
-                                break;
-                            case 'date':
-                                $table->date($columnName)->nullable();
-                                break;
-                            case 'datetime':
-                                $table->dateTime($columnName)->nullable();
-                                break;
-                            case 'float':
-                                $table->float($columnName)->nullable();
-                                break;
-                            default:
-                                $table->string($columnName)->nullable();
-                        }
-                    });
-                } catch (\Throwable $e) {
-                    return response()->json(['error' => 'Schema update failed: ' . $e->getMessage()]);
+        // Step 2: Create one migration for all new columns
+        if (!empty($newColumns)) {
+            $columnPart = implode('_', array_keys($newColumns));
+            $migrationName = 'add_' . $columnPart . '_to_' . $tableName . '_table';
+            Artisan::call('make:migration', [
+                'name' => $migrationName,
+                '--table' => $tableName,
+            ]);
+
+            // Step 3: Locate and write migration content
+            $timestampedFile = collect(File::files(database_path('migrations')))
+                ->sortByDesc(fn($file) => $file->getCTime())
+                ->firstWhere(fn($file) => str_contains($file->getFilename(), $migrationName));
+
+            if ($timestampedFile) {
+                $content = File::get($timestampedFile->getPathname());
+
+                $schemaLines = '';
+                foreach ($newColumns as $col => $type) {
+                    $nullable = "->nullable()";
+                    switch ($type) {
+                        case 'text':
+                            $schemaLines .= "\$table->text('$col')$nullable;\n                ";
+                            break;
+                        case 'integer':
+                            $schemaLines .= "\$table->integer('$col')$nullable;\n                ";
+                            break;
+                        case 'boolean':
+                            $schemaLines .= "\$table->boolean('$col')->default(false);\n                ";
+                            break;
+                        case 'date':
+                            $schemaLines .= "\$table->date('$col')$nullable;\n                ";
+                            break;
+                        case 'datetime':
+                            $schemaLines .= "\$table->dateTime('$col')$nullable;\n                ";
+                            break;
+                        case 'float':
+                            $schemaLines .= "\$table->float('$col')$nullable;\n                ";
+                            break;
+                        default:
+                            $schemaLines .= "\$table->string('$col')$nullable;\n                ";
+                            break;
+                    }
+                }
+
+                // Replace default stub
+                $content = preg_replace(
+                    '/Schema::table\(.*?function\s*\(Blueprint\s*\$table\)\s*\{\n(.*?)\n\s*\}\);/s',
+                    "Schema::table('$tableName', function (Blueprint \$table) {\n                $schemaLines\n            });",
+                    $content
+                );
+
+                File::put($timestampedFile->getPathname(), $content);
+                $generatedMigration = $timestampedFile->getFilename();
+
+                if($generatedMigration){
+                    Artisan::call('migrate');
                 }
             }
         }
 
-        // 🔸 Step 2: Model update logic WITHIN transaction
+        // Step 4: Update model metadata
         DB::beginTransaction();
-
         try {
-            // Delete old fields
             $this->model->where('menu_id', $mainMenu->id)->delete();
 
-            // Insert new metadata
             foreach ($request->fields as $field => $fieldObj) {
                 $columnName = $fieldObj['name'] ?? $field;
 
@@ -222,9 +252,15 @@ class MenuFieldController extends Controller
                 ]);
             }
 
+            $msg = 'You have updated ' . $singularLabel . ' successfully.';
+            if (isset($generatedMigration) && !empty($generatedMigration)) {
+                // Now, call migrate after committing the transaction
+                $msg .= ' Migration created: `' . $generatedMigration . '`. Migration executed.';
+            }
+
             if(isset($model) && !empty($model)){
                 DB::commit();
-                return response()->json(['success' => true, 'message' =>'You have updated '.$singularLabel.' successfully.']);
+                return response()->json(['success' => true, 'message' =>$msg]);
             }else{
                 DB::rollback();
                 return response()->json(['success' => false, 'message' =>'You have not updated '.$singularLabel.' successfully.']);
@@ -234,6 +270,114 @@ class MenuFieldController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+    // public function update(Request $request, $modelId)
+    // {
+    //     $mainMenu = Menu::where('id', $modelId)->first();
+    //     $singularLabel = $this->singularLabel;
+
+    //     // Reorder fields if needed
+    //     if (isset($request->field_order) && !empty($request->field_order)) {
+    //         $fieldOrder = json_decode($request->field_order, true);
+    //         $orderedFields = [];
+
+    //         if (is_array($fieldOrder)) {
+    //             foreach ($fieldOrder as $fieldName) {
+    //                 if (isset($request->fields[$fieldName])) {
+    //                     $orderedFields[$fieldName] = $request->fields[$fieldName];
+    //                 }
+    //             }
+    //         }
+
+    //         $request->merge(['fields' => $orderedFields]);
+    //     }
+
+    //     // Get table name
+    //     $tableName = Str::plural(Str::snake($mainMenu->menu));
+
+    //     // 🔸 Step 1: Run schema changes OUTSIDE transaction
+    //     foreach ($request->fields as $field => $fieldObj) {
+    //         $columnName = $fieldObj['name'] ?? $field;
+
+    //         if (!Schema::hasColumn($tableName, $columnName) && $columnName !== 'action') {
+    //             try {
+    //                 Schema::table($tableName, function (Blueprint $table) use ($columnName, $fieldObj) {
+    //                     $type = $fieldObj['type'] ?? 'string';
+
+    //                     switch ($type) {
+    //                         case 'string':
+    //                             $table->string($columnName)->nullable();
+    //                             break;
+    //                         case 'text':
+    //                             $table->text($columnName)->nullable();
+    //                             break;
+    //                         case 'integer':
+    //                             $table->integer($columnName)->nullable();
+    //                             break;
+    //                         case 'boolean':
+    //                             $table->boolean($columnName)->default(false);
+    //                             break;
+    //                         case 'date':
+    //                             $table->date($columnName)->nullable();
+    //                             break;
+    //                         case 'datetime':
+    //                             $table->dateTime($columnName)->nullable();
+    //                             break;
+    //                         case 'float':
+    //                             $table->float($columnName)->nullable();
+    //                             break;
+    //                         default:
+    //                             $table->string($columnName)->nullable();
+    //                     }
+    //                 });
+    //             } catch (\Throwable $e) {
+    //                 return response()->json(['error' => 'Schema update failed: ' . $e->getMessage()]);
+    //             }
+    //         }
+    //     }
+
+    //     // 🔸 Step 2: Model update logic WITHIN transaction
+    //     DB::beginTransaction();
+
+    //     try {
+    //         // Delete old fields
+    //         $this->model->where('menu_id', $mainMenu->id)->delete();
+
+    //         // Insert new metadata
+    //         foreach ($request->fields as $field => $fieldObj) {
+    //             $columnName = $fieldObj['name'] ?? $field;
+
+    //             $extraValidation = !empty($fieldObj['extra'])
+    //                 ? $fieldObj['extra']
+    //                 : json_encode(($fieldObj['type'] === 'string') ? ['validation' => 'max:255'] : []);
+
+    //             $model = $this->model->create([
+    //                 'menu_id' => $mainMenu->id,
+    //                 'name' => $columnName,
+    //                 'data_type' => $fieldObj['type'] ?? null,
+    //                 'input_type' => $fieldObj['input_type'] ?? null,
+    //                 'label' => $fieldObj['label'] ?? null,
+    //                 'placeholder' => $fieldObj['placeholder'] ?? null,
+    //                 'required' => $fieldObj['required'] ?? 0,
+    //                 'index_visible' => $fieldObj['index_visible'] ?? 0,
+    //                 'create_visible' => $fieldObj['create_visible'] ?? 0,
+    //                 'edit_visible' => $fieldObj['edit_visible'] ?? 0,
+    //                 'show_visible' => $fieldObj['show_visible'] ?? 0,
+    //                 'extra' => $extraValidation,
+    //             ]);
+    //         }
+
+            // if(isset($model) && !empty($model)){
+            //     DB::commit();
+            //     return response()->json(['success' => true, 'message' =>'You have updated '.$singularLabel.' successfully.']);
+            // }else{
+            //     DB::rollback();
+            //     return response()->json(['success' => false, 'message' =>'You have not updated '.$singularLabel.' successfully.']);
+            // }
+    //     } catch (Exception $e) {
+    //         DB::rollBack();
+    //         return response()->json(['error' => $e->getMessage()]);
+    //     }
+    // }
 
     // public function update(Request $request, $modelId)
     // {

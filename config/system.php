@@ -2,11 +2,11 @@
 return [
     'settings' => [
         'name' => 'Dynamic Admin Panel',
-        'country' => 'United State',
-        'state' => 'Lincolnwood',
+        'country' => 'United States',
+        'state' => 'California',
         'area' => '6600 N Lincoln Ave Ste 316',
-        'city' => 'Lincolnwood',
-        'address' => '6600 N Lincoln Ave Ste 316 Lincolnwood Illinois 60712 United States.',
+        'city' => 'Acton',
+        'address' => '6600 N Lincoln Ave Ste 316 Acton California 60712 United States.',
         'currency_symbol' => '$',
     ],
 

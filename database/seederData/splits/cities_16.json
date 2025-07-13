@@ -1,0 +1,2102 @@
+[
+    {
+        "state_id": 5102,
+        "name": "Tutu"
+    },
+    {
+        "state_id": 5102,
+        "name": "Water Island"
+    },
+    {
+        "state_id": 5102,
+        "name": "West End"
+    },
+    {
+        "state_id": 5103,
+        "name": "Aden"
+    },
+    {
+        "state_id": 5103,
+        "name": "Al Buraiqeh"
+    },
+    {
+        "state_id": 5103,
+        "name": "Al Mansura"
+    },
+    {
+        "state_id": 5103,
+        "name": "Al Mualla"
+    },
+    {
+        "state_id": 5103,
+        "name": "Ash Shaikh Outhman"
+    },
+    {
+        "state_id": 5103,
+        "name": "Attawahi"
+    },
+    {
+        "state_id": 5103,
+        "name": "Craiter"
+    },
+    {
+        "state_id": 5103,
+        "name": "Dar Sad"
+    },
+    {
+        "state_id": 5104,
+        "name": "‘Amrān"
+    },
+    {
+        "state_id": 5104,
+        "name": "Al Ashah"
+    },
+    {
+        "state_id": 5104,
+        "name": "Al Madan"
+    },
+    {
+        "state_id": 5104,
+        "name": "Al Qaflah"
+    },
+    {
+        "state_id": 5104,
+        "name": "As Sawd"
+    },
+    {
+        "state_id": 5104,
+        "name": "As Sudah"
+    },
+    {
+        "state_id": 5104,
+        "name": "Bani Suraim"
+    },
+    {
+        "state_id": 5104,
+        "name": "Dhi Bin"
+    },
+    {
+        "state_id": 5104,
+        "name": "Habur Zulaymah"
+    },
+    {
+        "state_id": 5104,
+        "name": "Harf Sufyan"
+    },
+    {
+        "state_id": 5104,
+        "name": "Hooth"
+    },
+    {
+        "state_id": 5104,
+        "name": "Iyal Surayh"
+    },
+    {
+        "state_id": 5104,
+        "name": "Jabal Iyal Yazid"
+    },
+    {
+        "state_id": 5104,
+        "name": "Khamir"
+    },
+    {
+        "state_id": 5104,
+        "name": "Kharif"
+    },
+    {
+        "state_id": 5104,
+        "name": "Maswar"
+    },
+    {
+        "state_id": 5104,
+        "name": "Raydah"
+    },
+    {
+        "state_id": 5104,
+        "name": "Shahārah"
+    },
+    {
+        "state_id": 5104,
+        "name": "Suwayr"
+    },
+    {
+        "state_id": 5104,
+        "name": "Thula"
+    },
+    {
+        "state_id": 5105,
+        "name": "Ahwar"
+    },
+    {
+        "state_id": 5105,
+        "name": "Al Mahfad"
+    },
+    {
+        "state_id": 5105,
+        "name": "Al Wade'a"
+    },
+    {
+        "state_id": 5105,
+        "name": "Jawf al Maqbābah"
+    },
+    {
+        "state_id": 5105,
+        "name": "Jayshan"
+    },
+    {
+        "state_id": 5105,
+        "name": "Khanfir"
+    },
+    {
+        "state_id": 5105,
+        "name": "Lawdar"
+    },
+    {
+        "state_id": 5105,
+        "name": "Mudiyah"
+    },
+    {
+        "state_id": 5105,
+        "name": "Rasad"
+    },
+    {
+        "state_id": 5105,
+        "name": "Sarar"
+    },
+    {
+        "state_id": 5105,
+        "name": "Sibah"
+    },
+    {
+        "state_id": 5105,
+        "name": "Zingibar"
+    },
+    {
+        "state_id": 5105,
+        "name": "Zinjibār"
+    },
+    {
+        "state_id": 5106,
+        "name": "Al A'rsh"
+    },
+    {
+        "state_id": 5106,
+        "name": "Al Bayda"
+    },
+    {
+        "state_id": 5106,
+        "name": "Al Bayda City"
+    },
+    {
+        "state_id": 5106,
+        "name": "Al Bayḑā’"
+    },
+    {
+        "state_id": 5106,
+        "name": "Al Malagim"
+    },
+    {
+        "state_id": 5106,
+        "name": "Al Quraishyah"
+    },
+    {
+        "state_id": 5106,
+        "name": "Ar Ryashyyah"
+    },
+    {
+        "state_id": 5106,
+        "name": "As Sawadiyah"
+    },
+    {
+        "state_id": 5106,
+        "name": "As Sawma'ah"
+    },
+    {
+        "state_id": 5106,
+        "name": "Ash Sharafayn"
+    },
+    {
+        "state_id": 5106,
+        "name": "At Taffah"
+    },
+    {
+        "state_id": 5106,
+        "name": "Az Zahir"
+    },
+    {
+        "state_id": 5106,
+        "name": "Dhi Na'im"
+    },
+    {
+        "state_id": 5106,
+        "name": "Maswarah"
+    },
+    {
+        "state_id": 5106,
+        "name": "Mukayras"
+    },
+    {
+        "state_id": 5106,
+        "name": "Na'man"
+    },
+    {
+        "state_id": 5106,
+        "name": "Nati'"
+    },
+    {
+        "state_id": 5106,
+        "name": "Radā‘"
+    },
+    {
+        "state_id": 5106,
+        "name": "Radman Al Awad"
+    },
+    {
+        "state_id": 5106,
+        "name": "Sabah"
+    },
+    {
+        "state_id": 5106,
+        "name": "Wald Rabi'"
+    },
+    {
+        "state_id": 5107,
+        "name": "Ad Dahi"
+    },
+    {
+        "state_id": 5107,
+        "name": "Ad Durayhimi"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Garrahi"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Hajjaylah"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Hali"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Hawak"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Ḩudaydah"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Mansuriyah"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Marawi'ah"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Mighlaf"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Mina"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Munirah"
+    },
+    {
+        "state_id": 5107,
+        "name": "Al Qanawis"
+    },
+    {
+        "state_id": 5107,
+        "name": "Alluheyah"
+    },
+    {
+        "state_id": 5107,
+        "name": "As Salif"
+    },
+    {
+        "state_id": 5107,
+        "name": "As Sukhnah"
+    },
+    {
+        "state_id": 5107,
+        "name": "At Tuhayat"
+    },
+    {
+        "state_id": 5107,
+        "name": "Az Zaydīyah"
+    },
+    {
+        "state_id": 5107,
+        "name": "Az Zuhrah"
+    },
+    {
+        "state_id": 5107,
+        "name": "Bājil"
+    },
+    {
+        "state_id": 5107,
+        "name": "Bayt al Faqīh"
+    },
+    {
+        "state_id": 5107,
+        "name": "Bura"
+    },
+    {
+        "state_id": 5107,
+        "name": "Hays"
+    },
+    {
+        "state_id": 5107,
+        "name": "Jabal Ra's"
+    },
+    {
+        "state_id": 5107,
+        "name": "Kamaran"
+    },
+    {
+        "state_id": 5107,
+        "name": "Zabīd"
+    },
+    {
+        "state_id": 5108,
+        "name": "Al ‘Inān"
+    },
+    {
+        "state_id": 5108,
+        "name": "Al Ghayl"
+    },
+    {
+        "state_id": 5108,
+        "name": "Al Hazm"
+    },
+    {
+        "state_id": 5108,
+        "name": "Al Humaydat"
+    },
+    {
+        "state_id": 5108,
+        "name": "Al Khalq"
+    },
+    {
+        "state_id": 5108,
+        "name": "Al Maslub"
+    },
+    {
+        "state_id": 5108,
+        "name": "Al Matammah"
+    },
+    {
+        "state_id": 5108,
+        "name": "Al Maton"
+    },
+    {
+        "state_id": 5108,
+        "name": "Az Zahir"
+    },
+    {
+        "state_id": 5108,
+        "name": "Barţ al ‘Anān"
+    },
+    {
+        "state_id": 5108,
+        "name": "Khabb wa ash Sha'af"
+    },
+    {
+        "state_id": 5108,
+        "name": "Kharab Al Marashi"
+    },
+    {
+        "state_id": 5108,
+        "name": "Rajuzah"
+    },
+    {
+        "state_id": 5109,
+        "name": "Al Ghaydah"
+    },
+    {
+        "state_id": 5109,
+        "name": "Al Ghayz̧ah"
+    },
+    {
+        "state_id": 5109,
+        "name": "Al Masilah"
+    },
+    {
+        "state_id": 5109,
+        "name": "Hat"
+    },
+    {
+        "state_id": 5109,
+        "name": "Hawf"
+    },
+    {
+        "state_id": 5109,
+        "name": "Huswain"
+    },
+    {
+        "state_id": 5109,
+        "name": "Man'ar"
+    },
+    {
+        "state_id": 5109,
+        "name": "Qishn"
+    },
+    {
+        "state_id": 5109,
+        "name": "Sayhut"
+    },
+    {
+        "state_id": 5109,
+        "name": "Shahan"
+    },
+    {
+        "state_id": 5110,
+        "name": "Al Khabt"
+    },
+    {
+        "state_id": 5110,
+        "name": "Al Mahwait"
+    },
+    {
+        "state_id": 5110,
+        "name": "Al Maḩwīt"
+    },
+    {
+        "state_id": 5110,
+        "name": "Ar Rujum"
+    },
+    {
+        "state_id": 5110,
+        "name": "Aţ Ţawīlah"
+    },
+    {
+        "state_id": 5110,
+        "name": "Bani Sa'd"
+    },
+    {
+        "state_id": 5110,
+        "name": "Hufash"
+    },
+    {
+        "state_id": 5110,
+        "name": "Milhan"
+    },
+    {
+        "state_id": 5110,
+        "name": "Shibām Kawkabān"
+    },
+    {
+        "state_id": 5112,
+        "name": "‘Ans"
+    },
+    {
+        "state_id": 5112,
+        "name": "Al Hada"
+    },
+    {
+        "state_id": 5112,
+        "name": "Al Manar"
+    },
+    {
+        "state_id": 5112,
+        "name": "Al-Medy Village قرية المدي"
+    },
+    {
+        "state_id": 5112,
+        "name": "Dawran Aness"
+    },
+    {
+        "state_id": 5112,
+        "name": "Dhamār"
+    },
+    {
+        "state_id": 5112,
+        "name": "Jabal Ash sharq"
+    },
+    {
+        "state_id": 5112,
+        "name": "Jahran"
+    },
+    {
+        "state_id": 5112,
+        "name": "Maghirib Ans"
+    },
+    {
+        "state_id": 5112,
+        "name": "Mayfa'at Anss"
+    },
+    {
+        "state_id": 5112,
+        "name": "Utmah"
+    },
+    {
+        "state_id": 5112,
+        "name": "Wusab Al Ali"
+    },
+    {
+        "state_id": 5112,
+        "name": "Wusab As Safil"
+    },
+    {
+        "state_id": 5113,
+        "name": "Ad Dis"
+    },
+    {
+        "state_id": 5113,
+        "name": "Ad Dīs ash Sharqīyah"
+    },
+    {
+        "state_id": 5113,
+        "name": "Adh Dhlia'ah"
+    },
+    {
+        "state_id": 5113,
+        "name": "Al Abr"
+    },
+    {
+        "state_id": 5113,
+        "name": "Al Ḩamdī"
+    },
+    {
+        "state_id": 5113,
+        "name": "Al Mukalla"
+    },
+    {
+        "state_id": 5113,
+        "name": "Al Mukalla City"
+    },
+    {
+        "state_id": 5113,
+        "name": "Al Qaf"
+    },
+    {
+        "state_id": 5113,
+        "name": "Al Qatn"
+    },
+    {
+        "state_id": 5113,
+        "name": "Amd"
+    },
+    {
+        "state_id": 5113,
+        "name": "Ar Raydah Wa Qusayar"
+    },
+    {
+        "state_id": 5113,
+        "name": "As Sawm"
+    },
+    {
+        "state_id": 5113,
+        "name": "Ash Shihr"
+    },
+    {
+        "state_id": 5113,
+        "name": "At Taḩāluf"
+    },
+    {
+        "state_id": 5113,
+        "name": "Brom Mayfa"
+    },
+    {
+        "state_id": 5113,
+        "name": "Daw'an"
+    },
+    {
+        "state_id": 5113,
+        "name": "Ghayl Ba Wazir"
+    },
+    {
+        "state_id": 5113,
+        "name": "Ghayl Bin Yamin"
+    },
+    {
+        "state_id": 5113,
+        "name": "Hagr As Sai'ar"
+    },
+    {
+        "state_id": 5113,
+        "name": "Hajr"
+    },
+    {
+        "state_id": 5113,
+        "name": "Huraidhah"
+    },
+    {
+        "state_id": 5113,
+        "name": "Kilmia"
+    },
+    {
+        "state_id": 5113,
+        "name": "Mukalla"
+    },
+    {
+        "state_id": 5113,
+        "name": "Rakhyah"
+    },
+    {
+        "state_id": 5113,
+        "name": "Rumah"
+    },
+    {
+        "state_id": 5113,
+        "name": "Sah"
+    },
+    {
+        "state_id": 5113,
+        "name": "Sayun"
+    },
+    {
+        "state_id": 5113,
+        "name": "Shibam"
+    },
+    {
+        "state_id": 5113,
+        "name": "Suḩayl Shibām"
+    },
+    {
+        "state_id": 5113,
+        "name": "Tarim"
+    },
+    {
+        "state_id": 5113,
+        "name": "Thamud"
+    },
+    {
+        "state_id": 5113,
+        "name": "Wadi Al Ayn"
+    },
+    {
+        "state_id": 5113,
+        "name": "Yabuth"
+    },
+    {
+        "state_id": 5113,
+        "name": "Zamakh wa Manwakh"
+    },
+    {
+        "state_id": 5114,
+        "name": "Abs"
+    },
+    {
+        "state_id": 5114,
+        "name": "Aflah Al Yaman"
+    },
+    {
+        "state_id": 5114,
+        "name": "Aflah Ash Shawm"
+    },
+    {
+        "state_id": 5114,
+        "name": "Al Jamimah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Al Maghrabah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Al Mahabishah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Al Miftah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Ash Shaghadirah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Ash Shahil"
+    },
+    {
+        "state_id": 5114,
+        "name": "Aslem"
+    },
+    {
+        "state_id": 5114,
+        "name": "Bakil Al Mir"
+    },
+    {
+        "state_id": 5114,
+        "name": "Banī al ‘Awwām"
+    },
+    {
+        "state_id": 5114,
+        "name": "Bani Al Awam"
+    },
+    {
+        "state_id": 5114,
+        "name": "Bani Qa'is"
+    },
+    {
+        "state_id": 5114,
+        "name": "Hajjah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Harad District"
+    },
+    {
+        "state_id": 5114,
+        "name": "Hayran"
+    },
+    {
+        "state_id": 5114,
+        "name": "Khayran Al Muharraq"
+    },
+    {
+        "state_id": 5114,
+        "name": "Ku'aydinah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Kuhlan Affar"
+    },
+    {
+        "state_id": 5114,
+        "name": "Kuhlan Ash Sharaf"
+    },
+    {
+        "state_id": 5114,
+        "name": "Kushar"
+    },
+    {
+        "state_id": 5114,
+        "name": "Mabyan"
+    },
+    {
+        "state_id": 5114,
+        "name": "Midi"
+    },
+    {
+        "state_id": 5114,
+        "name": "Mustaba"
+    },
+    {
+        "state_id": 5114,
+        "name": "Najrah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Qafl Shamer"
+    },
+    {
+        "state_id": 5114,
+        "name": "Qarah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Sharas"
+    },
+    {
+        "state_id": 5114,
+        "name": "Wadhrah"
+    },
+    {
+        "state_id": 5114,
+        "name": "Washḩah"
+    },
+    {
+        "state_id": 5115,
+        "name": "Al ‘Udayn"
+    },
+    {
+        "state_id": 5115,
+        "name": "Al Dhihar"
+    },
+    {
+        "state_id": 5115,
+        "name": "Al Makhādir"
+    },
+    {
+        "state_id": 5115,
+        "name": "Al Mashannah"
+    },
+    {
+        "state_id": 5115,
+        "name": "Al Qafr"
+    },
+    {
+        "state_id": 5115,
+        "name": "An Nādirah"
+    },
+    {
+        "state_id": 5115,
+        "name": "Ar Radmah"
+    },
+    {
+        "state_id": 5115,
+        "name": "As Sabrah"
+    },
+    {
+        "state_id": 5115,
+        "name": "As Saddah"
+    },
+    {
+        "state_id": 5115,
+        "name": "As Sayyani"
+    },
+    {
+        "state_id": 5115,
+        "name": "Ash Sha'ir"
+    },
+    {
+        "state_id": 5115,
+        "name": "Ba'dan"
+    },
+    {
+        "state_id": 5115,
+        "name": "Dhī as Sufāl"
+    },
+    {
+        "state_id": 5115,
+        "name": "Far Al Udayn"
+    },
+    {
+        "state_id": 5115,
+        "name": "Hazm Al Udayn"
+    },
+    {
+        "state_id": 5115,
+        "name": "Hubaysh"
+    },
+    {
+        "state_id": 5115,
+        "name": "Ibb"
+    },
+    {
+        "state_id": 5115,
+        "name": "Jiblah"
+    },
+    {
+        "state_id": 5115,
+        "name": "Mudhaykhirah"
+    },
+    {
+        "state_id": 5115,
+        "name": "Yarīm"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Hawtah"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Ḩabīlayn"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Had"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Madaribah Wa Al Arah"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Maflahy"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Maqatirah"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Milah"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Musaymir"
+    },
+    {
+        "state_id": 5116,
+        "name": "Al Qabbaytah"
+    },
+    {
+        "state_id": 5116,
+        "name": "Habil Jabr"
+    },
+    {
+        "state_id": 5116,
+        "name": "Halimayn"
+    },
+    {
+        "state_id": 5116,
+        "name": "Laḩij"
+    },
+    {
+        "state_id": 5116,
+        "name": "Radfan"
+    },
+    {
+        "state_id": 5116,
+        "name": "Tuban"
+    },
+    {
+        "state_id": 5116,
+        "name": "Tur Al Bahah"
+    },
+    {
+        "state_id": 5116,
+        "name": "Yafa'a"
+    },
+    {
+        "state_id": 5116,
+        "name": "Yahr"
+    },
+    {
+        "state_id": 5117,
+        "name": "Al Abdiyah"
+    },
+    {
+        "state_id": 5117,
+        "name": "Al Jubah"
+    },
+    {
+        "state_id": 5117,
+        "name": "Bidbadah"
+    },
+    {
+        "state_id": 5117,
+        "name": "Ḩarīb"
+    },
+    {
+        "state_id": 5117,
+        "name": "Harib Al Qaramish"
+    },
+    {
+        "state_id": 5117,
+        "name": "Jabal Murad"
+    },
+    {
+        "state_id": 5117,
+        "name": "Ma'rib"
+    },
+    {
+        "state_id": 5117,
+        "name": "Mahliyah"
+    },
+    {
+        "state_id": 5117,
+        "name": "Majzar"
+    },
+    {
+        "state_id": 5117,
+        "name": "Marib"
+    },
+    {
+        "state_id": 5117,
+        "name": "Marib City"
+    },
+    {
+        "state_id": 5117,
+        "name": "Medghal"
+    },
+    {
+        "state_id": 5117,
+        "name": "Raghwan"
+    },
+    {
+        "state_id": 5117,
+        "name": "Rahabah"
+    },
+    {
+        "state_id": 5117,
+        "name": "Sirwah"
+    },
+    {
+        "state_id": 5118,
+        "name": "Al Jabin"
+    },
+    {
+        "state_id": 5118,
+        "name": "Al Jafariyah"
+    },
+    {
+        "state_id": 5118,
+        "name": "As Salafiyah"
+    },
+    {
+        "state_id": 5118,
+        "name": "Bilad At Ta'am"
+    },
+    {
+        "state_id": 5118,
+        "name": "Kusmah"
+    },
+    {
+        "state_id": 5118,
+        "name": "Mazhar"
+    },
+    {
+        "state_id": 5119,
+        "name": "Al Dhaher"
+    },
+    {
+        "state_id": 5119,
+        "name": "Al Hashwah"
+    },
+    {
+        "state_id": 5119,
+        "name": "As Safra"
+    },
+    {
+        "state_id": 5119,
+        "name": "Ash Shawātī"
+    },
+    {
+        "state_id": 5119,
+        "name": "Baqim"
+    },
+    {
+        "state_id": 5119,
+        "name": "Ghamr"
+    },
+    {
+        "state_id": 5119,
+        "name": "Haydan"
+    },
+    {
+        "state_id": 5119,
+        "name": "Kitaf wa Al Boqe'e"
+    },
+    {
+        "state_id": 5119,
+        "name": "Majz"
+    },
+    {
+        "state_id": 5119,
+        "name": "Monabbih"
+    },
+    {
+        "state_id": 5119,
+        "name": "Qatabir"
+    },
+    {
+        "state_id": 5119,
+        "name": "Rāziḩ"
+    },
+    {
+        "state_id": 5119,
+        "name": "Sa'dah"
+    },
+    {
+        "state_id": 5119,
+        "name": "Şa‘dah"
+    },
+    {
+        "state_id": 5119,
+        "name": "Saḩār"
+    },
+    {
+        "state_id": 5119,
+        "name": "Saqayn"
+    },
+    {
+        "state_id": 5119,
+        "name": "Shada'a"
+    },
+    {
+        "state_id": 5120,
+        "name": "Al Haymah Ad Dakhiliyah"
+    },
+    {
+        "state_id": 5120,
+        "name": "Al Haymah Al Kharijiyah"
+    },
+    {
+        "state_id": 5120,
+        "name": "Al Husn"
+    },
+    {
+        "state_id": 5120,
+        "name": "Al Khāniq"
+    },
+    {
+        "state_id": 5120,
+        "name": "Arhab"
+    },
+    {
+        "state_id": 5120,
+        "name": "Attyal"
+    },
+    {
+        "state_id": 5120,
+        "name": "Bani Dhabyan"
+    },
+    {
+        "state_id": 5120,
+        "name": "Bani Hushaysh"
+    },
+    {
+        "state_id": 5120,
+        "name": "Bani Matar"
+    },
+    {
+        "state_id": 5120,
+        "name": "Bilad Ar Rus"
+    },
+    {
+        "state_id": 5120,
+        "name": "Hamdān"
+    },
+    {
+        "state_id": 5120,
+        "name": "Jihanah"
+    },
+    {
+        "state_id": 5120,
+        "name": "Khwlan"
+    },
+    {
+        "state_id": 5120,
+        "name": "Manakhah"
+    },
+    {
+        "state_id": 5120,
+        "name": "Nihm"
+    },
+    {
+        "state_id": 5120,
+        "name": "Sa'fan"
+    },
+    {
+        "state_id": 5120,
+        "name": "Saḩar"
+    },
+    {
+        "state_id": 5120,
+        "name": "Sanaa"
+    },
+    {
+        "state_id": 5120,
+        "name": "Sanhan"
+    },
+    {
+        "state_id": 5120,
+        "name": "Sayyān"
+    },
+    {
+        "state_id": 5121,
+        "name": "Ain"
+    },
+    {
+        "state_id": 5121,
+        "name": "Al ‘Āqir"
+    },
+    {
+        "state_id": 5121,
+        "name": "Al Talh"
+    },
+    {
+        "state_id": 5121,
+        "name": "AL-khashā upper"
+    },
+    {
+        "state_id": 5121,
+        "name": "Ar Rawdah"
+    },
+    {
+        "state_id": 5121,
+        "name": "Arma"
+    },
+    {
+        "state_id": 5121,
+        "name": "As Said"
+    },
+    {
+        "state_id": 5121,
+        "name": "Ataq"
+    },
+    {
+        "state_id": 5121,
+        "name": "Bayhan"
+    },
+    {
+        "state_id": 5121,
+        "name": "Dhar"
+    },
+    {
+        "state_id": 5121,
+        "name": "Habban"
+    },
+    {
+        "state_id": 5121,
+        "name": "Hatib"
+    },
+    {
+        "state_id": 5121,
+        "name": "Jardan"
+    },
+    {
+        "state_id": 5121,
+        "name": "Khimār"
+    },
+    {
+        "state_id": 5121,
+        "name": "Mayfa'a"
+    },
+    {
+        "state_id": 5121,
+        "name": "Merkhah Al Ulya"
+    },
+    {
+        "state_id": 5121,
+        "name": "Merkhah As Sufla"
+    },
+    {
+        "state_id": 5121,
+        "name": "Nisab"
+    },
+    {
+        "state_id": 5121,
+        "name": "Rudum"
+    },
+    {
+        "state_id": 5121,
+        "name": "Usaylan"
+    },
+    {
+        "state_id": 5122,
+        "name": "Hadibu"
+    },
+    {
+        "state_id": 5122,
+        "name": "Hidaybu"
+    },
+    {
+        "state_id": 5122,
+        "name": "Qalansīyah"
+    },
+    {
+        "state_id": 5122,
+        "name": "Qulensya Wa Abd Al Kuri"
+    },
+    {
+        "state_id": 5123,
+        "name": "Al Ma'afer"
+    },
+    {
+        "state_id": 5123,
+        "name": "Al Mawasit"
+    },
+    {
+        "state_id": 5123,
+        "name": "Al Misrakh"
+    },
+    {
+        "state_id": 5123,
+        "name": "Al Mudhaffar"
+    },
+    {
+        "state_id": 5123,
+        "name": "Al Mukhā’"
+    },
+    {
+        "state_id": 5123,
+        "name": "Al Qahirah"
+    },
+    {
+        "state_id": 5123,
+        "name": "Al Wazi'iyah"
+    },
+    {
+        "state_id": 5123,
+        "name": "As Silw"
+    },
+    {
+        "state_id": 5123,
+        "name": "Ash Shamayatayn"
+    },
+    {
+        "state_id": 5123,
+        "name": "At Ta‘izzīyah"
+    },
+    {
+        "state_id": 5123,
+        "name": "Dhubab"
+    },
+    {
+        "state_id": 5123,
+        "name": "Dimnat Khadir"
+    },
+    {
+        "state_id": 5123,
+        "name": "Hayfan"
+    },
+    {
+        "state_id": 5123,
+        "name": "Jabal Habashy"
+    },
+    {
+        "state_id": 5123,
+        "name": "Maqbanah"
+    },
+    {
+        "state_id": 5123,
+        "name": "Mashra'a Wa Hadnan"
+    },
+    {
+        "state_id": 5123,
+        "name": "Māwīyah"
+    },
+    {
+        "state_id": 5123,
+        "name": "Mawza"
+    },
+    {
+        "state_id": 5123,
+        "name": "Sabir Al Mawadim"
+    },
+    {
+        "state_id": 5123,
+        "name": "Salh"
+    },
+    {
+        "state_id": 5123,
+        "name": "Sama"
+    },
+    {
+        "state_id": 5123,
+        "name": "Shara'b Ar Rawnah"
+    },
+    {
+        "state_id": 5123,
+        "name": "Shara'b As Salam"
+    },
+    {
+        "state_id": 5123,
+        "name": "Ta‘izz"
+    },
+    {
+        "state_id": 5123,
+        "name": "Village of Alamrah"
+    },
+    {
+        "state_id": 5124,
+        "name": "Chibombo"
+    },
+    {
+        "state_id": 5124,
+        "name": "Chibombo District"
+    },
+    {
+        "state_id": 5124,
+        "name": "Kabwe"
+    },
+    {
+        "state_id": 5124,
+        "name": "Kapiri Mposhi"
+    },
+    {
+        "state_id": 5124,
+        "name": "Mkushi"
+    },
+    {
+        "state_id": 5124,
+        "name": "Mumbwa"
+    },
+    {
+        "state_id": 5124,
+        "name": "Serenje"
+    },
+    {
+        "state_id": 5125,
+        "name": "Chambishi"
+    },
+    {
+        "state_id": 5125,
+        "name": "Chililabombwe"
+    },
+    {
+        "state_id": 5125,
+        "name": "Chingola"
+    },
+    {
+        "state_id": 5125,
+        "name": "Chingola District"
+    },
+    {
+        "state_id": 5125,
+        "name": "Kalulushi"
+    },
+    {
+        "state_id": 5125,
+        "name": "Kataba"
+    },
+    {
+        "state_id": 5125,
+        "name": "Kitwe"
+    },
+    {
+        "state_id": 5125,
+        "name": "Luanshya"
+    },
+    {
+        "state_id": 5125,
+        "name": "Mpongwe"
+    },
+    {
+        "state_id": 5125,
+        "name": "Mufulira"
+    },
+    {
+        "state_id": 5125,
+        "name": "Ndola"
+    },
+    {
+        "state_id": 5126,
+        "name": "Chadiza"
+    },
+    {
+        "state_id": 5126,
+        "name": "Chipata"
+    },
+    {
+        "state_id": 5126,
+        "name": "Lundazi"
+    },
+    {
+        "state_id": 5126,
+        "name": "Nyimba"
+    },
+    {
+        "state_id": 5126,
+        "name": "Petauke"
+    },
+    {
+        "state_id": 5127,
+        "name": "Kawambwa"
+    },
+    {
+        "state_id": 5127,
+        "name": "Mansa"
+    },
+    {
+        "state_id": 5127,
+        "name": "Mwense"
+    },
+    {
+        "state_id": 5127,
+        "name": "Nchelenge"
+    },
+    {
+        "state_id": 5127,
+        "name": "Samfya"
+    },
+    {
+        "state_id": 5128,
+        "name": "Chongwe"
+    },
+    {
+        "state_id": 5128,
+        "name": "Kafue"
+    },
+    {
+        "state_id": 5128,
+        "name": "Luangwa"
+    },
+    {
+        "state_id": 5128,
+        "name": "Lusaka"
+    },
+    {
+        "state_id": 5129,
+        "name": "Chama"
+    },
+    {
+        "state_id": 5129,
+        "name": "Chinsali"
+    },
+    {
+        "state_id": 5129,
+        "name": "Isoka"
+    },
+    {
+        "state_id": 5129,
+        "name": "Mpika"
+    },
+    {
+        "state_id": 5129,
+        "name": "Nakonde"
+    },
+    {
+        "state_id": 5130,
+        "name": "Kaputa"
+    },
+    {
+        "state_id": 5130,
+        "name": "Kasama"
+    },
+    {
+        "state_id": 5130,
+        "name": "Luwingu"
+    },
+    {
+        "state_id": 5130,
+        "name": "Mbala"
+    },
+    {
+        "state_id": 5130,
+        "name": "Mporokoso"
+    },
+    {
+        "state_id": 5130,
+        "name": "Mpulungu"
+    },
+    {
+        "state_id": 5130,
+        "name": "Mungwi"
+    },
+    {
+        "state_id": 5131,
+        "name": "Kabompo"
+    },
+    {
+        "state_id": 5131,
+        "name": "Kalengwa"
+    },
+    {
+        "state_id": 5131,
+        "name": "Kansanshi"
+    },
+    {
+        "state_id": 5131,
+        "name": "Kasempa"
+    },
+    {
+        "state_id": 5131,
+        "name": "Mufumbwe"
+    },
+    {
+        "state_id": 5131,
+        "name": "Mwinilunga"
+    },
+    {
+        "state_id": 5131,
+        "name": "Solwezi"
+    },
+    {
+        "state_id": 5131,
+        "name": "Zambezi"
+    },
+    {
+        "state_id": 5132,
+        "name": "Choma"
+    },
+    {
+        "state_id": 5132,
+        "name": "Gwembe"
+    },
+    {
+        "state_id": 5132,
+        "name": "Itezhi-Tezhi District"
+    },
+    {
+        "state_id": 5132,
+        "name": "Livingstone"
+    },
+    {
+        "state_id": 5132,
+        "name": "Maamba"
+    },
+    {
+        "state_id": 5132,
+        "name": "Mazabuka"
+    },
+    {
+        "state_id": 5132,
+        "name": "Monze"
+    },
+    {
+        "state_id": 5132,
+        "name": "Nakambala"
+    },
+    {
+        "state_id": 5132,
+        "name": "Namwala"
+    },
+    {
+        "state_id": 5132,
+        "name": "Siavonga"
+    },
+    {
+        "state_id": 5132,
+        "name": "Siavonga District"
+    },
+    {
+        "state_id": 5132,
+        "name": "Sinazongwe"
+    },
+    {
+        "state_id": 5133,
+        "name": "Kalabo"
+    },
+    {
+        "state_id": 5133,
+        "name": "Kaoma"
+    },
+    {
+        "state_id": 5133,
+        "name": "Limulunga"
+    },
+    {
+        "state_id": 5133,
+        "name": "Lukulu"
+    },
+    {
+        "state_id": 5133,
+        "name": "Mongu"
+    },
+    {
+        "state_id": 5133,
+        "name": "Senanga"
+    },
+    {
+        "state_id": 5133,
+        "name": "Sesheke"
+    },
+    {
+        "state_id": 5134,
+        "name": "Bulawayo"
+    },
+    {
+        "state_id": 5135,
+        "name": "Chitungwiza"
+    },
+    {
+        "state_id": 5135,
+        "name": "Epworth"
+    },
+    {
+        "state_id": 5135,
+        "name": "Harare"
+    },
+    {
+        "state_id": 5136,
+        "name": "Buhera District"
+    },
+    {
+        "state_id": 5136,
+        "name": "Chimanimani"
+    },
+    {
+        "state_id": 5136,
+        "name": "Chimanimani District"
+    },
+    {
+        "state_id": 5136,
+        "name": "Chipinge"
+    },
+    {
+        "state_id": 5136,
+        "name": "Chipinge District"
+    },
+    {
+        "state_id": 5136,
+        "name": "Dorowa Mining Lease"
+    },
+    {
+        "state_id": 5136,
+        "name": "Headlands"
+    },
+    {
+        "state_id": 5136,
+        "name": "Makoni District"
+    },
+    {
+        "state_id": 5136,
+        "name": "Mutare"
+    },
+    {
+        "state_id": 5136,
+        "name": "Mutare District"
+    },
+    {
+        "state_id": 5136,
+        "name": "Mutasa District"
+    },
+    {
+        "state_id": 5136,
+        "name": "Nyanga"
+    },
+    {
+        "state_id": 5136,
+        "name": "Nyanga District"
+    },
+    {
+        "state_id": 5136,
+        "name": "Nyazura"
+    },
+    {
+        "state_id": 5136,
+        "name": "Odzi"
+    },
+    {
+        "state_id": 5136,
+        "name": "Penhalonga"
+    },
+    {
+        "state_id": 5136,
+        "name": "Rusape"
+    },
+    {
+        "state_id": 5137,
+        "name": "Bindura"
+    },
+    {
+        "state_id": 5137,
+        "name": "Bindura District"
+    },
+    {
+        "state_id": 5137,
+        "name": "Centenary"
+    },
+    {
+        "state_id": 5137,
+        "name": "Centenary District"
+    },
+    {
+        "state_id": 5137,
+        "name": "Concession"
+    },
+    {
+        "state_id": 5137,
+        "name": "Glendale"
+    },
+    {
+        "state_id": 5137,
+        "name": "Guruve District"
+    },
+    {
+        "state_id": 5137,
+        "name": "Mazowe"
+    },
+    {
+        "state_id": 5137,
+        "name": "Mazowe District"
+    },
+    {
+        "state_id": 5137,
+        "name": "Mount Darwin"
+    },
+    {
+        "state_id": 5137,
+        "name": "Mvurwi"
+    },
+    {
+        "state_id": 5137,
+        "name": "Rushinga District"
+    },
+    {
+        "state_id": 5137,
+        "name": "Shamva"
+    },
+    {
+        "state_id": 5137,
+        "name": "Shamva District"
+    },
+    {
+        "state_id": 5138,
+        "name": "Beatrice"
+    },
+    {
+        "state_id": 5138,
+        "name": "Chivhu"
+    },
+    {
+        "state_id": 5138,
+        "name": "Goromonzi District"
+    },
+    {
+        "state_id": 5138,
+        "name": "Macheke"
+    },
+    {
+        "state_id": 5138,
+        "name": "Marondera"
+    },
+    {
+        "state_id": 5138,
+        "name": "Marondera District"
+    },
+    {
+        "state_id": 5138,
+        "name": "Mudzi District"
+    },
+    {
+        "state_id": 5138,
+        "name": "Murehwa"
+    },
+    {
+        "state_id": 5138,
+        "name": "Murehwa District"
+    },
+    {
+        "state_id": 5138,
+        "name": "Mutoko"
+    },
+    {
+        "state_id": 5138,
+        "name": "Ruwa"
+    },
+    {
+        "state_id": 5139,
+        "name": "Banket"
+    },
+    {
+        "state_id": 5139,
+        "name": "Chakari"
+    },
+    {
+        "state_id": 5139,
+        "name": "Chegutu"
+    },
+    {
+        "state_id": 5139,
+        "name": "Chegutu District"
+    },
+    {
+        "state_id": 5139,
+        "name": "Chinhoyi"
+    },
+    {
+        "state_id": 5139,
+        "name": "Chirundu"
+    },
+    {
+        "state_id": 5139,
+        "name": "Hurungwe District"
+    },
+    {
+        "state_id": 5139,
+        "name": "Kadoma"
+    },
+    {
+        "state_id": 5139,
+        "name": "Kadoma District"
+    },
+    {
+        "state_id": 5139,
+        "name": "Kariba"
+    },
+    {
+        "state_id": 5139,
+        "name": "Kariba District"
+    },
+    {
+        "state_id": 5139,
+        "name": "Karoi"
+    },
+    {
+        "state_id": 5139,
+        "name": "Makonde District"
+    },
+    {
+        "state_id": 5139,
+        "name": "Mhangura"
+    },
+    {
+        "state_id": 5139,
+        "name": "Norton"
+    },
+    {
+        "state_id": 5139,
+        "name": "Raffingora"
+    },
+    {
+        "state_id": 5140,
+        "name": "Bikita District"
+    },
+    {
+        "state_id": 5140,
+        "name": "Chiredzi"
+    },
+    {
+        "state_id": 5140,
+        "name": "Chiredzi District"
+    },
+    {
+        "state_id": 5140,
+        "name": "Chivi District"
+    },
+    {
+        "state_id": 5140,
+        "name": "Gutu District"
+    },
+    {
+        "state_id": 5140,
+        "name": "Mashava"
+    },
+    {
+        "state_id": 5140,
+        "name": "Masvingo"
+    },
+    {
+        "state_id": 5140,
+        "name": "Masvingo District"
+    },
+    {
+        "state_id": 5140,
+        "name": "Mwenezi District"
+    },
+    {
+        "state_id": 5140,
+        "name": "Zvishavane"
+    },
+    {
+        "state_id": 5141,
+        "name": "Binga"
+    },
+    {
+        "state_id": 5141,
+        "name": "Binga District"
+    },
+    {
+        "state_id": 5141,
+        "name": "Bubi District"
+    },
+    {
+        "state_id": 5141,
+        "name": "Dete"
+    },
+    {
+        "state_id": 5141,
+        "name": "Hwange"
+    },
+    {
+        "state_id": 5141,
+        "name": "Hwange District"
+    },
+    {
+        "state_id": 5141,
+        "name": "Inyati"
+    },
+    {
+        "state_id": 5141,
+        "name": "Kamativi Mine"
+    },
+    {
+        "state_id": 5141,
+        "name": "Lupane"
+    },
+    {
+        "state_id": 5141,
+        "name": "Lupane District"
+    },
+    {
+        "state_id": 5141,
+        "name": "Nkayi District"
+    },
+    {
+        "state_id": 5141,
+        "name": "Victoria Falls"
+    },
+    {
+        "state_id": 5142,
+        "name": "Beitbridge"
+    },
+    {
+        "state_id": 5142,
+        "name": "Beitbridge District"
+    },
+    {
+        "state_id": 5142,
+        "name": "Esigodini"
+    },
+    {
+        "state_id": 5142,
+        "name": "Filabusi"
+    },
+    {
+        "state_id": 5142,
+        "name": "Gwanda"
+    },
+    {
+        "state_id": 5142,
+        "name": "Gwanda District"
+    },
+    {
+        "state_id": 5142,
+        "name": "Insiza"
+    },
+    {
+        "state_id": 5142,
+        "name": "Insiza District"
+    },
+    {
+        "state_id": 5142,
+        "name": "Mangwe District"
+    },
+    {
+        "state_id": 5142,
+        "name": "Matobo"
+    },
+    {
+        "state_id": 5142,
+        "name": "Plumtree"
+    },
+    {
+        "state_id": 5142,
+        "name": "Umzingwane District"
+    },
+    {
+        "state_id": 5143,
+        "name": "Gokwe"
+    },
+    {
+        "state_id": 5143,
+        "name": "Gweru"
+    },
+    {
+        "state_id": 5143,
+        "name": "Gweru District"
+    },
+    {
+        "state_id": 5143,
+        "name": "Kwekwe"
+    },
+    {
+        "state_id": 5143,
+        "name": "Kwekwe District"
+    },
+    {
+        "state_id": 5143,
+        "name": "Lalapanzi"
+    },
+    {
+        "state_id": 5143,
+        "name": "Mberengwa District"
+    },
+    {
+        "state_id": 5143,
+        "name": "Mvuma"
+    },
+    {
+        "state_id": 5143,
+        "name": "Redcliff"
+    },
+    {
+        "state_id": 5143,
+        "name": "Shangani"
+    },
+    {
+        "state_id": 5143,
+        "name": "Shurugwi"
+    },
+    {
+        "state_id": 5143,
+        "name": "Shurugwi District"
+    },
+    {
+        "state_id": 5143,
+        "name": "Zvishavane District"
+    }
+]

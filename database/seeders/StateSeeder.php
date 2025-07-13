@@ -20,7 +20,7 @@ class StateSeeder extends Seeder
             DB::table('states')->insert([
                 'country_id' => $state['country_id'],
                 'name' => $state['name'],
-                'iso2' => $state['state_code'],
+                'iso2' => $state['iso2'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

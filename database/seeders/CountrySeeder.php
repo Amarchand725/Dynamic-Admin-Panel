@@ -21,7 +21,7 @@ class CountrySeeder extends Seeder
                 'name' => $country['name'],
                 'iso2' => $country['iso2'] ?? null,
                 'iso3' => $country['iso3'] ?? null,
-                'phone_code' => $country['phonecode'] ?? null,
+                'phone_code' => $country['phone_code'] ?? null,
                 'currency' => $country['currency'] ?? null,
                 'currency_name' => $country['currency_name'] ?? null,
                 'currency_symbol' => $country['currency_symbol'] ?? null,

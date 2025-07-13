@@ -41,7 +41,7 @@ class SettingController extends Controller
             $states = State::where('country_id', $country->id)->get();
         }
         $stateName = getSetting('state', null);
-        $state = State::where('name', 'like', '%' .$stateName.'%')->first();
+        $state = State::where('name', 'like', $stateName.'%')->first();
         
         $cities = [];
         if(!empty($state)){

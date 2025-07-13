@@ -14,7 +14,7 @@ class CitySeeder extends Seeder
         DB::table('cities')->truncate();
         Schema::enableForeignKeyConstraints();
 
-        $cityFiles = glob(database_path('seederData/splits/cities_part_*.json'));
+        $cityFiles = glob(database_path('seederData/splits/cities_*.json'));
 
         foreach ($cityFiles as $filePath) {
             echo "Seeding: $filePath\n";
@@ -32,7 +32,5 @@ class CitySeeder extends Seeder
                 }, $chunk));
             }
         }
-
-        echo "✅ All split files imported successfully.\n";
     }
 }
