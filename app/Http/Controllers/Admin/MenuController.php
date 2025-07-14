@@ -499,8 +499,8 @@ class MenuController extends Controller
     {
         $bladePath = $this->pathInitialize;
         $title = $this->singularLabel;
-        $menuGroups = $this->model->where('menu_group', NULL)->where('status', 1)->get();
         $model = $this->model->where('id', $id)->first();
+        $menuGroups = $this->model->where('menu_group', NULL)->where('id', '!=', $id)->where('status', 1)->get();
         $fields = getFields($model, getFieldsAndColumns($this->model, $this->pathInitialize, $this->singularLabel, $this->routePrefix), 'edit');
         
         return view($bladePath.'.edit_content', get_defined_vars());

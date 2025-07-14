@@ -31,17 +31,23 @@ function restoreRecord($record){
 
 function actionLabel($action){
     if($action=='create'){
-        return '<span class="badge bg-label-success me-1">Create</span>';
+        return '<span class="badge bg-label-success me-1">Created</span>';
     }elseif($action=='update'){
-        return '<span class="badge bg-label-primary me-1">Update</span>';
+        return '<span class="badge bg-label-primary me-1">Updated</span>';
     }elseif($action=='delete'){
-        return '<span class="badge bg-label-danger me-1">Delete</span>';
+        return '<span class="badge bg-label-danger me-1">Deleted</span>';
+    }elseif($action=='restore'){
+        return '<span class="badge bg-label-success me-1">Restored</span>';
     }elseif($action=='show'){
         return '<span class="badge bg-label-info me-1">Show</span>';
     }elseif($action=='show_column'){
         return '<span class="badge bg-label-warning me-1">Show Column</span>';
     }elseif($action=='downloaded-document'){
         return '<span class="badge bg-label-dark me-1">Downloaded Document</span>';
+    }elseif($action=='login'){
+        return '<span class="badge bg-label-success me-1">Login</span>';
+    }elseif($action=='logout'){
+        return '<span class="badge bg-label-danger me-1">Logout</span>';
     }else{
         return '<span class="badge bg-label-secondary me-1">Unknown</span>';
     }

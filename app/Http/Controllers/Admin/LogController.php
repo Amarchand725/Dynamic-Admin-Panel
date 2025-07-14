@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
 use App\Models\Log;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\DataTableTrait;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
@@ -72,6 +70,17 @@ class LogController extends Controller
             ->select($selectedColumns);
         //select columns
 
+        // Check and handle relation
+        if (isset($getFields['user_id'])) {
+            // Customize index to pull from relation
+            $getFields['user_id']['index'] = fn($model) => $model->hasActionUser ? $model->hasActionUser->name . ' (' . $model->hasActionUser->role . ')' : '-' ?? '-';
+        }
+
+        if (isset($getFields['user_action'])) {
+            // Customize index to pull from relation
+            $getFields['user_action']['index'] = fn($model) => actionLabel($model->user_action);
+        }
+
         $columns = collect($getFields)->mapWithKeys(function ($config, $key) {
             return [$key => $config['index']];
         })->toArray();  // Convert Collection to Array
@@ -92,7 +101,7 @@ class LogController extends Controller
         
         return view($bladePath.'.index', get_defined_vars());
     }
-    
+
     public function show(string $id)
     {
         $bladePath = $this->pathInitialize;

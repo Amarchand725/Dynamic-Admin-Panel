@@ -50,7 +50,7 @@
                                                         <th scope="col">Action Type</th>
                                                         <th scope="col">Action Model</th>
                                                         <th scope="col">Remarks</th>
-                                                        <th scope="col">IP</th>
+                                                        <th scope="col">IP Address</th>
                                                         <th scope="col">Date</th>
                                                     </tr>
                                                 </thead>
@@ -78,9 +78,9 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="6"><strong>Details Data</strong></td>
+                                                        <td colspan="6"><strong>Record Details</strong></td>
                                                     </tr>
-                                                    @if($model->action=='update') <!-- For update -->
+                                                    @if($model->user_action=='update') <!-- For update -->
                                                         <tr>
                                                             <th colspan="2">Columns</th>
                                                             <th colspan="2">Old Data</th>
@@ -91,21 +91,29 @@
                                                             <tr>
                                                                 <th colspan="2"><strong>{{ $key }}</strong></th>
                                                                 <td colspan="2">
-                                                                    @if($key=='status')
+                                                                    @if (is_string($item['old']) && preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $item['old']))
+                                                                        <img src="{{ asset('storage/' .$item['old']) }}" width="80">
+                                                                    @elseif($key=='status')
                                                                         {!! statusBadge($item['old']) !!}
                                                                     @elseif($key == 'updated_at')
-                                                                        {{ newDateFormat($item['old']) ?? '-' }}
+                                                                        {{ getDateTimeFormat($item['old']) ?? '-' }}
                                                                     @elseif($key=='password')
                                                                         {{ '-' }}
                                                                     @else
-                                                                        {{ $item['old'] }}
+                                                                        {{ $item['old'] ?? '-' }}
                                                                     @endif
                                                                 </td>
                                                                 <td colspan="2">
-                                                                    @if($key=='status')
+                                                                    @if (is_string($item['new']) && preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $item['new']))
+                                                                            @if(!empty($item['new']))
+                                                                                <img src="{{ asset('storage/' .$item['new']) }}" width="80">
+                                                                            @else
+                                                                                -
+                                                                            @endif
+                                                                    @elseif($key=='status')
                                                                         {!! statusBadge($item['new']) !!}
                                                                     @elseif($key == 'updated_at')
-                                                                        {{ newDateFormat($item['new']) ?? '-' }}
+                                                                        {{ getDateTimeFormat($item['new']) ?? '-' }}
                                                                     @elseif($key=='password')
                                                                         {{ '-' }}
                                                                     @else
@@ -114,7 +122,7 @@
                                                                 </td>
                                                             </tr>
                                                         @endforeach
-                                                    @elseif($model->action=='show_column') <!-- For show specific column data -->
+                                                    @elseif($model->user_action=='show_column') <!-- For show specific column data -->
                                                         <tr>
                                                             <th colspan="2">Columns</th>
                                                             <th colspan="4">Viewed </th>
@@ -126,7 +134,7 @@
                                                             <th colspan="2"><strong>{{ Str::upper($columnData['column_name']) ?? '-' }}</strong></th>
                                                             <td colspan="4">{{ $columnData['column_value'] ?? '-' }}</td>
                                                         </tr>
-                                                    @elseif($model->action=='downloaded-document') <!-- For downloading document or file -->
+                                                    @elseif($model->user_action=='downloaded-document') <!-- For downloading document or file -->
                                                         <tr>
                                                             <th colspan="2">Columns</th>
                                                             <th colspan="4">Document </th>
@@ -172,7 +180,13 @@
                                                                 <tr>
                                                                     <th colspan="2"><strong>{{ $key ?? '-' }}</strong></th>
                                                                     <td colspan="4">
-                                                                        @if($key=='status')
+                                                                        @if (is_string($item) && preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $item))
+                                                                            @if(!empty($item))
+                                                                                <img src="{{ asset('storage/' .$item) }}" width="80">
+                                                                            @else
+                                                                                -
+                                                                            @endif
+                                                                        @elseif($key=='status')
                                                                             {!! statusBadge($item) !!}
                                                                         @elseif($key=='created_at')
                                                                             {{ getDateTimeFormat($item) }}

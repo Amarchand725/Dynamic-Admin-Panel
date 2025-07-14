@@ -45,7 +45,7 @@
                                             value="{{ getSetting('name', null) }}" 
                                             name="settings[name]" id="name" placeholder="Enter company name"/>
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
-                                        <span id="name_error" class="text-danger error">{{ $errors->first('name') }}</span>
+                                        <span id="name_error" class="text-danger error">{{ $errors->first('settings.name') }}</span>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -152,10 +152,10 @@
                                     <label for="phone_number" class="col-md-2 col-form-label">Phone Number <span class="text-danger">*</span></label>
                                     <div class="col-md-10">
                                         <input class="form-control phoneNumber" type="text" 
-                                            name="settings[phone_number]" value="{{ getSetting('phone_number', null) }}" id="phone_number" 
+                                            name="settings[phone_number]" value="{{ old('settings.phone_number', getSetting('phone_number', null)) }}" id="phone_number" 
                                             placeholder="Enter company phone number" />
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
-                                        <span id="phone_number_error" class="text-danger error"></span>
+                                        <span id="phone_number_error" class="text-danger error">{{ $errors->first('settings.phone_number') }}</span>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -163,7 +163,7 @@
                                     <div class="col-md-10">
                                         <input class="form-control" type="email" name="settings[support_email]" value="{{ getSetting('support_email', null) }}" id="support_email" placeholder="Enter support email" />
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
-                                        <span id="support_email_error" class="text-danger error"></span>
+                                        <span id="support_email_error" class="text-danger error">{{ $errors->first('settings.support_email') }}</span>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -267,7 +267,7 @@
                                     <div class="col-md-10">
                                         <textarea name="settings[address]" id="address" class="form-control" placeholder="Enter address">{{ getSetting('address', null) }}</textarea>
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
-                                        <span id="address_error" class="text-danger error"></span>
+                                        <span id="address_error" class="text-danger error">{{ $errors->first('settings.address') }}</span>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">

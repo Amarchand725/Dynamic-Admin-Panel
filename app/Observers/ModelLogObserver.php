@@ -120,6 +120,11 @@ class ModelLogObserver
         ]);
     }
 
+    public function restored($model)
+    {
+        $this->restoreRecord($model);
+    }
+
     public function restoreRecord($model){
         Log::create([
             'user_id' => Auth::id(),

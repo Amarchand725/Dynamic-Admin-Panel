@@ -145,9 +145,8 @@ class BaseController extends Controller
                         }
                     }
                 }
-
-                $saved->save();
             }
+            $saved->save();
 
             if(isset($saved) && !empty($saved)){
                 DB::commit();
@@ -231,8 +230,8 @@ class BaseController extends Controller
                         }
                     }
                 }
-                $model->save();
             }
+            $model->save();
 
             if(isset($model) && !empty($model)){
                 DB::commit();
@@ -256,7 +255,9 @@ class BaseController extends Controller
     public function destroy($modelId)
     {
         $singularLabel = $this->singularLabel;
-        if($this->model->where('id', $modelId)->delete()) {
+        $model = $this->model->findOrFail($modelId);
+        $model->delete(); 
+        if($model) {
             return response()->json([
                 'status' => true,
                 'message' => $singularLabel.' Deleted Successfully'

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Log extends Model
 {
     protected $fillable = [
-        'user_id', 'action', 'model', 'model_id', 'changed_fields', 'ip_address', 'description', 'extra_details',
+        'user_id', 'user_action', 'model', 'model_id', 'changed_fields', 'ip_address', 'description', 'extra_details',
     ];
 
     public function hasActionUser(){
