@@ -1,0 +1,171 @@
+<div id="managerDetail" class="accordion-collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <div class="datatable mb-3">
+            <div class="table-responsive custom-scrollbar table-view-responsive">
+                <table class="table table-striped table-responsive custom-table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Action By</th>
+                            <th scope="col">Action Type</th>
+                            <th scope="col">Action Model</th>
+                            <th scope="col">Remarks</th>
+                            <th scope="col">IP Address</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @if(!empty($model->hasActionUser->name))
+                                    {{ $model->hasActionUser->name.' ('.$model->hasActionUser->role.')' ?? '-' }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                {!! actionLabel($model->user_action) !!}
+                            </td>
+                            <td>{{ $className }}</td>
+                            <td>{{ $model->description }}</td>
+                            <td>{{ $model->ip_address }}</td>
+                            <td>
+                                @if(!empty($model->created_at))
+                                    {{ getDateTimeFormat($model->created_at) ?? '-' }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"><strong>Record Details</strong></td>
+                        </tr>
+                        @if($model->user_action=='update') <!-- For update -->
+                            <tr>
+                                <th colspan="2">Columns</th>
+                                <th colspan="2">Old Data</th>
+                                <th colspan="2">New Data</th>
+                            </tr>
+                            @php $data = json_decode($model->changed_fields, true); @endphp
+                            @foreach ($data as $key => $item)
+                                <tr>
+                                    <th colspan="2"><strong>{{ $key }}</strong></th>
+                                    <td colspan="2">
+                                        @if (is_string($item['old']) && preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $item['old']))
+                                            <img src="{{ asset('storage/' .$item['old']) }}" width="80">
+                                        @elseif($key=='status')
+                                            {!! statusBadge($item['old']) !!}
+                                        @elseif($key == 'updated_at')
+                                            {{ getDateTimeFormat($item['old']) ?? '-' }}
+                                        @elseif($key=='password')
+                                            {{ '-' }}
+                                        @else
+                                            {{ $item['old'] ?? '-' }}
+                                        @endif
+                                    </td>
+                                    <td colspan="2">
+                                        @if (is_string($item['new']) && preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $item['new']))
+                                                @if(!empty($item['new']))
+                                                    <img src="{{ asset('storage/' .$item['new']) }}" width="80">
+                                                @else
+                                                    -
+                                                @endif
+                                        @elseif($key=='status')
+                                            {!! statusBadge($item['new']) !!}
+                                        @elseif($key == 'updated_at')
+                                            {{ getDateTimeFormat($item['new']) ?? '-' }}
+                                        @elseif($key=='password')
+                                            {{ '-' }}
+                                        @else
+                                            {{ $item['new'] }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @elseif($model->user_action=='show_column') <!-- For show specific column data -->
+                            <tr>
+                                <th colspan="2">Columns</th>
+                                <th colspan="4">Viewed </th>
+                            </tr>
+                            @php
+                                $columnData = json_decode($model->extra_details, true);
+                            @endphp
+                            <tr>
+                                <th colspan="2"><strong>{{ Str::upper($columnData['column_name']) ?? '-' }}</strong></th>
+                                <td colspan="4">{{ $columnData['column_value'] ?? '-' }}</td>
+                            </tr>
+                        @elseif($model->user_action=='downloaded-document') <!-- For downloading document or file -->
+                            <tr>
+                                <th colspan="2">Columns</th>
+                                <th colspan="4">Document </th>
+                            </tr>
+                            @php
+                                $columnData = json_decode($model->extra_details, true);
+                            @endphp
+                            <tr>
+                                <th colspan="2"><strong>{{ Str::upper($columnData['column_name']) ?? '-' }}</strong></th>
+                                <td colspan="4">
+                                    @if(!empty($columnData['column_value']))
+                                        <a href="{{ asset($columnData['document_path'].'/'.$columnData['column_value']) }}"
+                                            download class="btn btn-info"
+                                            title="{{ $columnData['column_value'] }}"
+                                            style="display: flex; align-items: center; gap: 5px;">
+                                            <i class="fa fa-download"></i>
+                                            Download
+                                        </a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <th colspan="2">Columns</th>
+                                <th colspan="4">Data</th>
+                            </tr>
+                            @if(isset($modelData) && !empty($modelData))
+                                @php
+                                    $recordArray = $modelData->toArray();
+                                    $excludeKeys = ['id', 'created_by', 'updated_at', 'deleted_at'];
+
+                                    if ($className == 'User') {
+                                        $excludeKeys[] = 'email_verified_at'; // Add the key dynamically to the array
+                                        $excludeKeys[] = 'password'; // Add the key dynamically to the array
+                                        $excludeKeys[] = 'remember_token'; // Add the key dynamically to the array
+                                    }
+
+                                    $filteredData = array_diff_key($recordArray, array_flip($excludeKeys));
+                                @endphp
+                                @foreach ($filteredData as $key => $item)
+                                    <tr>
+                                        <th colspan="2"><strong>{{ $key ?? '-' }}</strong></th>
+                                        <td colspan="4">
+                                            @if (is_string($item) && preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $item))
+                                                @if(!empty($item))
+                                                    <img src="{{ asset('storage/' .$item) }}" width="80">
+                                                @else
+                                                    -
+                                                @endif
+                                            @elseif($key=='status')
+                                                {!! statusBadge($item) !!}
+                                            @elseif($key=='created_at')
+                                                {{ getDateTimeFormat($item) }}
+                                            @elseif($key=='is_employee')
+                                                {!! isEmployee($item) !!}
+                                            @else
+                                                {{ $item ?? '-' }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="6">Record not found</td>
+                                </tr>
+                            @endif
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

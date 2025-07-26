@@ -120,7 +120,7 @@ class LogController extends Controller
             $modelData = collect($attributes)->filter(function ($value, $key) {
                 return !\Illuminate\Support\Str::endsWith($key, '_id'); // Exclude columns ending with '_id'
             });
-            return view($bladePath.'.show', get_defined_vars());
+            return (string) view($bladePath.'.show_content', get_defined_vars());
         }else{
             return abort(405);
         }

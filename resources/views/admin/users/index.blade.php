@@ -58,10 +58,10 @@
                                             <span class="d-none d-sm-inline-block"> Add {{ $singularLabel }} </span>
                                         </span>
                                     </button>
-                                @endif
+                                @endcan
                             </div>
                         </div>
-                    @endcan
+                    @endcanany
                 @endif
             </div>
         </div>
@@ -74,7 +74,7 @@
                             <thead>
                                 <tr>
                                     @foreach($columnsConfig as $columnName)
-                                        <th>{{ $columnName['name'] }}</th>
+                                        <th>{{ $columnName['title'] }}</th>
                                     @endforeach
                                 </tr>
                             </thead>

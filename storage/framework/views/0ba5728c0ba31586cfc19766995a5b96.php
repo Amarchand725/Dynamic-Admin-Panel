@@ -66,7 +66,7 @@
                         <h3 class="mb-2" id="modal-label"></h3>
                     </div>
                     <form method="POST" class="pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="create-form" data-modal-id="create-pop-up-modal">
-                        @csrf
+                        <?php echo csrf_field(); ?>
     
                         <span id="edit-content"></span>
                         <div class="col-12 mt-3 action-btn">
@@ -103,7 +103,7 @@
                         <h3 class="mb-2" id="modal-label"></h3>
                     </div>
                     <form method="POST" class="pt-0 fv-plugins-bootstrap5 fv-plugins-framework submitBtnWithFileUpload" id="create-form" data-modal-id="create-pop-up-modal-for-file" enctype="multipart/form-data">
-                        @csrf
+                        <?php echo csrf_field(); ?>
     
                         <span id="edit-content"></span>
                         <div class="col-12 mt-3 action-btn">
@@ -138,7 +138,7 @@
                         <h3 class="mb-2" id="modal-label"></h3>
                     </div>
                     <form method="POST" class="pt-0 fv-plugins-bootstrap5 fv-plugins-framework submitBtnWithFileUpload" id="create-form" data-modal-id="create-pop-up-modal-x-large-for-file" enctype="multipart/form-data">
-                        @csrf
+                        <?php echo csrf_field(); ?>
     
                         <div id="edit-content"></div>
                         <div class="col-12 mt-3 action-btn">
@@ -175,7 +175,7 @@
                         <h3 class="mb-2" id="modal-label"></h3>
                     </div>
                     <form method="POST" class="pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="create-form" data-modal-id="create-pop-up-modal-large">
-                        @csrf
+                        <?php echo csrf_field(); ?>
     
                         <span id="edit-content"></span>
                         <div class="col-12 mt-3 action-btn">
@@ -202,3 +202,4 @@
     </div>
     <!-- Create Large Modal -->
 </div>
+<?php /**PATH C:\xampp\htdocs\dynamic-admin-panel\resources\views/components/modals.blade.php ENDPATH**/ ?>

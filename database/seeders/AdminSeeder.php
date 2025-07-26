@@ -16,16 +16,35 @@ class AdminSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {       
+    {      
         $settings = config('system.settings');
-        foreach($settings as $key=>$setting){
-            if(BusinessSetting::where('key', $key)->first()){
-                continue;
+
+        $businessSetting = new BusinessSetting();
+        foreach ($settings as $category => $group) {
+            if (is_array($group)) {
+                foreach ($group as $key => $item) {
+                    $value = is_array($item) ? $item['value'] ?? null : $item;
+                    $inputType = is_array($item) ? $item['input_type'] ?? 'text' : 'text';
+
+                    $businessSetting->firstOrCreate(
+                        ['key' => $key],
+                        [
+                            'category' => $category,
+                            'value' => $value,
+                            'input_type' => $inputType,
+                        ]
+                    );
+                }
+            } else {
+                $businessSetting->firstOrCreate(
+                    ['key' => $category],
+                    [
+                        'category' => null,
+                        'value' => $group,
+                        'input_type' => 'text',
+                    ]
+                );
             }
-            BusinessSetting::create([
-                'key' => $key,
-                'value' => config('system.settings.'.$key),
-            ]);
         }
 
         $user = config('system.user');

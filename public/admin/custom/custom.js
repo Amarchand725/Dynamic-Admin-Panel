@@ -37,16 +37,6 @@ $(document).on('keyup', '.phoneNumber', function() {
     $(this).val(formattedPhone);
 });
 
-// function formatPhoneNumber(phone) {
-//     phone = phone.replace(/\D/g, '');
-//     if (phone.length > 3) {
-//         var areaCode = phone.substring(0, 3);
-//         var telephoneNumber = phone.substring(3, 10);
-//         phone =  "(" + areaCode + ") - " + telephoneNumber;
-//     }
-//     return phone;
-// }
-
 function formatPhoneNumber(phone) {
     // Remove all non-digit characters
     phone = phone.replace(/\D/g, '');
@@ -75,14 +65,14 @@ $(document).on('click','i[class^="ti ti-eye"]',function(){
 
 $(document).ready(function() {
     $(document).on('change', '.uploader', function() {
-        var name = this.name;
+        var name = this.id;
         var file = this.files[0];
         if (file) {
             var reader = new FileReader();
 
             reader.onload = function(e) {
                 // Create an image element
-                var img = $('<img style="width:60px; height:50px">').attr('src', e.target.result);
+                var img = $('<img style="width:120px">').attr('src', e.target.result);
 
                 // Display the image preview
                 $('#preview-'+name).html(img);

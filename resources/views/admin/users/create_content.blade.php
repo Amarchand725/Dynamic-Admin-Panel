@@ -30,7 +30,7 @@
             @elseif(isset($field['type']) && $field['type'] === 'file')
                 <input 
                     type="{{ $field['type'] ?? 'text' }}" 
-                    id="file-uploader" 
+                    id="{{ $name }}" 
                     name="{{ $name }}" 
                     accept="{{ isset($field['accept']) ? $field['accept'] : '' }}" 
                     class="form-control uploader" 

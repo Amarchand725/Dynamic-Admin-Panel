@@ -37,6 +37,7 @@ return  [
     "roles-restore",
     "roles-show",
     "roles-update",
+    "settings-list",
     "settings-create",
     "settings-edit",
     "notifications-list",

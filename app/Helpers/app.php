@@ -453,3 +453,9 @@ function isEmployee($isEmployee){
         return '<span class="badge bg-label-danger me-1">No</span>';
     }
 }
+
+function getTimeZone(){
+    return [
+        'CDT', 'EST', 'PST', 'UTC'
+    ];
+}

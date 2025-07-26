@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('business_settings', function (Blueprint $table) {
             $table->id();
+            $table->string('category')->default('company');
             $table->string('key')->nullable();
             $table->text('value')->nullable();
+            $table->string('input_type')->default('text'); // text, boolean, image, etc. (optional)
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

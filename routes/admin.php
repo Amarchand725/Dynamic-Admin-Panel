@@ -33,6 +33,7 @@ Route::controller(DeveloperController::class)->group(function () {
     Route::get('/getCountries', 'getCountries');
     Route::get('/getStates', 'getStates');
     Route::get('/getCities', 'getCities');
+    Route::get('/addBusinessSetting', 'addBusinessSetting');
 });
 
 //developer

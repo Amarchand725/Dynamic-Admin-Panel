@@ -38,7 +38,7 @@
                             <thead>
                                 <tr>
                                     @foreach($columnsConfig as $columnName)
-                                        <th>{{ $columnName['name'] }}</th>
+                                        <th>{{ $columnName['title'] }}</th>
                                     @endforeach
                                 </tr>
                             </thead>

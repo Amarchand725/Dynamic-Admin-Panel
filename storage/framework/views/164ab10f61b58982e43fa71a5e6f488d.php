@@ -10,7 +10,8 @@
     <div class="navbar-nav align-items-center">
       <div class="nav-item navbar-search-wrapper mb-0">
         <a class="nav-item nav-linkd-flex align-items-center px-0" href="javascript:void(0);">
-          Welcome, {{ Auth::user()->name }}
+          Welcome, <?php echo e(Auth::user()->name); ?>
+
         </a>
       </div>
     </div>
@@ -35,7 +36,7 @@
           aria-expanded="false"
         >
           <i class="ti ti-bell ti-md"></i>
-          <span class="badge bg-danger rounded-pill badge-notifications">{{ auth()->user()->unreadNotifications->count() }}</span>
+          <span class="badge bg-danger rounded-pill badge-notifications"><?php echo e(auth()->user()->unreadNotifications->count()); ?></span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end py-0">
           <li class="dropdown-menu-header border-bottom">
@@ -53,25 +54,25 @@
           </li>
           <li class="dropdown-notifications-list scrollable-container">
             <ul class="list-group list-group-flush">
-              @foreach(auth()->user()->unreadNotifications as $notification)
+              <?php $__currentLoopData = auth()->user()->unreadNotifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                  <a href="{{ $notification->data['url'] }}" class="d-flex text-dark text-decoration-none">
+                  <a href="<?php echo e($notification->data['url']); ?>" class="d-flex text-dark text-decoration-none">
                     <div class="flex-shrink-0 me-3">
                       <div class="avatar">
-                        <img src="{{ asset('admin/notification-images') }}/{{ $notification->data['icon'] }}" alt class="h-auto rounded-circle" />
+                        <img src="<?php echo e(asset('admin/notification-images')); ?>/<?php echo e($notification->data['icon']); ?>" alt class="h-auto rounded-circle" />
                       </div>
                     </div>
                     <div class="flex-grow-1">
-                      <h6 class="mb-1">{{ $notification->data['title'] }}</h6>
-                      <p class="mb-0">{{ $notification->data['message'] }}</p>
-                      <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                      <h6 class="mb-1"><?php echo e($notification->data['title']); ?></h6>
+                      <p class="mb-0"><?php echo e($notification->data['message']); ?></p>
+                      <small class="text-muted"><?php echo e($notification->created_at->diffForHumans()); ?></small>
                     </div>
                     <div class="flex-shrink-0 dropdown-notifications-actions">
                       <span class="badge badge-dot"></span>
                     </div>
                   </a>
                 </li>
-              @endforeach
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
           </li>
           <li class="dropdown-menu-footer border-top">
@@ -90,31 +91,31 @@
       <li class="nav-item navbar-dropdown dropdown-user dropdown">
         <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
           <div class="avatar avatar-online">
-            @if(isset(Auth::user()->profile) && !empty(Auth::user()->profile))
-              <img src="{{ asset('storage/'. Auth::user()->profile) }}" alt class="h-auto rounded-circle" />
-            @else
-              <img src="{{ asset('admin') }}/assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
-            @endif
+            <?php if(isset(Auth::user()->profile) && !empty(Auth::user()->profile)): ?>
+              <img src="<?php echo e(asset('storage/'. Auth::user()->profile)); ?>" alt class="h-auto rounded-circle" />
+            <?php else: ?>
+              <img src="<?php echo e(asset('admin')); ?>/assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+            <?php endif; ?>
           </div>
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
           <li>
-            <a class="dropdown-item" href="{{ route('settings.create') }}">
+            <a class="dropdown-item" href="<?php echo e(route('settings.create')); ?>">
               <div class="d-flex">
                 <div class="flex-shrink-0 me-3">
                   <div class="avatar avatar-online">
-                    @if(isset(Auth::user()->profile) && !empty(Auth::user()->profile))
-                      <img src="{{ asset('storage/'. Auth::user()->profile) }}" alt class="h-auto rounded-circle" />
-                    @else
-                      <img src="{{ asset('admin') }}/assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
-                    @endif
+                    <?php if(isset(Auth::user()->profile) && !empty(Auth::user()->profile)): ?>
+                      <img src="<?php echo e(asset('storage/'. Auth::user()->profile)); ?>" alt class="h-auto rounded-circle" />
+                    <?php else: ?>
+                      <img src="<?php echo e(asset('admin')); ?>/assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
+                    <?php endif; ?>
                   </div>
                 </div>
                 <div class="flex-grow-1">
-                  @if(Auth::check())
-                    <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
-                    <small class="text-muted">{{ ucfirst(Auth::user()->role) }}</small>
-                  @endif
+                  <?php if(Auth::check()): ?>
+                    <span class="fw-semibold d-block"><?php echo e(Auth::user()->name); ?></span>
+                    <small class="text-muted"><?php echo e(ucfirst(Auth::user()->role)); ?></small>
+                  <?php endif; ?>
                 </div>
               </div>
             </a>
@@ -122,9 +123,9 @@
           <li>
             <div class="dropdown-divider"></div>
           </li> 
-          @can('settings-list')
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('settings-list')): ?>
               <li>
-                  <a class="dropdown-item" href="{{ route('settings.index') }}">
+                  <a class="dropdown-item" href="<?php echo e(route('settings.index')); ?>">
                       <i class="ti ti-settings me-2 ti-sm"></i>
                       <span class="align-middle">Settings</span>
                   </a>
@@ -132,10 +133,10 @@
               <li>
                 <div class="dropdown-divider"></div>
               </li>
-          @endcan
+          <?php endif; ?>
           
           <li>
-              <a class="dropdown-item" href="{{ route('user.logout') }}">
+              <a class="dropdown-item" href="<?php echo e(route('user.logout')); ?>">
                   <i class="ti ti-logout me-2 ti-sm"></i>
                   <span class="align-middle">Log Out</span>
               </a>
@@ -157,3 +158,4 @@
     <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
   </div>
 </nav>
+<?php /**PATH C:\xampp\htdocs\dynamic-admin-panel\resources\views/components/nav-bar.blade.php ENDPATH**/ ?>

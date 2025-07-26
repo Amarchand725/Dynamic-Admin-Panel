@@ -3,7 +3,7 @@
         <i class="ti ti-dots-vertical ti-sm mx-1"></i>
     </a>
     <div class="dropdown-menu dropdown-menu-end m-0">
-        @can($routeInitialize.'-show')
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check($routeInitialize.'-show')): ?>
             <a href="#"
                 class="dropdown-item show"
                 tabindex="0" aria-controls="DataTables_Table_0"
@@ -11,12 +11,12 @@
                 data-bs-target="#show-xl-modal"
                 data-toggle="tooltip"
                 data-placement="top"
-                title="{{ $singularLabel }} Details"
-                data-show-url="{{ route($routeInitialize.'.show', $model->id) }}"
+                title="<?php echo e($singularLabel); ?> Details"
+                data-show-url="<?php echo e(route($routeInitialize.'.show', $model->id)); ?>"
                 >
                 View Details
             </a>
-        @endcan
+        <?php endif; ?>
     </div>
 </div>
-    
+    <?php /**PATH C:\xampp\htdocs\dynamic-admin-panel\resources\views/admin/logs/action.blade.php ENDPATH**/ ?>
