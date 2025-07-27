@@ -82,7 +82,7 @@ Route::controller(AdminController::class)->group(function () {
         Route::get('restore/{id}', 'restore')->name('menus.restore');
         Route::get('settings', 'settings')->name('menus.settings');
         Route::post('reorder', 'reorder')->name('menus.reorder');
-    }); 
+    });
 
     //Resource Routes.
     Route::resource('roles', RoleController::class);

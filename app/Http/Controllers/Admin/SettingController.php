@@ -44,9 +44,8 @@ class SettingController extends Controller
                 if ($setting) {
                     $setting->value = $value;
                 }
+                $setting->save();
             }
-
-            $setting->save();
 
             return response()->json(['success' => true, 'message' => ucfirst($category).' settings updated successfully.']);
         } catch (Exception $e) {

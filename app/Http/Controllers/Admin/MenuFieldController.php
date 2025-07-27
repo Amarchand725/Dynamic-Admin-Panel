@@ -158,7 +158,7 @@ class MenuFieldController extends Controller
         foreach ($request->fields as $field => $fieldObj) {
             $columnName = $fieldObj['name'] ?? $field;
 
-            if (!Schema::hasColumn($tableName, $columnName) && $columnName !== 'action') {
+            if (!Schema::hasColumn($tableName, $columnName) && $columnName !== 'action' && $columnName !== 'role') {
                 $newColumns[$columnName] = $fieldObj['type'] ?? 'string';
             }
         }

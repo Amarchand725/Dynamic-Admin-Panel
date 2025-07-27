@@ -187,10 +187,18 @@ class MenuController extends Controller
                 
                 // Common fields that should always be included
                 $commonFields = [
-                    ['field' => 'status', 'type' => 'boolean', 'input_type' => 'select'],
-                    ['field' => 'created_at', 'type' => 'datetime', 'input_type' => 'datetime'],
-                    ['field' => 'created_by', 'type' => 'bigInteger', 'input_type' => 'text'],
-                    ['field' => 'action', 'type' => 'string', 'input_type' => 'select'],
+                    ['field' => 'status', 'type' => 'boolean', 'input_type' => 'select',
+                        'required' => false, 'index_visible' => true, 'create_visible' => false, 'edit_visible' => true, 'show_visible' => true
+                    ],
+                    ['field' => 'created_at', 'type' => 'datetime', 'input_type' => 'datetime',
+                        'required' => false, 'index_visible' => true, 'create_visible' => false, 'edit_visible' => false, 'show_visible' => true
+                    ],
+                    ['field' => 'created_by', 'type' => 'bigInteger', 'input_type' => 'text',
+                        'required' => false, 'index_visible' => true, 'create_visible' => false, 'edit_visible' => false, 'show_visible' => true
+                    ],
+                    ['field' => 'action', 'type' => 'string', 'input_type' => 'select',
+                        'required' => false, 'index_visible' => true, 'create_visible' => false, 'edit_visible' => false, 'show_visible' => false
+                    ],
                 ];
             
                 // Merging common fields with dynamic fields
@@ -257,7 +265,11 @@ class MenuController extends Controller
                 'input_type' => $input_type,
                 'label' => $label,
                 'placeholder' => $placeholder,
-                'required' => $required,
+                'required' => isset($fieldItem['required']) ? $fieldItem['required'] : $required,
+                'index_visible' => isset($fieldItem['index_visible']) ? $fieldItem['index_visible'] : true,
+                'create_visible' => isset($fieldItem['create_visible']) ? $fieldItem['create_visible'] : true,
+                'edit_visible' => isset($fieldItem['edit_visible']) ? $fieldItem['edit_visible'] : true,
+                'show_visible' => isset($fieldItem['show_visible']) ? $fieldItem['show_visible'] : true,
                 'extra' => $extraValidation,
             ]);
         }        

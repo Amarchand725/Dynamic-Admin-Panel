@@ -185,7 +185,14 @@ function buildValidationRules($fields, $model = null, $request = null)
         $validations = [];
 
         if (isset($config['extra']) && !empty($config['extra'])) {
-            $decoded = json_decode($config['extra'], true);
+            $extra = $config['extra'];
+
+            // Only decode if it's a JSON string
+            if (is_string($extra)) {
+                $decoded = json_decode($extra, true);
+            } else {
+                $decoded = $extra; // already an array
+            }
 
             if (isset($decoded['validation']) && is_array($decoded['validation'])) {
                 $validations = $decoded['validation'];
